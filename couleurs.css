@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 :root {
---main-background: #FFF4EB;
---article-background: #B48B67;
---main-title: ;
+--main-background: #fcf9f4;
+--article-background: #bba06f;
+--main-title: #361906;
 --article-title: ;
---small-text: ;
---light-black: ;
+--small-text:;
+--light-black:;
 }
