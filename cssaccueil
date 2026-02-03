@@ -1,0 +1,9 @@
+body{background-color:var(--main-background); }
+h1{color:var(--main-title); font-family: "Dancing Script" ; text-align: center }
+h2{color:var(--article-background)}
+.barres{
+    position:fixed;
+    top:20px;
+    left:20px;
+    width:35px;
+}
