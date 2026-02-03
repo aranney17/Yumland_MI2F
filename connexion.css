@@ -1,0 +1,11 @@
+body{
+    background-color: var(--main-background);
+    text-align: center;
+}
+h1{
+    color: var(--article-background);
+}
+fieldset{
+    border: 2px double var(--main-title);
+    display: inline-block;
+}
