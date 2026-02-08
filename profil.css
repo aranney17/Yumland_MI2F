@@ -2,11 +2,11 @@ body>main
 {
 	display: grid;
 	grid-template-areas:
-		"left-aside header header"
+		"header header header"
 		"left-aside section right-aside"
-		"left-aside footer footer";
-	grid-template-rows: 70px auto 50px;
-	grid-template-columns: clamp(200px, 22%, 290px) auto 200px;
+		"footer footer footer";
+	grid-template-rows: auto auto 50px;
+	grid-template-columns: 200px auto 200px;
 }
 @media screen and (max-width: 760px) { /* ne s'applique que sur les écrans dont la largeur est inférieure à 760px */
 	body>main
@@ -29,6 +29,7 @@ body>main
 		padding: 5px;
 	}
 }
+
 main>aside.left
 {
 	grid-area: left-aside;
@@ -40,4 +41,29 @@ h2{
 }
 h3{
     text-align: center;
+}
+
+body>main>header
+{
+	grid-area: header;
+	background-color: var(--main-background);
+	color: var(--main-title);
+}
+
+main>aside.right
+{
+	grid-area: right-aside;
+	border-left: 1px solid var(--main-title);
+	background-color: var(--main-background);
+}
+main>section
+{
+	grid-area: section;
+	min-height: 600px;
+	background-color: var(--main-background);
+}
+main>footer
+{
+	grid-area: footer;
+	background-color: var(--main-background);
 }
