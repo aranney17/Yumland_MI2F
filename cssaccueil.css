@@ -1,9 +1,56 @@
-body{background-color:var(--main-background); }
-h1{color:var(--main-title); font-family: "Dancing Script" ; text-align: center }
-h2{color:var(--article-background)}
+body{
+    background-color:var(--main-background); 
+}
+h1{
+    color:var(--main-title); font-family: "Dancing Script" ; text-align: center 
+}
+
+h2{
+    color:var(--article-background)
+}
+
 .barres{
     position:fixed;
     top:20px;
     left:20px;
     width:35px;
+    cursor: pointer;
+    z-index: 1000;
+}
+.barres span {
+  display: block;
+  height: 3px;
+  background: #5c3a2e;
+  margin: 6px 0;
+  border-radius: 2px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -25%; /* caché */
+  width: 25%;
+  height: 100vh;
+  background-color: #f8e8e2;
+  padding: 40px;
+  transition: left 0.4s ease;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin-top: 30px;
+}
+
+.sidebar li {
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #5c3a2e;
+  font-size: 1.2rem;
 }
