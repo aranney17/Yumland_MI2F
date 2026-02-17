@@ -1,0 +1,12 @@
+body{
+    background-color: var(--main-background);
+    text-align: center;
+}
+h1{
+    color: var(--main-title);
+    font-family: "Dancing Script";
+}
+fieldset{
+    border: 2px double var(--article-background);
+    display: inline-block;
+}
