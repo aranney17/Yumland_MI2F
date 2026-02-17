@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="inscription.css">
+    <link rel="stylesheet" href="couleurs.css">
+    <title>Inscription</title>
+</head>
+<body>
+    <h1>La pâttisserie</h1>
+    <br />
+   <form action="page1.php" method="POST">
+        Créer un nouveau compte
+        <fieldset>
+            <div>
+            Civilité *
+            Mme
+            <input type="radio" name="civilite">
+            M.
+            <input type="radio" name="civilite" >
+            </div>
+            <div>
+            Prénom *
+            <input type="text"  name="prenom"  />
+            </div>
+            <div>
+            Nom *
+            <input type="text"  name="nom"  />
+            </div>
+            <div>
+            Date de naissance *
+            <input type="text"  name="anniv"  />
+            </div>
+            <div>
+            Téléphone
+            <input type="text"  name="tel"  />
+            </div>
+            <div>
+            Code postale *
+            <input type="text"  name="codepostale"  />
+            </div>
+            <div>
+            Votre adresse e-mail *
+            <input type="email" name="e-mail"  />
+            </div>
+            <div>
+            Créez votre mot de passe *
+            <input type="text"  name="mdp"  />
+            </div>
+            <div>
+            Confirmer le mot de passe *
+            <input type="text"  name="mdp"  />
+            </div>
 
+            <input type="submit " value="CREER UN COMPTE"/>
+        </fieldset>
+    </form> 
+    
+</body>
+</html>
