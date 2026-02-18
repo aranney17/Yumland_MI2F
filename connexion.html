@@ -9,33 +9,71 @@
 </head>
 
 <body>
-	<h1>La pâttisserie</h1>
-	<form action="page1.php" method="POST">
-        <fieldset>
-			<legend>Connexion</legend>
-			<div>
-				E-mail *
-				<br />
-				<input type="email" name="mail"  />
-			</div>
-			<div >
-				Mot de passe *
-				<br />
-				<input type="password"  name="mdp" id="password"  />
-                <img src="oeil.png" alt="Afficher mot de passe">
-			</div>
-            <a id=mdpoublie href="">Mot de passe oublié ?</a>
+	<div class="barres">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+    
+    <h1>Pâtisserie</h1>
+    
+    <div class="top-icons">
+        <a href=""> <img src="images/35c49de33b49d0f34a20893b38afac8c.png" alt="Profil" class="icon"> </a>
+        <a href=""> <img src="images/a0942deeea08bdfaea408134b53fa33d.png" alt="Panier" class="icon"> </a>
+    </div>
+    
+    <section>
+        <form action="page1.php" method="POST">
+            <fieldset>
+                <legend>Connexion</legend>
+                <div class="input">
+                    E-mail *
+                    <br />
+                    <input type="email" name="mail"  />
+                </div>
+                <div class="input" >
+                    Mot de passe *
+                    <br />
+                    <input type="password"  name="mdp" id="password"  />
+                    <img src="oeil.png" alt="Afficher mot de passe">
+                </div>
+                <a id=mdpoublie href="">Mot de passe oublié ?</a>
+                <br />
+                <input class=bouton type="submit" value="ME CONNECTER"/>
+            </fieldset>
+        </form> 
+        <p>
+            Vous n'êtes toujours pas client chez nous? 
             <br />
-			<input class=bouton type="submit" value="ME CONNECTER"/>
-		</fieldset>
-	</form> 
-	<p>
-		Vous n'êtes toujours pas client chez nous? 
-		<br />
-		Créez un compte en quelques cliques pour profiter pleinement des avantages du site
-	</p>
-	<a class=bouton href="inscription.html">CREER UN COMPTE</a>
+            Créez un compte en quelques cliques pour profiter pleinement des avantages du site
+        </p>
+        <a class=bouton href="inscription.html">CREER UN COMPTE</a>
+    </section>    
+    <footer>
+        <p>suivez nous sur nos réseaux!
+            </br>
+                <img src="images/a795c0d8d4584d0671a2968daa4c2f0f.jpg" alt="instagram" class="icon">
+                <img src="images/bf8c005ecf527096f670dd60a1bebd58.jpg" alt="tiktok" class="icon">
+                <img src="images/5241cbc6015d08b9424b9f4896869f23.png" alt="instagram" class="icon">
+        </p>
+        <div class="infos-footer">
+
+            <div class="info">
+                <img src="images/5241cbc6015d08b9424b9f4896869f78.png" alt="maps" class="icon">
+                <span>5 av de la république, 75300 Paris</span>
+            </div>
+
+            <div class="info">
+                <img src="images/5241cbc6015d08b9424b9f4896869f256.png" alt="horloge" class="icon">
+                <span>Tous les jours 9h - 22h</span>
+            </div>
+        </div>
+        <h5>© 2026 Pâtisserie</h5>
+    </footer>
    
 </body>
 
+</html>
 </html>
