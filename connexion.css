@@ -6,8 +6,7 @@
 
 body{
 	background-color: var(--main-background);
-	text-align: center;
-	font-family: Arial, sans-serif;
+	font-family:"DM Serif Display";
 	font-size: 20px;
     color: var(--main-title);
     height: 100vh;
@@ -15,9 +14,14 @@ body{
 
 h1{
 	color: var(--main-title);
-	font-family: "Dancing Script";
-	margin-bottom: 50px;
+	font-family: "Dancing Script", cursive;
+	margin: 20px 0 50px 0;
     font-size: 50px; 
+    text-align: center;
+}
+
+section{
+    text-align: center;
 }
 
 legend{
@@ -33,7 +37,8 @@ fieldset{
 	display: inline-block;
 }
 
-div{
+
+div.input{
     width: 100%;
     position: relative;
 	text-align: left;
@@ -42,7 +47,7 @@ div{
 
 input{
     width: 100%;
-	padding: 10px ;
+	padding: 10px;
 	margin-top: 5px;
     border-radius: 25px;
     outline: none;
@@ -55,7 +60,7 @@ input[type="password"]{
     padding-right: 40px;
 }
 
-img{
+fieldset img{
     position: absolute;
     right: 10px;
     top: 60%;
@@ -91,4 +96,61 @@ img{
 
 p{
 	padding: 30px ;
+}
+
+.barres {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 35px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.barres span {
+    display: block;
+    height: 3px;
+    background: var(--main-title);
+    margin: 6px 0;
+    border-radius: 2px;
+}
+
+.top-icons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.icon {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+.infos-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; 
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+footer{
+    background-color: var(--main-title);
+    text-align: center;
+    padding: 20px;
+    color: white;
+    width: 100%;
+    margin-top: auto;
 }
