@@ -1,4 +1,5 @@
 body>main
+body>main
 {
 	display: grid;
 	grid-template-areas:
@@ -19,7 +20,7 @@ body>main
 			"right-aside"
 			"footer";
 		grid-template-columns: 100%;
-		grid-template-rows: 70px auto auto auto 70px;
+		grid-template-rows: 70px auto auto auto auto;
 	}
 	article
 	{
@@ -33,8 +34,70 @@ body>main
 main>aside.left
 {
 	grid-area: left-aside;
-	background-color: var(--article-background);
+	background-color: var(--main-background);
 	padding: 30px 30px 30px 30px;
+}
+
+
+
+.barres {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 35px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.barres span {
+    display: block;
+    height: 3px;
+    background: var(--main-title);
+    margin: 6px 0;
+    border-radius: 2px;
+}
+
+.top-icons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.icon {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+.infos-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; 
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+    
+.icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+h1 {
+    color: var(--main-title);
+    font-family: "Dancing Script", cursive;
+    text-align: center;
+    margin-top: 20px;
 }
 h2{
     text-align: center;
@@ -55,6 +118,7 @@ main>aside.right
 	grid-area: right-aside;
 	border-left: 1px solid var(--main-title);
 	background-color: var(--main-background);
+	text-align: center;
 }
 main>section
 {
@@ -65,5 +129,11 @@ main>section
 main>footer
 {
 	grid-area: footer;
-	background-color: var(--main-background);
+	background-color: var(--main-title);
+    text-align: center;
+    color: white;
+}
+
+p.perso{
+	line-height: 200%;
 }
