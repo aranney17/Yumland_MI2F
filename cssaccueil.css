@@ -1,56 +1,315 @@
-body{
-    background-color:var(--main-background); 
-}
-h1{
-    color:var(--main-title); font-family: "Dancing Script" ; text-align: center 
-}
-
-h2{
-    color:var(--article-background)
+body {
+    background-color: var(--main-background);
+    margin: 0;
+    font-family:"DM Serif Display";
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.barres{
-    position:fixed;
-    top:20px;
-    left:20px;
-    width:35px;
+footer{
+    background-color: var(--main-title);
+    text-align: center;
+    padding: 20px;
+    color: white;
+    width: 100%;
+    margin-top: auto;
+}
+
+
+h1 {
+    color: var(--main-title);
+    font-family: "Dancing Script", cursive;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+h2 {
+    color: var(--article-background);
+}
+
+.barres {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 35px;
     cursor: pointer;
     z-index: 1000;
 }
+
 .barres span {
-  display: block;
-  height: 3px;
-  background: #5c3a2e;
-  margin: 6px 0;
-  border-radius: 2px;
+    display: block;
+    height: 3px;
+    background: var(--main-title);
+    margin: 6px 0;
+    border-radius: 2px;
 }
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: -25%; /* caché */
-  width: 25%;
-  height: 100vh;
-  background-color: #f8e8e2;
-  padding: 40px;
-  transition: left 0.4s ease;
+.top-icons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
 }
 
-.sidebar.active {
-  left: 0;
+.icon {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }
 
-.sidebar ul {
-  list-style: none;
-  margin-top: 30px;
+
+.infos-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; 
 }
 
-.sidebar li {
-  margin-bottom: 20px;
+.info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+    
+.icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }
 
-.sidebar a {
-  text-decoration: none;
-  color: #5c3a2e;
-  font-size: 1.2rem;
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+
+.search-bar input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #d6b5a6;
+    border-radius: 20px 0 0 20px;
+    outline: none;
+    font-size: 1rem;
+}
+
+
+.search-bar button {
+    padding: 10px 15px;
+    border: 1px solid #d6b5a6;
+    background-color: #f8e8e2;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    border: 1px solid #d6b5a6;
+    background-color: #f8e8e2;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar button img {
+    width: 25px;
+    height: 23px;
+}
+
+/* bande horizontale */
+.categories {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;      /* permet le défilement */
+    padding: 20px;
+    justify-content: flex-start;
+}
+
+/* enlève la barre moche selon navigateur */
+.categories::-webkit-scrollbar {
+    display: none;
+}
+
+/* bloc catégorie */
+.categorie {
+    text-decoration: none;
+    color: var(--main-title);
+    text-align: center;
+    min-width: 120px; /* IMPORTANT pour le scroll */
+}
+
+/* cercle image */
+.categorie img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* rend le cercle */
+    object-fit: cover;  /* image bien cadrée */
+}
+
+/* titre */
+.categorie p {
+    margin-top: 8px;
+    font-size: 1rem;
+}
+
+/* grand encadré */
+.hero {
+    width: 100%;
+    height: 400px; /* hauteur du bloc */
+    background-image: url("images/716febf1dc88a71054df99b5eb4b2f06.jpg");
+    background-size: cover;      
+    background-position: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.hero-content {
+    text-align: center;
+    color: white;
+}
+
+
+.hero-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* bouton */
+.btn-commande {
+    background-color: #ffffff;
+    color: #5c3a2e;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+}
+.custom-cake {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+/* CONTENEUR DES IMAGES */
+.background-slider {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.background-slider span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: slideShow 15s infinite;
+}
+
+/* carrousel */
+.background-slider span:nth-child(1) {
+    background-image: url("images/38323d94d213caf5e5a08c36b47a9d93.jpg");
+    animation-delay: 0s;
+}
+
+.background-slider span:nth-child(2) {
+    background-image: url("images/1f33cbd5118658f8ce4362c6ad0c667e.jpg");
+    animation-delay: 5s;
+}
+
+.background-slider span:nth-child(3) {
+    background-image: url("images/ac79f221cd7a4cd604242a0d3602ea0c.jpg");
+    animation-delay: 10s;
+}
+
+.custom-content {
+    position: relative;
+    z-index: 2;   /* plus grand = devant */
+    margin-left: 8%;
+    max-width: 500px;
+    color: white;
+}
+
+
+@keyframes slideShow {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    30% { opacity: 1; }
+    40% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+
+.titre-section {
+    text-align: center;
+    margin: 60px 0 30px;
+    font-size: 2rem;
+}
+
+/* grille produits */
+.produits {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* un produit = moitié écran */
+.produit {
+    width: 50%;
+    padding: 15px;
+}
+
+/* image produit */
+.produit img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* zone texte + panier */
+.produit-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.prix {
+    color: #5c3a2e;
+}
+
+/* icône panier */
+.icon-panier {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.produit-highlight {
+    margin: 60px 40px; /* bordures droite/gauche */
+}
+
+.produit-highlight img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+}
+
+.highlight-info {
+    margin-top: 15px;
 }
