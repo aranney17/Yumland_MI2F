@@ -1,19 +1,23 @@
 *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body{
-	background-color: var(--main-background);
+	background: url(https://www.krion.com/uploads/tmp/_cafeteria_estilo_vintage_rosa.jpg);
+	background-position: center;
+	background-size: cover;
+	backdrop-filter: blur(8px);
 	font-family:"DM Serif Display";
 	font-size: 20px;
     color: var(--main-title);
-    height: 100vh;
+	min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 h1{
-	color: var(--main-title);
 	font-family: "Dancing Script", cursive;
 	margin: 20px 0 50px 0;
     font-size: 50px; 
@@ -33,8 +37,11 @@ fieldset{
 	border-color: var(--article-background);
     border-radius: 20px;
 	padding: 40px 70px;
-    width: 600px;
+	width: 90%;
+	max-width: 600px;
 	display: inline-block;
+	background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(3px);
 }
 
 
@@ -73,14 +80,14 @@ fieldset img{
     border-radius: 25px;
     width: 150px;
     padding: 10px;
-	background-color: transparent;
+	background-color: var(--article-background);
 	font-size: 15px;
     color: var(--main-title);
     text-decoration: none;
 }
 
 .bouton:hover{
-	background-color: var(--article-background);
+  background-color: transparent;
 }
 
 #mdpoublie{
