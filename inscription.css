@@ -1,12 +1,175 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body{
-    background-color: var(--main-background);
+	background: url(https://www.krion.com/uploads/tmp/_cafeteria_estilo_vintage_rosa.jpg);
+  background-position: center;
+  background-size: cover;
+  backdrop-filter: blur(8px);
+	font-family:"DM Serif Display";
+	font-size: 20px;
+    color: var(--main-title);
+  min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1{
+	font-family: "Dancing Script", cursive;
+	margin: 20px 0 50px 0;
+    font-size: 50px; 
     text-align: center;
 }
-h1{
-    color: var(--main-title);
-    font-family: "Dancing Script";
+
+section{
+    text-align: center;
 }
+
+
 fieldset{
-    border: 2px double var(--article-background);
-    display: inline-block;
+	border-color: var(--article-background);
+    border-radius: 20px;
+	padding: 40px 70px;
+  margin-bottom: 10px;
+  width: 90%;
+  max-width: 600px;
+	display: inline-block;
+  background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(3px);
+}
+
+
+div.input{
+    width: 100%;
+    position: relative;
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.input input{
+    width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+    border-radius: 25px;
+    outline: none;
+	background-color: transparent;
+    border: 2px solid var(--main-title);
+    font-size: 15px;
+}
+
+.civilite {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.civilite input {
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
+input[type="password"]{
+    padding-right: 40px;
+}
+
+fieldset img{
+    position: absolute;
+    right: 10px;
+    top: 60%;
+    width: 25px;
+    cursor: pointer;
+}
+
+.bouton{
+	border: 2px double var(--article-background);
+    border-radius: 25px;
+    width: 165px;
+    padding: 10px;
+	background-color: var(--article-background);
+	font-size: 15px;
+    color: var(--main-title);
+    text-decoration: none;
+}
+
+.bouton:hover{
+  background-color: transparent;
+}
+
+.conditions {
+    text-align: left;
+    margin: 20px 0;
+    font-size: 15px;
+}
+
+.conditions input {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.conditions a {
+    color: var(--article-background);
+    text-decoration: none;
+}
+
+.conditions a:hover {
+    text-decoration: underline;
+}
+
+.barres {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 35px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.barres span {
+    display: block;
+    height: 3px;
+    background: var(--main-title);
+    margin: 6px 0;
+    border-radius: 2px;
+}
+
+.top-icons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.icon {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+.infos-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; 
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+footer{
+    background-color: var(--main-title);
+    text-align: center;
+    padding: 20px;
+    color: white;
+    width: 100%;
+    margin-top: auto;
 }
