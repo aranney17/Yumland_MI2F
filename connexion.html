@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="connexion.css">
-    <link rel="stylesheet" href="couleurs.css">
-    <title>Connexion</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="connexion.css">
+ 	<link rel="stylesheet" href="couleurs.css">
+	<title>Connexion</title>
 </head>
+
 <body>
-    <h1>La pâttisserie</h1>
-    <br />
-   <form action="page1.php." method="POST">
+	<h1>La pâttisserie</h1>
+	<form action="page1.php" method="POST">
         <fieldset>
-            <legend>Connexion</legend>
-            E-mail *
+			<legend>Connexion</legend>
+			<div>
+				E-mail *
+				<br />
+				<input type="email" name="mail"  />
+			</div>
+			<div >
+				Mot de passe *
+				<br />
+				<input type="password"  name="mdp" id="password"  />
+                <img src="https://e7.pngegg.com/pngimages/494/25/png-clipart-eye-symbol-computer-icons-shape-visual-perception-eye-people-logo.png" alt="Afficher mot de passe">
+			</div>
+            <a id=mdpoublie href="">Mot de passe oublié ?</a>
             <br />
-            <input type="email" name="e-mail"  />
-            <br />
-            Mot de passe *
-            <br />
-            <input type="text"  name="mdp"  />
-            <br />
-            <input type="submit " value="ME CONNECTER"/>
-        </fieldset>
-    </form> 
-    <p>
-        Vous n'êtes toujours pas client chez nous? 
-        <br />
-        Créez un compte en quelques cliques pour profiter pleinement des avantages du site
-    </p>
-    <fieldset>
-        <a href="inscription.html">CREER UN COMPTE</a>
-    </fieldset>
+			<input class=bouton type="submit" value="ME CONNECTER"/>
+		</fieldset>
+	</form> 
+	<p>
+		Vous n'êtes toujours pas client chez nous? 
+		<br />
+		Créez un compte en quelques cliques pour profiter pleinement des avantages du site
+	</p>
+	<a class=bouton href="inscription.html">CREER UN COMPTE</a>
    
 </body>
+
 </html>
