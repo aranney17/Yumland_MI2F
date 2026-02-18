@@ -8,54 +8,93 @@
     <title>Inscription</title>
 </head>
 <body>
-    <h1>La pâttisserie</h1>
-    <br />
+    <div class="barres">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+    
+    <h1>Pâtisserie</h1>
+    
+    <div class="top-icons">
+        <a href=""> <img src="images/35c49de33b49d0f34a20893b38afac8c.png" alt="Profil" class="icon"> </a>
+        <a href=""> <img src="images/a0942deeea08bdfaea408134b53fa33d.png" alt="Panier" class="icon"> </a>
+    </div>
+  <section>
+    Créer un nouveau compte
    <form action="page1.php" method="POST">
-        Créer un nouveau compte
         <fieldset>
-            <div>
+            <div class="civilite">
             Civilité *
-            Mme
-            <input type="radio" name="civilite">
-            M.
-            <input type="radio" name="civilite" >
+            <input type="radio" name="civilite"> Mme
+            <input type="radio" name="civilite" > M.
             </div>
-            <div>
+            <div class="input">
             Prénom *
             <input type="text"  name="prenom"  />
             </div>
-            <div>
+            <div class="input">
             Nom *
             <input type="text"  name="nom"  />
             </div>
-            <div>
+            <div class="input">
             Date de naissance *
             <input type="text"  name="anniv"  />
             </div>
-            <div>
+            <div class="input">
             Téléphone
             <input type="text"  name="tel"  />
             </div>
-            <div>
+            <div class="input">
             Code postale *
             <input type="text"  name="codepostale"  />
             </div>
-            <div>
+            <div class="input">
             Votre adresse e-mail *
             <input type="email" name="e-mail"  />
             </div>
-            <div>
+            <div class="input">
             Créez votre mot de passe *
-            <input type="text"  name="mdp"  />
+            <input type="password"  name="mdp"  />
+             <img src="oeil.png" alt="Afficher mot de passe">
             </div>
-            <div>
+            <div class="input">
             Confirmer le mot de passe *
-            <input type="text"  name="mdp"  />
+            <input type="password"  name="mdpconfirme"  />
+            <img src="oeil.png" alt="Afficher mot de passe">
+            </div>
+            <div class="conditions">
+              <input type="checkbox" id="cgu" name="cgu" />
+                  J’accepte les <a href="conditions.html">conditions générales d’utilisation</a> *
             </div>
 
-            <input type="submit " value="CREER UN COMPTE"/>
+            <input class="bouton" type="submit" value="CREER UN COMPTE"/>
         </fieldset>
     </form> 
+  </section>
+  <footer>
+        <p>suivez nous sur nos réseaux!
+            </br>
+                <img src="images/a795c0d8d4584d0671a2968daa4c2f0f.jpg" alt="instagram" class="icon">
+                <img src="images/bf8c005ecf527096f670dd60a1bebd58.jpg" alt="tiktok" class="icon">
+                <img src="images/5241cbc6015d08b9424b9f4896869f23.png" alt="instagram" class="icon">
+        </p>
+        <div class="infos-footer">
+
+            <div class="info">
+                <img src="images/5241cbc6015d08b9424b9f4896869f78.png" alt="maps" class="icon">
+                <span>5 av de la république, 75300 Paris</span>
+            </div>
+
+            <div class="info">
+                <img src="images/5241cbc6015d08b9424b9f4896869f256.png" alt="horloge" class="icon">
+                <span>Tous les jours 9h - 22h</span>
+            </div>
+        </div>
+        <h5>© 2026 Pâtisserie</h5>
+    </footer>
     
 </body>
 </html>
