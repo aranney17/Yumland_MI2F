@@ -1,12 +1,94 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body{
-    background-color: var(--main-background);
-    text-align: center;
-}
-h1{
+	background-color: var(--main-background);
+	text-align: center;
+	font-family: Arial, sans-serif;
+	font-size: 20px;
     color: var(--main-title);
-    font-family: "Dancing Script";
+    height: 100vh;
 }
+
+h1{
+	color: var(--main-title);
+	font-family: "Dancing Script";
+	margin-bottom: 50px;
+    font-size: 50px; 
+}
+
+legend{
+	font-size: 30px;
+	font-weight: bold;
+}
+
 fieldset{
-    border: 2px double var(--article-background);
+	border-color: var(--article-background);
+    border-radius: 20px;
+	padding: 40px 70px;
+    width: 600px;
+	display: inline-block;
+}
+
+div{
+    width: 100%;
+    position: relative;
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+input{
+    width: 100%;
+	padding: 10px ;
+	margin-top: 5px;
+    border-radius: 25px;
+    outline: none;
+	background-color: transparent;
+    border: 2px solid var(--main-title);
+    font-size: 15px;
+}
+
+input[type="password"]{
+    padding-right: 40px;
+}
+
+img{
+    position: absolute;
+    right: 10px;
+    top: 60%;
+    width: 25px;
+    cursor: pointer;
+}
+
+.bouton{
+	border: 2px double var(--article-background);
+    border-radius: 25px;
+    width: 150px;
+    padding: 10px;
+	background-color: transparent;
+	font-size: 15px;
+    color: var(--main-title);
+    text-decoration: none;
+}
+
+.bouton:hover{
+	background-color: var(--article-background);
+}
+
+#mdpoublie{
     display: inline-block;
+    margin: 15px 0;
+	font-size: 15px;
+    color: var(--main-title);
+}
+
+#mdpoublie:hover{
+    color: var(--article-background);
+}
+
+p{
+	padding: 30px ;
 }
