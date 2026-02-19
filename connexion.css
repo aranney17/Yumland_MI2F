@@ -5,7 +5,7 @@
 }
 
 body{
-	background: url(https://www.krion.com/uploads/tmp/_cafeteria_estilo_vintage_rosa.jpg);
+	background: url(fond.png);
 	background-position: center;
 	background-size: cover;
 	backdrop-filter: blur(8px);
@@ -84,6 +84,7 @@ fieldset img{
 	font-size: 15px;
     color: var(--main-title);
     text-decoration: none;
+    cursor: pointer;
 }
 
 .bouton:hover{
