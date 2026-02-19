@@ -5,7 +5,7 @@
 }
 
 body{
-	background: url(fond.png);
+	background: url(images/fond.png);
 	background-position: center;
 	background-size: cover;
 	backdrop-filter: blur(8px);
