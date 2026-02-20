@@ -5,12 +5,14 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding: 0;
+    overflow-x:hidden;
 }
 
 footer{
     background-color: var(--main-title);
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     color: white;
     width: 100%;
     margin-top: auto;
@@ -55,13 +57,6 @@ h2 {
     z-index: 1000;
 }
 
-.icon {
-    margin-top: 10px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}
-
 
 .infos-footer {
     display: flex;
@@ -77,11 +72,20 @@ h2 {
 }
     
 .icon {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
 }
-
+.icon#panier {
+    width: 53px;
+    height: 53px;
+    cursor: pointer;
+}
+.hero img, .custom-cake img, .produit img, .produit-highlight img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* remplit le bloc sans déformer */
+}
 
 .search-bar {
     display: flex;
@@ -127,7 +131,7 @@ h2 {
 /* bande horizontale */
 .categories {
     display: flex;
-    gap: 30px;
+    gap: 20px;
     overflow-x: auto;      /* permet le défilement */
     padding: 20px;
     justify-content: flex-start;
@@ -163,8 +167,9 @@ h2 {
 /* grand encadré */
 .hero {
     width: 100%;
-    height: 400px; /* hauteur du bloc */
-    background-image: url("images/716febf1dc88a71054df99b5eb4b2f06.jpg");
+    aspect-ratio: 4/3;
+    min-height: 400px;
+    background-image: url("images/Menufond.png");
     background-size: cover;      
     background-position: center; 
     display: flex;
@@ -182,11 +187,12 @@ h2 {
 .hero-content h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;
+    color: var(--main-background);
 }
 
 /* bouton */
 .btn-commande {
-    background-color: #ffffff;
+    background-color: var(--article-background);
     color: #5c3a2e;
     padding: 12px 25px;
     text-decoration: none;
@@ -195,12 +201,14 @@ h2 {
 }
 .custom-cake {
     position: relative;
+    aspect-ratio: 4/3;
     width: 100%;
-    height: 70vh;
+    min-height: 400px;
     overflow: hidden;
     display: flex;
     align-items: center;
 }
+
 
 /* CONTENEUR DES IMAGES */
 .background-slider {
@@ -210,6 +218,12 @@ h2 {
     width: 100%;
     height: 100%;
     z-index: 0;
+}
+.custom-cake img, .background-slider span {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;       /* remplit sans déformer */
+    object-position: center; /* centre le gâteau */
 }
 
 .background-slider span {
@@ -224,28 +238,61 @@ h2 {
 
 /* carrousel */
 .background-slider span:nth-child(1) {
-    background-image: url("images/38323d94d213caf5e5a08c36b47a9d93.jpg");
+    background-image: url("images/Buffetfond1.png");
     animation-delay: 0s;
 }
 
 .background-slider span:nth-child(2) {
-    background-image: url("images/1f33cbd5118658f8ce4362c6ad0c667e.jpg");
+    background-image: url("images/piecemontee.png");
     animation-delay: 5s;
 }
 
 .background-slider span:nth-child(3) {
-    background-image: url("images/ac79f221cd7a4cd604242a0d3602ea0c.jpg");
+    background-image: url("images/Buffetfond2.png");
     animation-delay: 10s;
 }
 
 .custom-content {
     position: relative;
     z-index: 2;   /* plus grand = devant */
-    margin-left: 8%;
-    max-width: 500px;
+    display: flex;
+    flex-direction: column; /* empile h2, p et bouton */
+    justify-content: center; /* centre verticalement */
+    align-items: center;    /* centre horizontalement */
+    text-align: center;     /* centre le texte */
+    height: 100%;           /* prend toute la hauteur du bloc */
+    max-width: 600px;       /* largeur du texte */
+    margin: 0 auto;         /* centre le bloc horizontalement */
     color: white;
 }
 
+.custom-content h2 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    color: var(--main-background);
+}
+
+/* PARAGRAPHE plus grand */
+.custom-content p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* BOUTON inchangé mais centré automatiquement grâce à flex */
+.btn-custom {
+    padding: 14px 28px;
+    font-weight: bold;
+    border-radius: 30px;
+    background-color: #ffffff;
+    color: black;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: transparent;
+}
 
 @keyframes slideShow {
     0% { opacity: 0; }
@@ -259,32 +306,39 @@ h2 {
 .titre-section {
     text-align: center;
     margin: 60px 0 30px;
-    font-size: 2rem;
+    font-size: 40px;
 }
 
 /* grille produits */
 .produits {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding:0;
 }
 
 /* un produit = moitié écran */
 .produit {
     width: 50%;
     padding: 15px;
+    box-sizing: border-box;
 }
 
 /* image produit */
-.produit img {
+.produit > a > img {
     width: 100%;
-    height: 300px;
+    height: auto;
+    aspect-ratio: 1/1;
     object-fit: cover;
+    object-position:center;
 }
 
 /* zone texte + panier */
 .produit-info {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
     align-items: center;
     margin-top: 10px;
 }
@@ -295,13 +349,15 @@ h2 {
 
 /* icône panier */
 .icon-panier {
-    width: 28px;
-    height: 28px;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
 }
 
 .produit-highlight {
-    margin: 60px 40px; /* bordures droite/gauche */
+    margin: 60px auto;
+    width: 90%;
+    max-width: 1200px; /* bordures droite/gauche */
 }
 
 .produit-highlight img {
@@ -310,6 +366,9 @@ h2 {
     object-fit: cover;
 }
 
-.highlight-info {
-    margin-top: 15px;
+.produit-info .icon-panier {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    display: block;
 }
