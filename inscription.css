@@ -122,6 +122,19 @@ fieldset img{
     text-decoration: underline;
 }
 
+#connexion{
+    color: var(--main-title);
+}
+
+#connexion:hover{
+    color: var(--article-background);
+}
+
+p{
+	padding-top: 20px ;
+    font-size: 15px;
+}
+
 .barres {
     position: fixed;
     top: 20px;
