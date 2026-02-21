@@ -1,0 +1,39 @@
+.utilisateurs{
+    flex: 1;
+    padding: 20px;
+}
+
+button{
+    background-color: var(--article-background);
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td{
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+th{
+    text-align: center;
+    background-color: var(--article-background);
+}
+
+.logout{
+    margin: 10px 560px;
+    color: white;
+    font-weight: bold;
+    background-color: var(--article-background);
+    text-transform: uppercase;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.logout:hover{
+    background-color: var(--main-title);
+}
