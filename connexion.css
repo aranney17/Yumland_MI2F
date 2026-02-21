@@ -1,3 +1,4 @@
+/* tous les éléments */
 *{
 	margin: 0;
 	padding: 0;
@@ -17,96 +18,7 @@ body{
     flex-direction: column;
 }
 
-h1{
-	font-family: "Dancing Script", cursive;
-	margin: 20px 0 50px 0;
-    font-size: 50px; 
-    text-align: center;
-}
-
-section{
-    text-align: center;
-	margin: 100px 0 120px 0;
-}
-
-legend{
-	font-size: 30px;
-	font-weight: bold;
-}
-
-fieldset{
-	border-color: var(--article-background);
-    border-radius: 20px;
-	padding: 40px 70px;
-	width: 90%;
-	max-width: 600px;
-	display: inline-block;
-	background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(3px);
-}
-
-
-div.input{
-    width: 100%;
-    position: relative;
-	text-align: left;
-	margin-bottom: 20px;
-}
-
-input{
-    width: 100%;
-	padding: 10px;
-	margin-top: 5px;
-    border-radius: 25px;
-    outline: none;
-	background-color: transparent;
-    border: 2px solid var(--main-title);
-    font-size: 15px;
-}
-
-input[type="password"]{
-    padding-right: 40px;
-}
-
-fieldset img{
-    position: absolute;
-    right: 10px;
-    top: 60%;
-    width: 25px;
-    cursor: pointer;
-}
-
-.bouton{
-	border: 2px double var(--article-background);
-    border-radius: 25px;
-    width: 150px;
-    padding: 10px;
-	background-color: var(--article-background);
-	font-size: 15px;
-    color: var(--main-title);
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.bouton:hover{
-  background-color: transparent;
-}
-
-#mdpoublie{
-    display: inline-block;
-    margin: 15px 0;
-	font-size: 15px;
-    color: var(--main-title);
-}
-
-#mdpoublie:hover{
-    color: var(--article-background);
-}
-
-p{
-	padding: 30px ;
-}
-
+/*----------header---------*/
 .barres {
     position: fixed;
     top: 20px;
@@ -124,8 +36,15 @@ p{
     border-radius: 2px;
 }
 
+h1{
+	font-family: "Dancing Script", cursive;
+	margin-top: 20px;
+    font-size: 50px; 
+    text-align: center;
+}
+
 .top-icons {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
     display: flex;
@@ -133,14 +52,195 @@ p{
     z-index: 1000;
 }
 
-.icon {
-    margin-top: 10px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+/* conteneur profil */
+.profil-menu {
+    position: relative;
 }
 
+/* liens */
+.profil-bulle a {
+    display: block;
+    padding: 10px 18px;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
 
+.profil-bulle a:hover {
+    background: var(--article-background);
+}
+
+/* bulle cachée */
+.profil-bulle {
+    position: absolute;
+    top: 50px;
+    right: 0;
+
+    background: white;
+    border-radius: 12px;
+    min-width: 160px;
+    padding: 10px 0;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: 0.25s ease;
+}
+
+/* apparition */
+.profil-menu:hover .profil-bulle {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.icon#panier {
+    width: 53px;
+    height: 53px;
+    cursor: pointer;
+}
+/*---------------*/
+
+/*----------main---------*/
+    /* ---page de connexion, inscription et mdpoublie--- */
+    main{
+        text-align: center;
+        margin: 100px 0;
+    }
+
+    fieldset{
+        border-color: var(--article-background);
+        border-radius: 20px;
+        padding: 40px 70px;
+        width: 90%;
+        max-width: 600px;
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(3px);
+    }
+
+    .champ{
+        width: 100%;
+        position: relative;
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .champ input{
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 25px;
+        outline: none;
+        background-color: transparent;
+        border: 2px solid var(--main-title);
+        font-size: 15px;
+    }
+
+    .bouton{
+        border: 2px double var(--article-background);
+        border-radius: 25px;
+        padding: 10px;
+        background-color: var(--article-background);
+        font-size: 15px;
+        font-weight: bold;
+        font-family:"DM Serif Display";
+        color: var(--main-title);
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .bouton:hover{
+    background-color: transparent;
+    }
+    /* ------------------------------------- */
+
+    /* ---page de connexion et inscription--- */
+    input[type="password"]{
+        padding-right: 40px;
+    }
+
+    fieldset img{
+        position: absolute;
+        right: 10px;
+        top: 60%;
+        width: 25px;
+        cursor: pointer;
+    }
+
+    .lien{
+        display: inline-block;
+        margin: 15px 0;
+        font-size: 15px;
+        color: var(--main-title);
+    }
+
+    .lien:hover{
+        color: var(--article-background);
+    }
+    /* ------------------------------------- */
+
+    /* ---page de connexion et mdpoublie--- */
+    h2{
+        width: 90%;
+        max-width: 600px;
+        margin: 0 auto 20px auto;
+    }
+    /* ------------------------------------- */
+
+    /* ----------page de connexion---------- */
+    legend{
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .connexion{
+        padding: 30px ;
+    }
+    /* ------------------------------------- */
+
+    /* ----------page d'incription---------- */
+    .civilite {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .civilite input {
+        margin-left: 20px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .conditions {
+        text-align: left;
+        margin: 20px 0;
+        font-size: 15px;
+    }
+
+    .conditions input {
+        margin-right: 8px;
+        cursor: pointer;
+    }
+
+    .conditions a {
+        color: var(--article-background);
+        text-decoration: none;
+    }
+
+    .conditions a:hover {
+        text-decoration: underline;
+    }
+
+    .inscription {
+        padding-top: 20px ;
+        font-size: 15px;
+    }
+    /* ------------------------------------- */
+/*------------------------*/
+
+/*----------footer---------*/
 .infos-footer {
     display: flex;
     justify-content: center;
@@ -154,12 +254,19 @@ p{
     gap: 10px;
 }
 
-
 footer{
     background-color: var(--main-title);
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     color: white;
     width: 100%;
     margin-top: auto;
+}
+/*---------------*/
+
+/* icone du header et du footer */
+.icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
 }
