@@ -1,0 +1,372 @@
+body {
+    background-color: var(--main-background);
+    margin: 0;
+    font-family:"DM Serif Display";
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-x:hidden;
+}
+
+footer{
+    background-color: var(--main-title);
+    text-align: center;
+    padding: 15px;
+    color: white;
+    width: 100%;
+    margin-top: auto;
+}
+
+
+h1 {
+    color: var(--main-title);
+    font-family: "Dancing Script", cursive;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+h2 {
+    color: var(--article-background);
+}
+
+.barres {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 35px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.barres span {
+    display: block;
+    height: 3px;
+    background: var(--main-title);
+    margin: 6px 0;
+    border-radius: 2px;
+}
+
+.top-icons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+    
+}
+
+/* conteneur profil */
+.profil-menu {
+    position: relative;
+}
+
+/* liens */
+.profil-bulle a {
+    display: block;
+    padding: 10px 18px;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+.profil-bulle a:hover {
+    background: var(--article-background);
+}
+
+/* bulle cachée */
+.profil-bulle {
+    position: absolute;
+    top: 50px;
+    right: 0;
+
+    background: white;
+    border-radius: 12px;
+    min-width: 160px;
+    padding: 10px 0;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: 0.25s ease;
+}
+
+/* apparition */
+.profil-menu:hover .profil-bulle {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.infos-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; 
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+    
+.icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+.icon#panier {
+    width: 53px;
+    height: 53px;
+    cursor: pointer;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+
+.search-bar input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid var(--article-background);
+    border-radius: 20px 0 0 20px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    border: 1px solid var(--article-background);
+    background-color: var(--article-background);
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar button img {
+    width: 25px;
+    height: 23px;
+}
+
+.menu-horizontal {
+    width: 100%;
+    border-bottom: 2px solid #eee;
+    background-color: white;
+}
+
+.menu-horizontal ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 15px 0;
+    margin: 0;
+}
+
+.menu-horizontal a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #555;
+    padding-bottom: 8px;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* Effet hover */
+.menu-horizontal a:hover {
+    color: var(--article-background); /* couleur pâtisserie douce */
+}
+
+/* Soulignage animé */
+.menu-horizontal a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--article-background);
+    transition: 0.3s;
+}
+
+/* Hover = apparition du trait */
+.menu-horizontal a:hover::after {
+    width: 100%;
+}
+
+/* Page active */
+.menu-horizontal a.active {
+    color: var(--article-background);
+}
+
+.menu-horizontal a.active::after {
+    width: 100%;
+}
+
+.menu-slider {
+    position: relative;
+    width: 90%;
+    margin: 60px auto;
+    display: flex;
+    align-items: center;
+}
+
+/* Zone scrollable */
+.slider-container {
+    display: flex;
+    gap: 30px;
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Cartes menus */
+.menu-card {
+    min-width: 320px;
+    height: 200px;
+    border-radius: 20px;
+    border: 2px solid var(--main-title);
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 20px
+    z-index: 1;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.menu-title {
+    font-size: 22px;
+    margin-bottom: 0px;
+}
+
+.menu-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 60px; /* laisse de la place pour le bouton */
+}
+
+.menu-description {
+    font-size: 14px;
+    color: var(--main-title);
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 1.4;
+    max-width: 70%;
+}
+
+.menu-price {
+    font-size: 35px;
+    font-weight: bold;
+    color: var(--main-title);
+    margin-left: 15px;
+    white-space: nowrap;
+    font-family: Dancing Script;
+}
+
+/* Effet lumineux */
+.menu-card::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    z-index: -1;
+    border-radius: 25px;
+    background: radial-gradient(
+        circle,
+        var(--article-background),
+        transparent 65%
+    );
+    z-index: -1;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.menu-card:hover::before {
+    opacity: 1;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--article-background)
+}
+
+/* Flèches */
+.arrow {
+    background: white;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+
+.arrow:hover {
+    background: var(--article-background);
+}
+
+.menu-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    background-color: var(--article-background);
+    color: var(--main-title);
+    border: 1px solid var(--article-background);
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.menu-button:hover {
+    background-color: transparent;
+    color: var(--main-title);
+}
+
+#first-menu .menu-badge {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    margin-left: 40px;
+    transform: translateX(-50%);
+    background-color: var(--article-background);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 12px;
+
+    z-index: 2;
+
+    /* Animation */
+    animation: pulse 1.5s ease-in-out infinite alternate;
+}
+@keyframes pulse {
+    0% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.1);
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+}
