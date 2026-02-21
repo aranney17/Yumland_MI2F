@@ -1,44 +1,136 @@
-body>main
-body>main
-{
-	display: grid;
-	grid-template-areas:
-		"header header header"
-		"left-aside section right-aside"
-		"footer footer footer";
-	grid-template-rows: auto auto 50px;
-	grid-template-columns: 200px auto 200px;
-}
-@media screen and (max-width: 760px) { /* ne s'applique que sur les écrans dont la largeur est inférieure à 760px */
-	body>main
-	{
-		display: grid;
-		grid-template-areas:
-			"header"
-			"left-aside"
-			"section"
-			"right-aside"
-			"footer";
-		grid-template-columns: 100%;
-		grid-template-rows: 70px auto auto auto auto;
-	}
-	article
-	{
-		width: 95%;
-		border: 1px solid var(--article-background);
-		margin: 5px;
-		padding: 5px;
-	}
+body {
+    background-color: var(--main-background);
+    margin: 0;
+    font-family:"DM Serif Display";
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-main>aside.left
-{
-	grid-area: left-aside;
+header{
+    grid-area: header;
+    padding: 20px;
 	background-color: var(--main-background);
-	padding: 30px 30px 30px 30px;
+	color: var(--main-title);
+}
+
+.logo{
+    text-decoration: none;
+}
+
+@media screen and (max-width: 760px) {
+    .container{
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .sidebar{
+        width: 100%;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+        border: none;
+    }
+
+    .menu{
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 10px;
+        padding: 10px;
+        margin: 0;
+    }
+
+    .menu li{
+        flex: 0 0 auto;
+        padding: 10px 15px;
+    }
+
+    .menu::-webkit-scrollbar{
+        display: none;
+    }
+
+    .informations{
+        margin: 20px;
+    }
+}
+.container{
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+    background-color: var(--main-background);
 }
 
 
+footer{
+    background-color: var(--main-title);
+    text-align: center;
+    padding: 20px;
+    color: white;
+    width: 100%;
+    margin-top: auto;
+}
+
+.sidebar{
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    border:1px solid black;
+    padding: 20px;
+    margin: 40px;
+    border-radius: 10px;
+}
+
+.menu {
+    line-height: 200%;
+    list-style: none;
+}
+
+.menu ul{
+    flex: 1;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.menu li{
+    padding: 10px;
+    cursor: pointer;
+}
+
+.menu li:hover{
+    text-decoration-line: underline;
+}
+
+.logout{
+    margin-top: auto;
+    color: white;
+    font-weight: bold;
+    background-color: var(--article-background);
+    text-transform: uppercase;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.logout:hover{
+    background-color: var(--main-title);
+}
+
+.informations {
+flex: 1;
+padding: 20px;
+margin: 30px;
+border:1px solid black;
+border-radius: 10px;
+line-height: 400%;
+}
+
+.title{
+    text-align: center;
+    font-size: 150%;
+    text-transform: uppercase;
+}
 
 .barres {
     position: fixed;
@@ -106,34 +198,7 @@ h3{
     text-align: center;
 }
 
-body>main>header
-{
-	grid-area: header;
-	background-color: var(--main-background);
-	color: var(--main-title);
-}
-
-main>aside.right
-{
-	grid-area: right-aside;
-	border-left: 1px solid var(--main-title);
-	background-color: var(--main-background);
-	text-align: center;
-}
-main>section
-{
-	grid-area: section;
-	min-height: 600px;
-	background-color: var(--main-background);
-}
-main>footer
-{
-	grid-area: footer;
-	background-color: var(--main-title);
-    text-align: center;
-    color: white;
-}
-
-p.perso{
-	line-height: 200%;
+.menu{
+    margin-top: 20px;
+    
 }
