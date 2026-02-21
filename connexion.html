@@ -9,48 +9,59 @@
 </head>
 
 <body>
-	<div class="barres">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
 
+    <header>
+        <div class="barres">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>    
+        <h1>Pâtisserie</h1>   
+        <div class="top-icons">
+            
+            <!-- PROFIL -->
+            <div class="profil-menu">
+                <img src="images/Iconprofil.png" alt="Profil" class="icon">
+                <div class="profil-bulle">
+                    <a href="inscription.html">Inscription</a>
+                    <a href="connexion.html">Connexion</a>
+                </div>
+            </div>
 
+            <!-- PANIER -->
+            <a href="">
+                <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
+            </a>
+        </div>
+    </header>
     
-    <h1>Pâtisserie</h1>
-    
-    <div class="top-icons">
-        <a href=""> <img src="images/Iconprofil.png" alt="Profil" class="icon"> </a>
-        <a href=""> <img src="images/Iconpanier.png" alt="Panier" class="icon"> </a>
-    </div>
-    
-    <section>
+    <main>
         <form action="page1.php" method="POST">
             <fieldset>
                 <legend>Connexion</legend>
-                <div class="input">
+                <div class="champ">
                     E-mail *
                     <br />
-                    <input type="email" name="mail"  />
+                    <input type="email" id="mail" name="mail" placeholder="nom@email.com"  />
                 </div>
-                <div class="input" >
+                <div class="champ" >
                     Mot de passe *
                     <br />
-                    <input type="password"  name="mdp" id="password"  />
+                    <input type="password"  id="mdp" name="mdp" id="password"  />
                     <img src="images/oeil.png" alt="Afficher mot de passe">
                 </div>
-                <a id="mdpoublie" href="motdepasse.html">Mot de passe oublié ?</a>
+                <a class="lien" href="mdpoublie.html">Mot de passe oublié ?</a>
                 <br />
                 <input class="bouton" type="submit" value="ME CONNECTER"/>
             </fieldset>
         </form> 
-        <p>
+        <p class="connexion">
             Vous n'êtes toujours pas client chez nous? 
             <br />
             Créez un compte en quelques clics pour profiter pleinement des avantages du site
         </p>
-        <a class="bouton" href="inscription.html">CREER UN COMPTE</a>
-    </section>    
+        <a class="bouton" href="inscription.html">CRÉER UN COMPTE</a>
+    </main>    
     <footer>
         <p>suivez nous sur nos réseaux!
             </br>
@@ -58,8 +69,8 @@
                 <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
                 <img src="images/Icontwitter.png" alt="twitter" class="icon">
         </p>
-        <div class="infos-footer">
 
+        <div class="infos-footer">
             <div class="info">
                 <img src="images/Iconlocalisation.png" alt="maps" class="icon">
                 <span>5 avenue de la république, 75015 Paris</span>
@@ -72,10 +83,7 @@
         </div>
         <h5>© 2026 Pâtisserie</h5>
     </footer>
-   
+
 </body>
 
 </html>
-
-</html>
-
