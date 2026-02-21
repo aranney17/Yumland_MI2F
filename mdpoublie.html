@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="connexion.css">
+ 	<link rel="stylesheet" href="couleurs.css">
+	<title>Mot de passe oublié</title>
+</head>
+
+<body>
+
+	<header>
+        <div class="barres">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>    
+        <h1>Pâtisserie</h1>   
+        <div class="top-icons">
+            
+            <!-- PROFIL -->
+            <div class="profil-menu">
+                <img src="images/Iconprofil.png" alt="Profil" class="icon">
+                <div class="profil-bulle">
+                    <a href="inscription.html">Inscription</a>
+                    <a href="connexion.html">Connexion</a>
+                </div>
+            </div>
+
+            <!-- PANIER -->
+            <a href="">
+                <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <h2>Mot de passe oublié ?</h2>
+        <form action="page3.php" method="POST">
+            <fieldset>
+                <div class="champ">
+                    E-mail 
+                    <br />
+                    <input type="email" name="mail" placeholder="nom@email.com"  />
+                </div>
+                <input class="bouton" type="submit" value="ENVOYER UN LIEN RÉINITIALISATION"/>
+            </fieldset>
+        </form>
+    </main>
+
+    <footer>
+        <p>suivez nous sur nos réseaux!
+            </br>
+                <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
+                <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
+                <img src="images/Icontwitter.png" alt="twitter" class="icon">
+        </p>
+        <div class="infos-footer">
+
+            <div class="info">
+                <img src="images/Iconlocalisation.png" alt="maps" class="icon">
+                <span>5 avenue de la république, 75015 Paris</span>
+            </div>
+
+            <div class="info">
+                <img src="images/Iconhorloge.png" alt="horloge" class="icon">
+                <span>Tous les jours 9h - 20h</span>
+            </div>
+        </div>
+        <h5>© 2026 Pâtisserie</h5>
+    </footer>
+
+</body>
+</html>
