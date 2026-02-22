@@ -2,7 +2,6 @@
 header{
     grid-area: header;
     padding: 20px;
-	background-color: var(--main-background);
 	color: var(--main-title);
 }
 
