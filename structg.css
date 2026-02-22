@@ -3,6 +3,11 @@ header {
     position: relative;
 }
 
+.logo{
+    text-decoration: none;
+}
+
+
 .barres {
     position: fixed;
     top: 20px;
@@ -20,11 +25,12 @@ header {
     border-radius: 2px;
 }
 
-h1{
-	font-family: "Dancing Script", cursive;
-	margin-top: 20px;
-    font-size: 50px; 
+
+h1.maintitle{
+    color: var(--main-title);
+    font-family: "Dancing Script", cursive;
     text-align: center;
+    margin-top: 20px;
 }
 
 .top-icons {
