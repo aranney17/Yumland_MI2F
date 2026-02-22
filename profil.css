@@ -123,7 +123,7 @@ padding: 20px;
 margin: 30px;
 border:1px solid black;
 border-radius: 10px;
-line-height: 400%;
+line-height: 200%;
 }
 
 .title{
@@ -197,6 +197,18 @@ h2{
 h3{
     text-align: center;
 }
+
+.block{
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.inline{
+    display:inline-block; 
+    margin-right: 200px;
+    margin-bottom: 10px;
+}
+
 
 .menu{
     margin-top: 20px;
