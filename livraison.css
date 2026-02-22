@@ -1,0 +1,118 @@
+body {
+    background-color: var(--main-background);
+    margin: 0;
+    font-family:"DM Serif Display";
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-x:hidden;
+}
+
+footer{
+    background-color: var(--main-title);
+    text-align: center;
+    padding: 15px;
+    color: white;
+    width: 100%;
+    margin-top: auto;
+}
+
+
+h1 {
+    color: var(--main-title);
+    font-family: "Dancing Script", cursive;
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+h2 {
+    color: var(--article-background);
+}
+
+
+/* Conteneur mobile */
+.container {
+    padding: 20px;
+}
+
+/* Carte commande */
+.commande-card {
+    background: var(--main-background);
+    border-radius: 14px;
+    border: 2px solid var(--main-title);
+    margin-top: 15px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    transition: 
+    0.3s ease transform,
+    0.2s ease,
+    border-color 0.3s ease;
+}
+
+/* Effet lumière hover */
+.commande-card:hover {
+    box-shadow:
+        0 0 10px var(--article-background),
+        0 0 25px var(--article-background),
+        0 0 40px var(--article-background);
+}
+
+/* Texte */
+.ref {
+    color: var(--article-background);
+    margin-bottom: 15px;
+}
+
+.adresse:hover {
+    text-decoration: underline;
+}
+/* Adresse avec icône */
+.adresse {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #0E4A80;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+/* Taille du logo maps */
+.map-icon {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+/* Bloc infos */
+.infos p {
+    margin: 6px 0;
+    color: var(--main-title);
+}
+
+/* Bouton livraison */
+.finish-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+
+    border-radius: 12px;
+    border: 2px solid var(--article-background);
+
+    background: var(--article-background);
+    color: var(--main-title);
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover bouton = fond disparaît */
+.finish-btn:hover {
+    background: transparent;
+    color: var(--main-title);
+}
