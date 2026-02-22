@@ -16,6 +16,7 @@ header{
 
 .logo{
     text-decoration: none;
+    color: var(--main-title);
 }
 
 footer{
