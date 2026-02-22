@@ -152,3 +152,52 @@ h3{
     margin-bottom: 10px;
 }
 
+.produit {
+    width: 30%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+/* image produit */
+.produit > a > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position:center;
+    border-radius: 0px;
+    transition: 0.3s ease;
+}
+
+.produit:hover > a > img {
+    box-shadow:
+        0 0 10px var(--article-background),
+        0 0 20px var(--article-background),
+        0 0 35px var(--article-background);
+    transform: scale(1.03);
+}
+
+/* zone texte + panier */
+.produit-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.prix {
+    color: var(--article-price);
+}
+
+/* icône panier */
+.icon-panier {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
