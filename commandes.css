@@ -15,62 +15,6 @@ body{
   flex-direction: column;
 }
 
-
-/*----------header---------*/
-.barres {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 35px;
-    cursor: pointer;
-    z-index: 1000;
-}
-
-.barres span {
-    display: block;
-    height: 3px;
-    background: var(--main-title);
-    margin: 6px 0;
-    border-radius: 2px;
-}
-
-h1{
-	font-family: "Dancing Script", cursive;
-	margin-top: 20px;
-    font-size: 50px; 
-    text-align: center;
-}
-
-.top-icons {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 15px;
-    z-index: 1000;
-}
-
-/* conteneur profil */
-.profil-menu {
-    position: relative;
-}
-
-/* apparition */
-.profil-menu:hover {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.icon#panier {
-    width: 53px;
-    height: 53px;
-    cursor: pointer;
-}
-/*---------------*/
-
-
-
 /*----------main---------*/
 main{
     margin: 100px 0;
@@ -147,35 +91,4 @@ tr.ligne:hover {
     display: inline-block;
     background: #e4e0ff;
     color: #5b4bdb;
-}
-
-/*----------footer---------*/
-.infos-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px; 
-}
-
-.info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-footer{
-    background-color: var(--main-title);
-    text-align: center;
-    padding: 15px;
-    color: white;
-    width: 100%;
-    margin-top: auto;
-}
-/*---------------*/
-
-/* icone du header et du footer */
-.icon {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
 }
