@@ -84,11 +84,6 @@ tr.ligne:hover {
 }
 
 .preparation {
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 15px;
-    font-weight: bold;
-    display: inline-block;
     background: #e4e0ff;
     color: #5b4bdb;
 }
