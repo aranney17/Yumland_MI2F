@@ -1,98 +1,22 @@
+/* tous les éléments */
 *{
-	margin: 0;
+  margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 }
 
 body{
 	background-color: var(--main-background);
 	font-family:"DM Serif Display";
 	font-size: 20px;
-    color: var(--main-title);
-    min-height:100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-h1{
-	font-family: "Dancing Script", cursive;
-	margin: 20px 0 50px 0;
-    font-size: 50px; 
-    text-align: center;
-}
-
-h2{
-    max-width: 1200px;
-    margin: 0 auto 20px auto;
-}
-
-section {
-  max-width: 100%;
-  margin: 20px auto;
-  background: white;
-  padding: 5px 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px var(--article-background);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 800px;
-}
-
-th, td{
-    padding: 15px 20px;
-}
-
-th {
-  text-align: left;
-}
-
-td {
-  border-top: 2px solid var(--main-title);
-  vertical-align: middle;
-}
-
-tr.ligne:hover {
-  background: #E7E7E7;
-}
-
-.bouton-details {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.fleche {
-  width: 20px;
-  height: 20px;
-}
-
-.case {
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-size: 15px;
-  font-weight: bold;
-  display: inline-block;
-}
-.payee,.livraison {
-  background: #d9f2ea;
-  color: #1f8f6f;
-}
-
-.preparation {
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-size: 15px;
-  font-weight: bold;
-  display: inline-block;
-  background: #e4e0ff;
-  color: #5b4bdb;
+  color: var(--main-title);
+  min-height:100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 
+/*----------header---------*/
 .barres {
     position: fixed;
     top: 20px;
@@ -110,8 +34,15 @@ tr.ligne:hover {
     border-radius: 2px;
 }
 
+h1{
+	font-family: "Dancing Script", cursive;
+	margin-top: 20px;
+    font-size: 50px; 
+    text-align: center;
+}
+
 .top-icons {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
     display: flex;
@@ -119,14 +50,106 @@ tr.ligne:hover {
     z-index: 1000;
 }
 
-.icon {
-    margin-top: 10px;
-    width: 30px;
-    height: 30px;
+/* conteneur profil */
+.profil-menu {
+    position: relative;
+}
+
+/* apparition */
+.profil-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.icon#panier {
+    width: 53px;
+    height: 53px;
+    cursor: pointer;
+}
+/*---------------*/
+
+
+
+/*----------main---------*/
+main{
+    margin: 100px 0;
+}
+
+h2{
+    max-width: 1200px;
+    margin: 20px 10px;
+}
+
+section {
+    max-width: 100%;
+    margin: 20px 10px;
+    background: white;
+    padding: 5px 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px var(--article-background);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+th, td{
+    padding: 15px 20px;
+}
+
+th {
+    text-align: left;
+}
+
+td {
+    border-top: 2px solid var(--main-title);
+    vertical-align: middle;
+}
+
+tr.ligne:hover {
+    background: #E7E7E7;
+}
+
+.bouton-details {
+    background: none;
+    border: none;
     cursor: pointer;
 }
 
+.fleche {
+    width: 20px;
+    height: 20px;
+}
 
+.case {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.payee,.livraison {
+    background: #d9f2ea;
+    color: #1f8f6f;
+}
+
+.preparation {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    display: inline-block;
+    background: #e4e0ff;
+    color: #5b4bdb;
+}
+
+/*----------footer---------*/
 .infos-footer {
     display: flex;
     justify-content: center;
@@ -140,18 +163,19 @@ tr.ligne:hover {
     gap: 10px;
 }
 
-
 footer{
     background-color: var(--main-title);
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     color: white;
     width: 100%;
     margin-top: auto;
 }
+/*---------------*/
 
-@media screen and (max-width: 1500px) {
-  section {
-    margin: 20px 10px;
-  }
+/* icone du header et du footer */
+.icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
 }
