@@ -7,25 +7,33 @@
     <link rel="stylesheet" href="couleurs.css">
     <title>Commandes</title>
 </head>
+
 <body>
-    <div class="barres">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
 
+    <header>
+        <div class="barres">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>    
+        <h1>Pâtisserie</h1>   
+        <div class="top-icons">
 
-    
-    <h1>Pâtisserie</h1>
-    
-    <div class="top-icons">
-        <a href=""> <img src="images/Iconprofil.png" alt="Profil" class="icon"> </a>
-        <a href=""> <img src="images/Iconpanier.png" alt="Panier" class="icon"> </a>
-    </div>
+            <!-- PROFIL -->
+            <div class="profil-menu">
+                <img src="images/Iconprofil.png" alt="Profil" class="icon">
+            </div>
+
+            <!-- PANIER -->
+            <a href="">
+                <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
+            </a>
+        </div>
+    </header>
   
-  
-    <h2>Commandes</h2>
-    <section>
+    <main>
+        <h2>Commandes</h2>
+        <section>
             <table>
                 <tr>
                     <th>Date</th>
@@ -49,7 +57,6 @@
                         </button>
                     </td>
                 </tr>
-
                 <tr class="ligne">
                     <td>23 déc. 2025</td>
                     <td>BFRTJKL0006</td>
@@ -64,28 +71,30 @@
                     </td>
                 </tr>
             </table>
-    </section>
+        </section>
+    </main>
+
     <footer>
-            <p>suivez nous sur nos réseaux!
-                </br>
-                    <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
-                    <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
-                    <img src="images/Icontwitter.png" alt="twitter" class="icon">
-            </p>
-            <div class="infos-footer">
+        <p>suivez nous sur nos réseaux!
+            </br>
+                <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
+                <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
+                <img src="images/Icontwitter.png" alt="twitter" class="icon">
+        </p>
 
-                <div class="info">
-                    <img src="images/Iconlocalisation.png" alt="maps" class="icon">
-                    <span>5 avenue de la république, 75015 Paris</span>
-                </div>
-
-                <div class="info">
-                    <img src="images/Iconhorloge.png" alt="horloge" class="icon">
-                    <span>Tous les jours 9h - 20h</span>
-                </div>
+        <div class="infos-footer">
+            <div class="info">
+                <img src="images/Iconlocalisation.png" alt="maps" class="icon">
+                <span>5 avenue de la république, 75015 Paris</span>
             </div>
-            <h5>© 2026 Pâtisserie</h5>
-        </footer>
+
+            <div class="info">
+                <img src="images/Iconhorloge.png" alt="horloge" class="icon">
+                <span>Tous les jours 9h - 20h</span>
+            </div>
+        </div>
+        <h5>© 2026 Pâtisserie</h5>
+    </footer>
   
 </body>
 </html>
