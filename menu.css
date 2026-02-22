@@ -128,7 +128,7 @@ h2 {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    padding: 20px
+    padding: 20px;
     z-index: 1;
     cursor: pointer;
     transition: 0.3s;
