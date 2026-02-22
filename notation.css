@@ -1,5 +1,10 @@
 body {
-  margin: 0;
+    background-color: var(--main-background);
+    margin: 0;
+    font-family:"DM Serif Display";
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 section {
@@ -32,6 +37,7 @@ section {
   margin-bottom: 10px;
 }
 
+/* Étoiles */
 .rating {
   display: flex;
   flex-direction: row-reverse;
@@ -52,13 +58,14 @@ section {
 
 .rating label:hover,
 .rating label:hover ~ label {
-  color: #d63384;
+  color: var(--article-background);
 }
 
 .rating input:checked ~ label {
-  color: #d63384;
+  color: var(--article-background);
 }
 
+/* Commentaires */
 textarea {
   width: 100%;
   min-height: 70px;
@@ -68,12 +75,13 @@ textarea {
   resize: vertical;
 }
 
+/* Bouton */
 button {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background: #d63384;
+  background: var(--article-background);
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -81,5 +89,6 @@ button {
 }
 
 button:hover {
-  background: #b0256a;
+  background: var(--main-title);
 }
+
