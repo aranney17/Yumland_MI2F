@@ -9,121 +9,8 @@ body {
     overflow-x:hidden;
 }
 
-footer{
-    background-color: var(--main-title);
-    text-align: center;
-    padding: 15px;
-    color: white;
-    width: 100%;
-    margin-top: auto;
-}
-
-
-h1 {
-    color: var(--main-title);
-    font-family: "Dancing Script", cursive;
-    text-align: center;
-    margin-top: 20px;
-}
-
-
 h2 {
     color: var(--article-background);
-}
-
-.barres {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 35px;
-    cursor: pointer;
-    z-index: 1000;
-}
-
-.barres span {
-    display: block;
-    height: 3px;
-    background: var(--main-title);
-    margin: 6px 0;
-    border-radius: 2px;
-}
-
-.top-icons {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 15px;
-    z-index: 1000;
-    
-}
-
-/* conteneur profil */
-.profil-menu {
-    position: relative;
-}
-
-/* liens */
-.profil-bulle a {
-    display: block;
-    padding: 10px 18px;
-    text-decoration: none;
-    color: black;
-    font-size: 14px;
-}
-
-.profil-bulle a:hover {
-    background: var(--article-background);
-}
-
-/* bulle cachée */
-.profil-bulle {
-    position: absolute;
-    top: 50px;
-    right: 0;
-
-    background: white;
-    border-radius: 12px;
-    min-width: 160px;
-    padding: 10px 0;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: 0.25s ease;
-}
-
-/* apparition */
-.profil-menu:hover .profil-bulle {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.infos-footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px; 
-}
-
-.info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-    
-.icon {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-}
-.icon#panier {
-    width: 53px;
-    height: 53px;
-    cursor: pointer;
 }
 
 .search-bar {
@@ -184,7 +71,7 @@ h2 {
 
 /* Effet hover */
 .menu-horizontal a:hover {
-    color: var(--article-background); /* couleur pâtisserie douce */
+    color: var(--article-background);
 }
 
 /* Soulignage animé */
