@@ -1,12 +1,31 @@
-/*----------header---------*/
-header {
-    position: relative;
+body {
+    background-color: var(--main-background);
+    margin: 0;
+    font-family:"DM Serif Display";
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    grid-area: header;
+    padding: 20px;
+	background-color: var(--main-background);
+	color: var(--main-title);
 }
 
 .logo{
     text-decoration: none;
 }
 
+footer{
+    background-color: var(--main-title);
+    text-align: center;
+    padding: 20px;
+    color: white;
+    width: 100%;
+    margin-top: auto;
+}
 
 .barres {
     position: fixed;
@@ -25,16 +44,8 @@ header {
     border-radius: 2px;
 }
 
-
-h1.maintitle{
-    color: var(--main-title);
-    font-family: "Dancing Script", cursive;
-    text-align: center;
-    margin-top: 20px;
-}
-
 .top-icons {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     display: flex;
@@ -42,58 +53,13 @@ h1.maintitle{
     z-index: 1000;
 }
 
-/* conteneur profil */
-.profil-menu {
-    position: relative;
-}
-
-/* liens */
-.profil-bulle a {
-    display: block;
-    padding: 10px 18px;
-    text-decoration: none;
-    color: black;
-    font-size: 14px;
-}
-
-.profil-bulle a:hover {
-    background: var(--article-background);
-}
-
-/* bulle cachée */
-.profil-bulle {
-    position: absolute;
-    top: 50px;
-    right: 0;
-
-    background: white;
-    border-radius: 12px;
-    min-width: 160px;
-    padding: 10px 0;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: 0.25s ease;
-}
-
-/* apparition */
-.profil-menu:hover .profil-bulle {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.icon#panier {
-    width: 53px;
-    height: 53px;
+.icon {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
 }
-/*---------------*/
 
-/*----------footer---------*/
 .infos-footer {
     display: flex;
     justify-content: center;
@@ -106,20 +72,25 @@ h1.maintitle{
     align-items: center;
     gap: 10px;
 }
-
-footer{
-    background-color: var(--main-title);
-    text-align: center;
-    padding: 15px;
-    color: white;
-    width: 100%;
-    margin-top: auto;
-}
-/*---------------*/
-
-/* icone du header et du footer */
+    
 .icon {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
+}
+
+h1.maintitle{
+    color: var(--main-title);
+    font-family: "Dancing Script", cursive;
+    text-align: center;
+    margin-top: 20px;
+}
+h1{
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+h3{
+    text-align: center;
 }
