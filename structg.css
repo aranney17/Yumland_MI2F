@@ -1,4 +1,11 @@
 /*----------header---------*/
+header{
+    grid-area: header;
+    padding: 20px;
+	background-color: var(--main-background);
+	color: var(--main-title);
+}
+
 .barres {
     position: fixed;
     top: 20px;
@@ -19,8 +26,13 @@
 h1{
 	font-family: "Dancing Script", cursive;
 	margin-top: 20px;
-    font-size: 50px; 
     text-align: center;
+}
+
+
+.logo{
+    text-decoration: none;
+    color: var(--main-title);
 }
 
 .top-icons {
