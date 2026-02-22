@@ -1,39 +1,72 @@
-.utilisateurs{
-    flex: 1;
-    padding: 20px;
+
+/* tous les éléments */
+*{
+  margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-button{
-    background-color: var(--article-background);
+body{
+	background-color: var(--main-background);
+	font-family:"DM Serif Display";
+	font-size: 20px;
+  color: var(--main-title);
+  min-height:100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-table{
+main{
+    margin: 100px 0;
+}
+
+h2{
+    max-width: 1200px;
+    margin: 20px 10px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.deconnexion{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--main-title);
+    margin: 15px;
+}
+
+section {
+    max-width: 100%;
+    margin: 20px 10px;
+    background: white;
+    padding: 5px 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px var(--article-background);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    min-width: 800px;
 }
 
 th, td{
-    border: 1px solid black;
-    padding: 10px;
+    padding: 15px 20px;
+}
+
+th {
     text-align: left;
 }
 
-th{
-    text-align: center;
-    background-color: var(--article-background);
+td {
+    border-top: 2px solid var(--main-title);
+    vertical-align: middle;
 }
 
-.logout{
-    margin: 10px 560px;
-    color: white;
-    font-weight: bold;
-    background-color: var(--article-background);
-    text-transform: uppercase;
-    text-align: center;
-    padding: 10px 0;
+tr.ligne:hover {
+    background: #E7E7E7;
 }
 
-.logout:hover{
-    background-color: var(--main-title);
-}
