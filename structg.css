@@ -1,4 +1,8 @@
 /*----------header---------*/
+header {
+    position: relative;
+}
+
 .barres {
     position: fixed;
     top: 20px;
