@@ -325,3 +325,84 @@ h2 {
     object-fit: contain;
     display: block;
 }
+
+/*css specifique a presentation.html*/
+.menu-horizontal {
+    width: 100%;
+    border-bottom: 2px solid #eee;
+    background-color: white;
+}
+
+.menu-horizontal ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 15px 0;
+    margin: 0;
+}
+
+.menu-horizontal a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #555;
+    padding-bottom: 8px;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* Effet hover */
+.menu-horizontal a:hover {
+    color: var(--article-background);
+}
+
+/* Soulignage animé */
+.menu-horizontal a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--article-background);
+    transition: 0.3s;
+}
+
+/* Hover = apparition du trait */
+.menu-horizontal a:hover::after {
+    width: 100%;
+}
+
+/* Page active */
+.menu-horizontal a.active {
+    color: var(--article-background);
+}
+
+.menu-horizontal a.active::after {
+    width: 100%;
+}
+
+/* bouton retour en haut (n'apparait pas car utilise javascript)*/
+#btn-top {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--main-title);
+    color: white;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 1000;
+}
+
+#btn-top:hover {
+    background-color: var(--article-background);
+}
+
