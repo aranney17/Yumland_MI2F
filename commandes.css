@@ -24,66 +24,51 @@ h2{
     margin: 20px 10px;
 	text-align: center;
 }
-
-section {
-    max-width: 100%;
-    margin: 20px 10px;
-    background: white;
-    padding: 5px 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px var(--article-background);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+.commande-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 800px;
+.commandes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
+    justify-content: center; /* centre les cartes */
+    gap: 20px;
+    padding: 20px;
 }
 
-th, td{
-    padding: 15px 20px;
-}
-
-th {
-    text-align: left;
-}
-
-td {
-    border-top: 2px solid var(--main-title);
-    vertical-align: middle;
-}
-
-tr.ligne:hover {
-    background: #E7E7E7;
-}
-
-.bouton-details {
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.fleche {
-    width: 20px;
-    height: 20px;
-}
-
-.case {
-    padding: 5px 15px;
+.commande-case {
+    background-color: white;
+    border: 2px solid var(--main-title);
+    border-radius: 14px;
+    margin-top: 15px;
     border-radius: 20px;
-    font-size: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+
+.numero {
+    background-color: var(--main-title);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.prix {
+    color: green;
     font-weight: bold;
-    display: inline-block;
 }
 
-.payee,.livraison {
-    background: #d9f2ea;
-    color: #1f8f6f;
-}
-
-.preparation {
-    background: #e4e0ff;
-    color: #5b4bdb;
-}
+button{
+        border: 2px double var(--article-background);
+        border-radius: 25px;
+        padding: 10px;
+        background-color: var(--article-background);
+        font-size: 15px;
+        font-family:"DM Serif Display";
+        color: var(--main-title);
+        cursor: pointer;
+    }
