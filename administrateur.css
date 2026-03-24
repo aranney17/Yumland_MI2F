@@ -17,7 +17,7 @@ body{
 }
 
 main{
-    margin: 100px 0;
+    margin: 50px 0;
 }
 
 h2{
@@ -76,6 +76,7 @@ tr.ligne:hover {
     background: white;
     border: 1px solid var(--article-background);
     border-radius: 15px;
+    width: 100px;
 }
 
 .filtre img{
@@ -87,6 +88,7 @@ tr.ligne:hover {
     display: flex;
     justify-content: center;
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 
@@ -115,7 +117,57 @@ tr.ligne:hover {
     height: 23px;
 }
 
-tr.ligne:hover {
-    background: #E7E7E7;
+.menu-horizontal {
+    width: 100%;
+    border-bottom: 2px solid #eee;
+    background-color: white;
 }
 
+.menu-horizontal ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 15px 0;
+    margin: 0;
+}
+
+.menu-horizontal a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #555;
+    padding-bottom: 8px;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* Effet hover */
+.menu-horizontal a:hover {
+    color: var(--article-background);
+}
+
+/* Soulignage animé */
+.menu-horizontal a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--article-background);
+    transition: 0.3s;
+}
+
+/* Hover = apparition du trait */
+.menu-horizontal a:hover::after {
+    width: 100%;
+}
+
+/* Page active */
+.menu-horizontal a.active {
+    color: var(--article-background);
+}
+
+.menu-horizontal a.active::after {
+    width: 100%;
+}
