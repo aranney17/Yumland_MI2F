@@ -80,16 +80,29 @@ body::before{
     /* ------------------------------------- */
 
     /* ---page de connexion et inscription--- */
-    input[type="password"]{
-        padding-right: 40px;
+    .champ {
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .champ input[type="password"]{
+        padding-right: 45px;
     }
 
-    fieldset img{
+    .champ small {
+        display: block;
+        margin-top: 5px;
+        font-size: 13px;
+        color: red;
+    }
+
+    .champ img {
         position: absolute;
-        right: 10px;
-        top: 60%;
-        width: 25px;
+        right: 15px;
+        top: 33px;  /* Valeur fixe au lieu de 50% */
+        width: 22px;
+        height: 22px;
         cursor: pointer;
+        z-index: 10;
     }
 
     .lien{
@@ -161,4 +174,5 @@ body::before{
     }
     /* ------------------------------------- */
 /*------------------------*/
+
 
