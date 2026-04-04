@@ -28,6 +28,11 @@ h1{
     text-align: center;
 }
 
+#prod{
+	   text-align:left;
+	   font-size:60px;
+    color: var(--main-title);
+}
 
 .logo{
     text-decoration: none;
