@@ -86,7 +86,7 @@
 
         if (empty($erreur)) {
             // Ouverture du fichier en écriture (ajout à la fin)
-            $infoclient = fopen("infoclient.txt", "a");
+            $infoclient = fopen("infoclient.json", "a");
             
             // Construction de la ligne avec les infos séparées par des espaces
             // Format: civilite prenom nom anniv tel adresse mail mdp role
