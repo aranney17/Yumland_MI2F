@@ -19,37 +19,6 @@ h2 {
     object-fit: cover;
 }
 
-.search-bar {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-
-.search-bar input {
-    width: 300px;
-    padding: 10px;
-    border: 1px solid var(--article-background);
-    border-radius: 20px 0 0 20px;
-    outline: none;
-    font-size: 1rem;
-}
-
-.search-bar button {
-    padding: 8px 12px;
-    border: 1px solid var(--article-background);
-    background-color: var(--article-background);
-    border-radius: 0 20px 20px 0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-bar button img {
-    width: 25px;
-    height: 23px;
-}
 
 /* menu horizontale */
 .categories {
@@ -326,61 +295,61 @@ h2 {
     display: block;
 }
 
-/*css specifique a presentation.html*/
-.menu-horizontal {
-    width: 100%;
-    border-bottom: 2px solid #eee;
-    background-color: white;
-}
-
-.menu-horizontal ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    padding: 15px 0;
-    margin: 0;
-}
-
-.menu-horizontal a {
-    text-decoration: none;
-    font-size: 18px;
-    color: #555;
-    padding-bottom: 8px;
+.panier-menu {
     position: relative;
-    transition: 0.3s;
 }
 
-/* Effet hover */
-.menu-horizontal a:hover {
-    color: var(--article-background);
-}
-
-/* Soulignage animé */
-.menu-horizontal a::after {
-    content: "";
+.panier-bulle {
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0%;
-    height: 2px;
-    background-color: var(--article-background);
-    transition: 0.3s;
+    bottom: 45px;
+    left: 70%; /* collé à droite du panier */
+
+    background: #5c3a21;
+    color: white;
+    border-radius: 12px;
+    padding: 15px;
+    width: 180px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: 0.25s ease;
 }
 
-/* Hover = apparition du trait */
-.menu-horizontal a:hover::after {
+/* apparition au hover */
+.panier-menu:hover .panier-bulle {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+/* style interne */
+.panier-bulle input,
+.panier-bulle select {
     width: 100%;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
 }
 
-/* Page active */
-.menu-horizontal a.active {
-    color: var(--article-background);
-}
-
-.menu-horizontal a.active::after {
+.panier-bulle button {
     width: 100%;
+    background: white;
+    color: #5c3a21;
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
 }
+
+.panier-bulle button:hover {
+    background: #eee;
+}
+
 
 /* bouton retour en haut (n'apparait pas car utilise javascript)*/
 #btn-top {
