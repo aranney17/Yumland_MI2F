@@ -1,5 +1,5 @@
 <?php
-$json = file_get_contents("commandes.json");
+$json = file_get_contents("data/commandes.json");
 $commandes = json_decode($json, true);
 ?>
 
@@ -69,7 +69,7 @@ $commandes = json_decode($json, true);
 
     <td><?= $commande['reference'] ?></td>
 
-    <td><?= $commande['client'] ?></td>
+    <td><?= $commande['prenom'] ?></td>
 
     <td><?= number_format($commande['montant'], 2, ',', ' ') ?> €</td>
 
@@ -146,3 +146,4 @@ $commandes = json_decode($json, true);
     </footer>
 </body>
 </html>
+
