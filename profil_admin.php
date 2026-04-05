@@ -1,12 +1,12 @@
 <?php
-// 1️⃣ Charger les utilisateurs depuis le JSON
-$json = file_get_contents("infoclient.json");
+//Charger les utilisateurs depuis le JSON
+$json = file_get_contents("data/infoclient.json");
 $utilisateurs = json_decode($json, true);
 
-// 2️⃣ Récupérer l'ID passé dans l'URL
+// Récupérer l'ID passé dans l'URL
 $id = $_GET['id'] ?? null; // si aucun id, null
 
-// 3️⃣ Chercher l'utilisateur correspondant
+// Chercher l'utilisateur correspondant
 $userTrouve = null;
 if ($id !== null) {
     foreach ($utilisateurs as $user) {
@@ -53,11 +53,7 @@ if ($id !== null) {
 <aside class="sidebar">
     <ul class="menu">
         <li><a href="profil_admin.php?id=<?= $id ?>">Informations</a></li>
-        <li>Adresses</li>
         <li><a href="profil2_admin.php?id=<?= $id ?>">Historique de commandes</a></li>
-        <li>Points</li>
-        <li>Avoirs</li>
-        <li>Bons de réductions</li>
         <li>Données personnelles</li>
     </ul>
     <br>
