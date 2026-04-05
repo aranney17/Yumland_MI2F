@@ -12,6 +12,8 @@
 <body>
 
     <?php
+        session_start(); // ✅ Démarrage de la session
+
         $erreur = [];
         
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -25,9 +27,8 @@
             }
             
             if (empty($erreur)) {
-                $mail = $_POST["mail"];
+                $mail = htmlspecialchars($_POST["mail"]);
                 $mdp = $_POST["mdp"];
-                $mdp_hash = md5($mdp);
                 
                 // Lire le fichier JSON
                 $fichier = "infoclient.json";
@@ -35,25 +36,32 @@
                 $utilisateurTrouve = null;
                 
                 if (file_exists($fichier)) {
-                    // Lire tout le contenu du fichier
                     $contenu = file_get_contents($fichier);
                     $utilisateurs = json_decode($contenu, true);
                     
-                    // Parcourir le tableau d'utilisateurs
                     if (is_array($utilisateurs)) {
                         foreach ($utilisateurs as $utilisateur) {
-                            if ($utilisateur && $utilisateur["mail"] == $mail && $utilisateur["mdp"] == $mdp_hash) {
-                                $connecte = true;
-                                $utilisateurTrouve = $utilisateur;
-                                break;
+                            if ($utilisateur && $utilisateur["mail"] == $mail) {
+                                // ✅ password_verify compare le mdp saisi avec le hash stocké
+                                if (password_verify($mdp, $utilisateur["mdp"])) {
+                                    $connecte = true;
+                                    $utilisateurTrouve = $utilisateur;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
                 
                 if ($connecte) {
-                    // Connexion réussie
-                    header("Location: accueil.html");
+                    // ✅ Stocker les infos utiles en session
+                    $_SESSION["connecte"] = true;
+                    $_SESSION["id"] = $utilisateurTrouve["id"];
+                    $_SESSION["mail"] = $utilisateurTrouve["mail"];
+                    $_SESSION["nom"] = $utilisateurTrouve["nom"] ?? ""; // si tu as ce champ
+
+                    // ✅ Redirection vers l'accueil (corrigé : guillemets autour de l'id)
+                    header("Location: accueil.php");
                     exit();
                 } else {
                     $erreur["mail"] = "E-mail ou mot de passe incorrect";
@@ -74,17 +82,13 @@
             <h1><a href="accueil.html" class="logo">La Cour des Délices</a></h1>
     
             <div class="top-icons">
-                <!-- PROFIL -->
                 <div class="profil-menu">
                     <img src="images/Iconprofil.png" alt="Profil" class="icon">
-
                     <div class="profil-bulle">
                         <a href="inscription.html">Inscription</a>
                         <a href="connexion.html">Connexion</a>
                     </div>
                 </div>
-
-                <!-- PANIER -->
                 <a href="">
                 <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
                 </a>
@@ -101,10 +105,10 @@
                     <input type="email" id="mail" name="mail" placeholder="nom@email.com" value="<?= isset($_POST['mail']) ? htmlspecialchars($_POST['mail']) : '' ?>" class="<?= isset($erreur['mail']) ? 'erreur' : '' ?>" />
                     <small><?= $erreur['mail'] ?? '' ?></small>
                 </div>
-                <div class="champ" >
+                <div class="champ">
                     Mot de passe *
                     <br />
-                    <input type="password"  id="mdp" name="mdp" maxlength=20 class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
+                    <input type="password" id="mdp" name="mdp" maxlength=20 class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
                     <small><?= $erreur['mdp'] ?? '' ?></small>
                     <img src="images/oeil.png" alt="Afficher mot de passe">
                 </div>
@@ -116,10 +120,11 @@
         <p class="connexion">
             Vous n'êtes toujours pas client chez nous? 
             <br />
-            Créez un compte en quelques clics pour profiter pleinement des avantages du site
+            Créez un compte en quelques clics pour profiter pleinement des avantages des avantages du site
         </p>
         <a class="bouton" href="inscription.html">CRÉER UN COMPTE</a>
     </main>    
+
     <footer>
         <p>suivez nous sur nos réseaux!
             </br>
@@ -127,13 +132,11 @@
                 <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
                 <img src="images/Icontwitter.png" alt="twitter" class="icon">
         </p>
-
         <div class="infos-footer">
             <div class="info">
                 <img src="images/Iconlocalisation.png" alt="maps" class="icon">
                 <span>5 avenue de la république, 75015 Paris</span>
             </div>
-
             <div class="info">
                 <img src="images/Iconhorloge.png" alt="horloge" class="icon">
                 <span>Tous les jours 9h - 20h</span>
@@ -143,5 +146,4 @@
     </footer>
 
 </body>
-
 </html>
