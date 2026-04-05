@@ -69,7 +69,7 @@
                     $_SESSION["connecte"] = true;
                     $_SESSION["id"] = $utilisateurTrouve["id"];
                     $_SESSION["mail"] = $utilisateurTrouve["mail"];
-                    $_SESSION["nom"] = $utilisateurTrouve["nom"] ?? ""; // si tu as ce champ
+                    $_SESSION["nom"] = $utilisateurTrouve["nom"] ?? ""; 
                     $_SESSION["role"] = $utilisateurTrouve["role"];
                     // Redirection vers les pages en fonction des roles
                     if($_SESSION["role"] == "client"){
@@ -98,14 +98,14 @@
                 <span></span>
             </div>
 
-            <h1><a href="accueil.html" class="logo">La Cour des Délices</a></h1>
+            <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
     
             <div class="top-icons">
                 <div class="profil-menu">
                     <img src="images/Iconprofil.png" alt="Profil" class="icon">
                     <div class="profil-bulle">
-                        <a href="inscription.html">Inscription</a>
-                        <a href="connexion.html">Connexion</a>
+                        <a href="inscription.php">Inscription</a>
+                        <a href="connexion.php">Connexion</a>
                     </div>
                 </div>
                 <a href="">
