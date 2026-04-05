@@ -54,6 +54,17 @@
                 }
                 
                 if ($connecte) {
+					foreach ($utilisateurs as &$user) {
+                        if ($user["id"] == $utilisateurTrouve["id"]) {
+                            $user["dateconnexion"] = date("Y-m-d");
+                            break;
+                        }
+                    }
+
+                    // 🔥 sauvegarder dans le fichier JSON
+                    file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT));
+
+					
                     // ✅ Stocker les infos utiles en session
                     $_SESSION["connecte"] = true;
                     $_SESSION["id"] = $utilisateurTrouve["id"];
