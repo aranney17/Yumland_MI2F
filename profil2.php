@@ -7,7 +7,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 // Charger l'utilisateur connecté
-$json = file_get_contents("infoclient.json");
+$json = file_get_contents("data/infoclient.json");
 $users = json_decode($json, true);
 $id = $_SESSION['id'];
 $userTrouve = null;
@@ -19,7 +19,7 @@ foreach ($users as $user) {
 }
 
 // Charger les commandes et filtrer celles de l'utilisateur connecté
-$commandesJson = file_get_contents("commandes.json");
+$commandesJson = file_get_contents("data/commandes.json");
 $toutesCommandes = json_decode($commandesJson, true);
 $mesCommandes = [];
 
