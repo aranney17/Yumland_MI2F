@@ -77,9 +77,11 @@ $utilisateurs = json_decode($json, true);
                             <button class="filtre">Débloquer</button>
                         <?php else: ?>
                             <button class="filtre">Bloquer</button>
-                        <?php endif; ?>
-
-                        <button class="filtre">Modifier</button>
+                        <?php endif; 
+                        $id = $user['id'];
+                        ?>
+                        
+                        <a href="modifier_admin.php?id=<?= $id ?>"><button class="filtre">Modifier</button></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
