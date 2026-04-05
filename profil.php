@@ -8,7 +8,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 // Charger JSON
-$json = file_get_contents("infoclient.json");
+$json = file_get_contents("data/infoclient.json");
 $users = json_decode($json, true);
 
 // Trouver l'utilisateur connecté
