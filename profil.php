@@ -2,8 +2,8 @@
 session_start();
 
 // Vérifier si utilisateur connecté
-if (!isset($_SESSION['user_id'])) {
-    header("Location: connexion.html");
+if (!isset($_SESSION['id'])) {
+    header("Location: connexion.php");
     exit();
 }
 
@@ -12,7 +12,7 @@ $json = file_get_contents("infoclient.json");
 $users = json_decode($json, true);
 
 // Trouver l'utilisateur connecté
-$id = $_SESSION['user_id'];
+$id = $_SESSION['id'];
 $userTrouve = null;
 
 foreach ($users as $user) {
@@ -35,7 +35,13 @@ foreach ($users as $user) {
 <body>
 
 <header>
-    <h1><a href="accueil.php" class="logo">Pâtisserie</a></h1>
+    <div class="barres">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
 
     <div class="top-icons">
         <div class="profil-menu">
@@ -53,8 +59,8 @@ foreach ($users as $user) {
 <aside class="sidebar">
     <ul class="menu">
         <li><a href="profil.php">Informations</a></li>
-        <li>Adresses</li>
         <li><a href="profil2.php">Historique de commandes</a></li>
+        <li>Données personnelles</li>
     </ul>
     <br>
     <a href="logout.php"><p class="logout">Déconnexion</p></a>
@@ -98,7 +104,7 @@ foreach ($users as $user) {
 </div>
 
 <div class="block">Adresse mail :
-    <br><?= $userTrouve['email'] ?>
+    <br><?= $userTrouve['mail'] ?>
 </div>
 
 <div class="block">Mot de passe :
@@ -111,6 +117,26 @@ foreach ($users as $user) {
 
 </section>
 </main>
+
+<footer>
+    <p>Suivez nous sur nos réseaux!
+        <br>
+        <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
+        <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
+        <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
+    </p>
+    <div class="infos-footer">
+        <div class="info">
+            <img src="images/Iconlocalisation.png" alt="maps" class="icon">
+            <span>5 av de la république, 75300 Paris</span>
+        </div>
+        <div class="info">
+            <img src="images/Iconhorloge.png" alt="horloge" class="icon">
+            <span>Tous les jours 9h - 22h</span>
+        </div>
+    </div>
+    <h5>© 2026 Pâtisserie</h5>    
+</footer>
 
 </body>
 </html>
