@@ -32,17 +32,19 @@
                 // Lire le fichier JSON
                 $fichier = "infoclient.json";
                 $connecte = false;
+                $utilisateurTrouve = null;
                 
                 if (file_exists($fichier)) {
-                    $lignes = file($fichier);
+                    // Lire tout le contenu du fichier
+                    $contenu = file_get_contents($fichier);
+                    $utilisateurs = json_decode($contenu, true);
                     
-                    foreach ($lignes as $ligne) {
-                        $ligne = trim($ligne);
-                        if ($ligne != "") {
-                            $utilisateur = json_decode($ligne, true);
-                            
+                    // Parcourir le tableau d'utilisateurs
+                    if (is_array($utilisateurs)) {
+                        foreach ($utilisateurs as $utilisateur) {
                             if ($utilisateur && $utilisateur["mail"] == $mail && $utilisateur["mdp"] == $mdp_hash) {
                                 $connecte = true;
+                                $utilisateurTrouve = $utilisateur;
                                 break;
                             }
                         }
@@ -51,10 +53,6 @@
                 
                 if ($connecte) {
                     // Connexion réussie
-                    session_start();
-                    $_SESSION["user"] = $mail;
-                    $_SESSION["prenom"] = $utilisateur["prenom"];
-                    $_SESSION["nom"] = $utilisateur["nom"];
                     header("Location: accueil.html");
                     exit();
                 } else {
