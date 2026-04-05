@@ -30,7 +30,7 @@
     file_put_contents("commandes.json", json_encode($commandes, JSON_PRETTY_PRINT));
 
     // Date du jour + demain
-    $demain = date("Y-m-d", strtotime("+1 day"));
+    $ajd = date("Y-m-d");
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +74,7 @@
 
             <?php
             // Filtrer : à préparer + livraison demain
-            if ($commande['statut'] == "a preparer" && $commande['datelivraison'] == $demain):
+            if ($commande['statut'] == "a preparer" && $commande['datelivraison'] == $ajd):
             ?>
 
 
