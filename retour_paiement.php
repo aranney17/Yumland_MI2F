@@ -45,7 +45,7 @@ $panier = file_exists('data/panier.json') ? json_decode(file_get_contents('data/
 
 // Récupérer date livraison et type commande depuis session
 $type_commande = $_SESSION['commande_temp']['type_commande'] ?? 'sur_place';
-$dateLivraison = $_SESSION['commande_temp']['date_livraison'] ?? date('Y-m-d'); // fallback date du jour
+$dateLivraison = $_SESSION['commande_temp']['date_livraison'] ?? date('Y-m-d'); 
 
 // Calcul total
 $total = 0;
@@ -64,7 +64,7 @@ $commande = [
     "prenom" => $client['prenom'] ?? '',
     "date" => $dateCommande,
     "datelivraison" => $dateLivraison,
-    "type_commande" => $type_commande, // nouveau champ
+    "type_commande" => $type_commande, 
     "telephone" => $client['telephone'] ?? '',
     "reference" => $reference,
     "montant" => $total,
@@ -88,7 +88,7 @@ unset($_SESSION['date_livraison'], $_SESSION['commande_temp']);
 <?php
 // ... ton code existant ...
 
-$userId = $_GET['id'] ?? null; // récupérer l'ID passé dans l'URL
+$userId = $_GET['id'] ?? null; 
 
 // Charger le fichier des clients
 $clients = file_exists('data/infoclient.json') ? json_decode(file_get_contents('data/infoclient.json'), true) : [];
