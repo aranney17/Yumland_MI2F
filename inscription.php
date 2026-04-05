@@ -153,46 +153,67 @@
         }
 
         if (empty($erreur)) {
-            // Ouverture du fichier en écriture (ajout à la fin)
-            $infoclient = fopen("infoclient.json", "a");
 
-            if (!$infoclient) {
-                die("ERREUR : impossible d'ouvrir le fichier");
-            }
+            
+                function nettoyerChamp($valeur) {
+                    // Remplace les ; par des espaces
+                    return str_replace(",", " ", $valeur);
+                }
+                
+                // Construction de la ligne avec les infos séparées par des espaces
+                // Format: civilite prenom nom anniv tel adresse mail mdp role
+                $fichier = "infoclient.json";
+                $utilisateurs = array();
 
-            function nettoyerChamp($valeur) {
-                // Remplace les ; par des espaces
-                return str_replace(",", " ", $valeur);
-            }
-            
-            // Construction de la ligne avec les infos séparées par des espaces
-            // Format: civilite prenom nom anniv tel adresse mail mdp role
-            $tel = str_replace(" ", "", $_POST["tel"]);
-            $mdp_hash = md5($_POST["mdp"]); 
-            
+                if (file_exists($fichier)) {
+                    $contenu = file_get_contents($fichier);
+                    if (!empty($contenu)) {
+                        $utilisateurs = json_decode($contenu, true);
+                        if (!is_array($utilisateurs)) {
+                            $utilisateurs = array();
+                        }
+                    }
+                }
 
-            $data = array(
-                "civilite" => $_POST["civilite"],
-                "prenom" => nettoyerChamp(ucfirst(strtolower($_POST["prenom"]))),
-                "nom" => nettoyerChamp(strtoupper($_POST["nom"])),
-                "anniv" => $_POST["anniv"],
-                "tel" => $tel,
-                "adresse" => nettoyerChamp($_POST["adresse"]),
-                "mail" => $_POST["mail"],
-                "mdp" => $mdp_hash,
-                "role" => "client"
-            );
-            $ligne = json_encode($data) . "\n";
-            
-            // Écriture de la ligne dans le fichier
-            fwrite($infoclient, $ligne);
-            
-            // Fermeture du fichier
-            fclose($infoclient);
+                $tel = str_replace(" ", "", $_POST["tel"]);
+                $mdp_hash = md5($_POST["mdp"]); 
+                $nbUtilisateurs = count($utilisateurs);
+                $nouvelId = $nbUtilisateurs + 1;
+                
 
-            // Redirection vers la page de connexion
-            header("Location: connexion.php");
-            exit();
+                $nouvelUtilisateur = array(
+                    "id" => $nouvelId,
+                    "civilite" => $_POST["civilite"],
+                    "prenom" => nettoyerChamp(ucfirst(strtolower($_POST["prenom"]))),
+                    "nom" => nettoyerChamp(strtoupper($_POST["nom"])),
+                    "date_naissance" => $_POST["anniv"],
+                    "telephone" => $tel,
+                    "adresse" => nettoyerChamp($_POST["adresse"]),
+                    "mail" => $_POST["mail"],
+                    "mdp" => $mdp_hash,
+                    "role" => "client",
+                    "commandes" => 0,
+                    "bloque" => false,
+                    "remise" => 0
+                );
+                $ligne = json_encode($nouvelUtilisateur) . "\n";
+                
+                $utilisateurs[] = $nouvelUtilisateur;
+
+                $infoclient = fopen($fichier, "w");
+                if (!$infoclient) {
+                    die("ERREUR : impossible d'ouvrir le fichier");
+                }
+
+                // Écrire tout le tableau dans le fichier
+                $data = json_encode($utilisateurs, JSON_PRETTY_PRINT);
+                fwrite($infoclient, $data);
+                fclose($infoclient);
+
+                // Redirection vers la page de connexion
+                header("Location: connexion.php");
+                exit();
+            
         }
     }
 ?>
