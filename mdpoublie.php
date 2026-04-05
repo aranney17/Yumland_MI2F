@@ -10,6 +10,47 @@
 </head>
 
 <body>
+    <?php
+        $erreur = [];
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            // Vérifier si le champ est vide
+            if ($_POST["mail"] == "") {
+                $erreur["mail"] = "Veuillez renseigner ce champ";
+            }
+
+            if (empty($erreur)) {
+
+                $mail = htmlspecialchars($_POST["mail"]);
+                $fichier = "infoclient.json";
+                $trouve = false;
+
+                if (file_exists($fichier)) {
+                    $contenu = file_get_contents($fichier);
+                    $utilisateurs = json_decode($contenu, true);
+
+                    if (is_array($utilisateurs)) {
+                        foreach ($utilisateurs as $utilisateur) {
+                            if ($utilisateur["mail"] == $mail) {
+                                $trouve = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if ($trouve) {
+                    // ✅ Redirection vers la page de connexion
+                    header("Location: connexion.php");
+                    exit();
+                } else {
+                    $erreur["mail"] = "Email non connu";
+                }
+            }
+        }
+?>
+
 
 	<header>
             <div class="barres">
@@ -18,7 +59,7 @@
                 <span></span>
             </div>
 
-            <h1><a href="accueil.html" class="logo">La Cour des Délices</a></h1>
+            <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
     
             <div class="top-icons">
                 <!-- PROFIL -->
@@ -26,8 +67,8 @@
                     <img src="images/Iconprofil.png" alt="Profil" class="icon">
 
                     <div class="profil-bulle">
-                        <a href="inscription.html">Inscription</a>
-                        <a href="connexion.html">Connexion</a>
+                        <a href="inscription.php">Inscription</a>
+                        <a href="connexion.php">Connexion</a>
                     </div>
                 </div>
 
@@ -40,12 +81,14 @@
 
     <main>
         <h2>Mot de passe oublié ?</h2>
-        <form action="page3.php" method="POST">
+        <form action="mdpoublie.php" method="POST">
             <fieldset>
                 <div class="champ">
                     E-mail 
                     <br />
-                    <input type="email" id="mail" name="mail" placeholder="nom@email.com"  />
+                    <input type="email" id="mail" name="mail" placeholder="nom@email.com" value="<?= isset($_POST['mail']) ? htmlspecialchars($_POST['mail']) : '' ?>"
+                class="<?= isset($erreur['mail']) ? 'erreur' : '' ?>" />
+                    <small><?= $erreur['mail'] ?? '' ?></small>
                 </div>
                 <input class="bouton" type="submit" value="ENVOYER UN LIEN RÉINITIALISATION"/>
             </fieldset>
