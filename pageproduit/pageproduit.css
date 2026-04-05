@@ -62,17 +62,65 @@ select{
 
 .quantite{
     display:flex;
-    align-items:center;
+    flex-direction: column;
+    align-items:flex-start;
     gap:10px;
     margin-top:20px;
 }
 
+#nocolumn {
+    display: flex;         
+    flex-direction: row;   
+    align-items: center;   
+    gap: 10px;             
+}
+
+/* Réduire la taille du bouton rafraîchir */
+#nocolumn button {
+    padding: 5px;          
+    width: 30px;           
+    height: 30px;          
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#nocolumn button img.icon {
+    width: 20px;           
+    height: 20px;
+}
+/* Bouton */
 .quantite button{
     padding:8px 15px;
     font-size:18px;
     background-color: var(--article-background);
     border: 2px double var(--article-background);
     border-radius: 25px;
+    cursor: pointer;
+}
+
+/* Input quantité */
+.quantite input[type="number"] {
+    background-color: var(--article-background); 
+    color: black; /* texte */
+    border: none;
+    border-radius: 25px;
+    padding: 8px 15px;
+    font-size: 18px;
+    width: 80px; /* largeur adaptée */
+    text-align: center;
+}
+
+/* Select saveur */
+.quantite select {
+    background-color: var(--article-background);
+    color: black; /* texte */
+    border: none;
+    border-radius: 25px;
+    padding: 8px 15px;
+    font-size: 18px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 /* PANIER */
@@ -88,6 +136,7 @@ select{
         color: var(--main-title);
         text-decoration: none;
         cursor: pointer;
+        margin-bottom: 30px;
     }
 
     .panier:hover{
