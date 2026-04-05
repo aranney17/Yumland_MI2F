@@ -8,10 +8,10 @@
     }
 
     // Charger JSON
-    $json = file_get_contents("commandes.json");
+    $json = file_get_contents("data/commande.json");
     $commandes = json_decode($json, true);
 
-    // SI on clique sur "Terminer"
+    // Terminer
     if (isset($_GET['terminer'])) {
 
         $idCommande = $_GET['terminer'];
@@ -26,10 +26,10 @@
         }
     }
 
-    //  SAUVEGARDE OBLIGATOIRE
-    file_put_contents("commandes.json", json_encode($commandes, JSON_PRETTY_PRINT));
+    // sauvegarde
+    file_put_contents("data/commande.json", json_encode($commandes, JSON_PRETTY_PRINT));
 
-    // Date du jour + demain
+    // Date du jour 
     $ajd = date("Y-m-d");
 ?>
 
@@ -52,15 +52,15 @@
             <span></span>
             <span></span>
         </div>    
-        <h1><a href="accueil.html" class="logo">La Cour des Délices</a></h1>   
+        <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>   
         <div class="top-icons">
 
             <!-- PROFIL -->
             <div class="profil-menu">
                 <img src="images/Iconprofil.png" alt="Profil" class="icon">
                 <div class="profil-bulle">
-                    <a href="profil.html">Profil</a>
-                    <a href="accueil.html">Déconnexion</a>
+                    <a href="profil.php">Profil</a>
+                    <a href="accueil.php">Déconnexion</a>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
         <?php foreach ($commandes as $commande): ?>
 
             <?php
-            // Filtrer : à préparer + livraison demain
+            // recherche des commandes a preparer
             if ($commande['statut'] == "a preparer" && $commande['datelivraison'] == $ajd):
             ?>
 
