@@ -1,1 +1,24 @@
-[]
+[
+    {
+        "id": 1775424971,
+        "nom": "DUPONT",
+        "prenom": "Claudine",
+        "date": "2026-04-05",
+        "datelivraison": "2026-04-05",
+        "type_commande": "livraison",
+        "telephone": "0610907010",
+        "reference": "C92442B000",
+        "montant": 4.5,
+        "paiement": "payee",
+        "adresse": "57 Avenue Victor Hugo 75116 Paris",
+        "statut": "a preparer",
+        "produits": [
+            {
+                "produit": "Paris brest",
+                "prix": "4.5",
+                "saveur": "Classique",
+                "quantite": "1"
+            }
+        ]
+    }
+]
