@@ -70,7 +70,7 @@ $commande = [
     "montant" => $total,
     "paiement" => "payee",
     "adresse" => $client['adresse'] ?? '',
-    "statut" => "preparation",
+    "statut" => "a preparer",
     "produits" => $panier
 ];
 
