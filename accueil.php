@@ -1,6 +1,6 @@
 <?php
 session_start(); // si ce n'est pas déjà fait
-$userId = $_SESSION['user_id'] ?? null; // récupère l'id de l'utilisateur connecté
+$userId = $_SESSION['id'] ?? null; // récupère l'id de l'utilisateur connecté
 ?>
 
 <?php
@@ -104,7 +104,7 @@ if (isset($_POST['ajouter_panier'])) {
         <span></span>
     </div>
 
-    <h1> <a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+    <h1> <a href="panier.php?id=<?= urlencode($userId) ?>" class="logo">La Cour des Délices</a></h1>
     
 <div class="top-icons">
 
@@ -112,8 +112,8 @@ if (isset($_POST['ajouter_panier'])) {
         <img src="images/Iconprofil.png" alt="Profil" class="icon">
 
         <div class="profil-bulle">
-            <a href="inscription.html">Inscription</a>
-            <a href="connexion.html">Connexion</a>
+            <a href="inscription.php">Inscription</a>
+            <a href="connexion.php">Connexion</a>
         </div>
     </div>
 
