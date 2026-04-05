@@ -130,8 +130,7 @@ usort($mesCommandes, function($a, $b) {
                             </td>
                         </tr>
 
-                        <!-- Ligne détails (cachée par défaut) -->
-                        <tr id="details-<?= $commande['reference'] ?>">
+                        <tr id="details-<?= $commande['reference'] ?>"> <!--cachée ensuite avec javascript-->
                             <td colspan="6">
                                 <table class="table-details">
                                     <tr>
