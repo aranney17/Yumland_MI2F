@@ -35,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userTrouve) {
         }
     }
 
-    // file_put_contents("infoclient.json", json_encode($utilisateurs, JSON_PRETTY_PRINT));
 
     echo "<p style='color:green'>Modification enregistrée ! (phase 3)</p>";
 }
