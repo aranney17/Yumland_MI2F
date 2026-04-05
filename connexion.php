@@ -131,7 +131,7 @@
                     <small><?= $erreur['mdp'] ?? '' ?></small>
                     <img src="images/oeil.png" alt="Afficher mot de passe">
                 </div>
-                <a class="lien" href="mdpoublie.html">Mot de passe oublié ?</a>
+                <a class="lien" href="mdpoublie.php">Mot de passe oublié ?</a>
                 <br />
                 <input class="bouton" type="submit" value="ME CONNECTER"/>
             </fieldset>
@@ -141,7 +141,7 @@
             <br />
             Créez un compte en quelques clics pour profiter pleinement des avantages des avantages du site
         </p>
-        <a class="bouton" href="inscription.html">CRÉER UN COMPTE</a>
+        <a class="bouton" href="inscription.php">CRÉER UN COMPTE</a>
     </main>    
 
     <footer>
