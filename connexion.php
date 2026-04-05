@@ -12,7 +12,7 @@
 <body>
 
     <?php
-        session_start(); // ✅ Démarrage de la session
+        session_start(); 
 
         $erreur = [];
         
@@ -30,8 +30,8 @@
                 $mail = htmlspecialchars($_POST["mail"]);
                 $mdp = $_POST["mdp"];
                 
-                // Lire le fichier JSON
-                $fichier = "infoclient.json";
+                // Lit le fichier sur les informations des clients
+                $fichier = "data/infoclient.json";
                 $connecte = false;
                 $utilisateurTrouve = null;
                 
@@ -42,7 +42,7 @@
                     if (is_array($utilisateurs)) {
                         foreach ($utilisateurs as $utilisateur) {
                             if ($utilisateur && $utilisateur["mail"] == $mail) {
-                                // ✅ password_verify compare le mdp saisi avec le hash stocké
+                                //compare le mdp saisi avec le hash stocké
                                 if (password_verify($mdp, $utilisateur["mdp"])) {
                                     $connecte = true;
                                     $utilisateurTrouve = $utilisateur;
@@ -61,17 +61,17 @@
                         }
                     }
 
-                    // 🔥 sauvegarder dans le fichier JSON
+                    //sauvegarde dans le fichier JSON
                     file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT));
 
 					
-                    // ✅ Stocker les infos utiles en session
+                    //Stockage des infos utiles 
                     $_SESSION["connecte"] = true;
                     $_SESSION["id"] = $utilisateurTrouve["id"];
                     $_SESSION["mail"] = $utilisateurTrouve["mail"];
                     $_SESSION["nom"] = $utilisateurTrouve["nom"] ?? ""; // si tu as ce champ
                     $_SESSION["role"] = $utilisateurTrouve["role"];
-                    // ✅ Redirection vers l'accueil (corrigé : guillemets autour de l'id)
+                    // Redirection vers les pages en fonction des roles
                     if($_SESSION["role"] == "client"){
                         header("Location: accueil.php");
                     } elseif($_SESSION["role"] == "cuisinier"){
