@@ -69,7 +69,7 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
     <div class="profil-menu">
         <img src="images/Iconprofil.png" class="icon">
         <div class="profil-bulle">
-            <a href="profil.html">Profil</a>
+            <a href="profil.php">Profil</a>
             <a href="accueil.php">Déconnexion</a>
         </div>
     </div>
