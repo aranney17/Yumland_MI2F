@@ -1,0 +1,283 @@
+[
+  {
+    "nom": "Painsuisse",
+    "titre": "Pain suisse",
+    "prix": 2.90,
+    "image": "Painsuisse.jpg",
+    "categorie": "Viennoiseries",
+    "saveurs": ["Classique"]
+  },
+  {
+    "nom": "Painauchocolat",
+    "titre": "Pain au chocolat",
+    "prix": 2.50,
+    "image": "Painauchocolat.jpg",
+    "categorie": "Viennoiseries",
+    "saveurs": ["Classique"]
+  },
+  {
+    "nom": "Feuilletécitron",
+    "titre": "Feuilleté citron",
+    "prix": 3.90,
+    "image": "Feuilletécitron.jpg",
+    "categorie": "Viennoiseries",
+    "saveurs": ["Citron"]
+  },
+  {
+    "nom": "Croissantauxamandes",
+    "titre": "Croissant aux amandes",
+    "prix": 3.50,
+    "image": "Croissantauxamandes.jpg",
+    "categorie": "Viennoiseries",
+    "saveurs": ["amandes"]
+  },
+  {
+    "nom": "Painauxraisins",
+    "titre": "Pain aux raisins",
+    "prix": 2.90,
+    "image": "Painauxraisins.jpg",
+    "categorie": "Viennoiseries",
+    "saveurs": ["Raisins secs"]
+  },
+  {
+    "nom": "Croissantaubeurre",
+    "titre": "Croissant au beurre",
+    "prix": 1.50,
+    "image": "Croissantaubeurre.jpg",
+    "categorie": "Viennoiseries",
+    "saveurs": ["Classique"]
+  },
+  {
+    "nom": "Matchalatte",
+    "titre": "Matcha latte",
+    "prix": 5.50,
+    "image": "Matchalatte.jpg",
+    "categorie": "Boissons",
+    "saveurs": ["Matcha"]
+  },
+  {
+    "nom": "Cappuccino",
+    "titre": "Cappuccino",
+    "prix": 3.50,
+    "image": "Cappuccino.jpg",
+    "categorie": "Boissons",
+    "saveurs": ["Café"]
+  },
+ {
+    "nom": "Milkshake",
+    "titre": "Milkshake",
+    "prix": 5.90,
+    "image": "Milkshake.jpg",
+    "categorie": "Boissons",
+    "saveurs": ["Chocolat", "Fraise", "Oreo"]
+  },
+
+  {
+    "nom": "Lattefraisematcha",
+    "titre": "Latte fraise matcha",
+    "prix": 6.50,
+    "image": "Lattefraisematcha.jpg",
+    "categorie": "Boissons",
+    "saveurs": ["Fraise"]
+  },
+  {
+    "nom": "Cafélatte",
+    "titre": "Café latte",
+    "prix": 3.90,
+    "image": "Cafélatte.jpg",
+    "categorie": "Boissons",
+    "saveurs": ["Café"]
+  },
+  {
+    "nom": "Chocolatchaud",
+    "titre": "Chocolat chaud",
+    "prix": 2.50,
+    "image": "Chocolatchaud.jpg",
+    "categorie": "Boissons",
+    "saveurs": ["Chocolat"]
+  },
+  {
+    "nom": "Croissantgourmand",
+    "titre": "Croissant gourmand",
+    "prix": 4.90,
+    "image": "Croissantgourmand.jpg",
+    "categorie": "Boissons",
+    "saveurs": ["fraise", "pistache", "chocolat", "crème noisette"]
+  },
+  {
+    "nom": "Cookiegourmand",
+    "titre": "Cookie gourmand",
+    "prix": 4.50,
+    "image": "Cookiegourmand.jpg",
+    "categorie": "Gourmandises",
+    "saveurs": ["chocolat noir", "chocolat blanc", "oreo", "pistache", "citron" ]
+  },
+  {
+    "nom": "Cookie",
+    "titre": "Cookie",
+    "prix": 2.90,
+    "image": "Cookie.jpg",
+    "categorie": "Patisseries",
+    "saveurs": ["Chocolat"]
+  },
+  {
+    "nom": "Opérapistacheyuzu",
+    "titre": "Opéra pistache yuzu",
+    "prix": 8.50,
+    "image": "Opérapistacheyuzu.jpg",
+    "categorie": "Patisseries",
+    "saveurs": ["Pistache / yuzu"]
+  },
+  {
+    "nom": "Eclairchocolat",
+    "titre": "Eclair chocolat",
+    "prix": 3.50,
+    "image": "Eclairchocolat.jpg",
+    "categorie": "Patisseries",
+    "saveurs": ["Chocolat"]
+  },
+  {
+    "nom": "Macaron",
+    "titre": "Macaron",
+    "prix": 2.50,
+    "image": "Macaron.jpg",
+    "categorie": "Patisseries",
+    "saveurs": ["vanille", "chocolat","fraise", "pistache", ""]
+  },
+  {
+    "nom": "Parisbrest",
+    "titre": "Paris brest",
+    "prix": 4.50,
+    "image": "Parisbrest.jpg",
+    "categorie": "Patisseries",
+    "saveurs": ["Classique"]
+  },
+  {
+    "nom": "Flan",
+    "titre": "Flan",
+    "prix": 4.50,
+    "image": "Flan.jpg",
+    "categorie": "Patisseries",
+    "saveurs": ["Vanille"]
+  },
+  {
+    "nom": "Tiramisu",
+    "titre": "Tiramisu",
+    "prix": 6.90,
+    "image": "Tiramisu.jpg",
+    "categorie": "Patisseries",
+    "saveurs": ["café", "spéculoos", "oréo"]
+  },
+  {
+    "nom": "Browniechocolatnoisette",
+    "titre": "Brownie chocolat noisette",
+    "prix": 3.50,
+    "image": "Browniechocolatnoisette.jpg",
+    "categorie": "Gateaux",
+    "saveurs": ["Chocolat / noisette"]
+  },
+  {
+    "nom": "Rouléspéculoos",
+    "titre": "Roulé spéculoos",
+    "prix": 5.90,
+    "image": "Rouléspéculoos.jpg",
+    "categorie": "Gateaux",
+    "saveurs": ["spéculoos"]
+  },
+  {
+    "nom": "Brownieube",
+    "titre": "Brownie ube",
+    "prix": 4.90,
+    "image": "Brownieube.jpg",
+    "categorie": "Gateaux",
+    "saveurs": ["Vanille"]
+  },
+  {
+    "nom": "Gateauaucitron",
+    "titre": "Gateau au citron",
+    "prix": 6.90,
+    "image": "Gateauaucitron.jpg",
+    "categorie": "Gateaux",
+    "saveurs": ["Citron"]
+  },
+  {
+    "nom": "Gateauauxfraises",
+    "titre": "Gateau aux fraises",
+    "prix": 6.90,
+    "image": "Gateauauxfraises.jpg",
+    "categorie": "Gateaux",
+    "saveurs": ["Fraise"]
+  },
+  {
+    "nom": "Gateaudecrepeaumatcha",
+    "titre": "Gateau de crepe au matcha",
+    "prix": 7.90,
+    "image": "Gateaudecrepeaumatcha.jpg",
+    "categorie": "Gateaux",
+    "saveurs": ["Matcha"]
+  },
+  {
+    "nom": "Gateauauxfruits",
+    "titre": "Gateauauxfruits",
+    "prix": 8.90,
+    "image": "Gateauauxfruits.jpg",
+    "categorie": "Gateaux",
+    "saveurs": ["Multifruit"]
+  },
+  {
+    "nom": "Tarteauxpommes",
+    "titre": "Tarteauxpommes",
+    "prix": 5.50,
+    "image": "Tarteauxpommes.jpg",
+    "categorie": "Tartes",
+    "saveurs": ["Pomme"]
+  },
+  {
+    "nom": "Tarteaucitron",
+    "titre": "Tarte au citron",
+    "prix": 5.50,
+    "image": "Tarteaucitron.jpg",
+    "categorie": "Tartes",
+    "saveurs": ["citron"]
+  },
+  {
+    "nom": "Tarteàlaframboise",
+    "titre": "Tarte à la framboise",
+    "prix": 6.90,
+    "image": "Tarteàlaframboise.jpg",
+    "categorie": "Tartes",
+    "saveurs": ["Framboise"]
+  },
+  {
+    "nom": "Cheesecakeaumatcha",
+    "titre": "Cheesecake au matcha",
+    "prix": 7.90,
+    "image": "Cheesecakeaumatcha.jpg",
+    "categorie": "Tartes",
+    "saveurs": ["Matcha"]
+  },
+  {
+    "nom": "Tarteauxpeches",
+    "titre": "Tarte aux peches",
+    "prix": 8.90,
+    "image": "Tarteauxpeches.jpg",
+    "categorie": "Tartes",
+    "saveurs": ["peche"]
+  },
+  {
+    "nom": "Tarteauxmyrtilles",
+    "titre": "Tart aux myrtilles",
+    "prix": 9.90,
+    "image": "Tarteauxmyrtilles.jpg",
+    "categorie": "Tartes",
+    "saveurs": ["Myrtilles"]
+  },
+  {
+    "nom": "Tarteàlanoisette",
+    "titre": "Tarte à la noisette",
+    "prix": 9.90,
+    "image": "Tarteàlanoisette.jpg",
+    "categorie": "Tartes",
+    "saveurs": ["Noisette"]
+  }
+]
