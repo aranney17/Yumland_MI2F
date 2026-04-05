@@ -1,6 +1,6 @@
 <?php
  // Lire tous les produits
-$fichierProduits = 'data/produits.json'; // ⚠️ adapte le chemin si nécessaire
+$fichierProduits = 'data/produits.json'; 
 $produits = json_decode(file_get_contents($fichierProduits), true);
 ?>
 
@@ -11,7 +11,7 @@ function getProduit($nom, $produits) {
             return $p;
         }
     }
-    return null; // si produit introuvable
+    return null;
 } ?>
 
 <!-- formatage de chaque produit pour les petits paniers -->
@@ -62,14 +62,14 @@ $produitTartealanoisette = getProduit('Tarteàlanoisette', $produits);
 
 if (isset($_POST['ajouter_panier'])) {
 
-    $nom = $_POST['nom']; //important (identifiant produit)
+    $nom = $_POST['nom']; 
     $produit = $_POST['produit'];
     $prix = $_POST['prix'];
     $saveur = $_POST['saveur'];
     $quantite = $_POST['quantite'];
 
     // Lire le panier
-    $fichier = 'data/panier.json'; // ⚠️ adapte le chemin
+    $fichier = 'data/panier.json'; 
 
     if (file_exists($fichier)) {
         $panier = json_decode(file_get_contents($fichier), true);
@@ -79,7 +79,7 @@ if (isset($_POST['ajouter_panier'])) {
 
     // Ajouter produit
     $panier[] = [
-        "nom" => $nom, // 🔥 très important pour les liens ensuite
+        "nom" => $nom, 
         "produit" => $produit,
         "prix" => $prix,
         "saveur" => $saveur,
@@ -89,7 +89,7 @@ if (isset($_POST['ajouter_panier'])) {
     // Sauvegarder
     file_put_contents($fichier, json_encode($panier, JSON_PRETTY_PRINT));
 
-    // 🔥 Recharge la page (évite bug F5)
+    // Recharge la page 
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
