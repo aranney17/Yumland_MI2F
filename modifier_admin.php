@@ -1,6 +1,6 @@
 <?php
 // Charger les utilisateurs depuis le JSON
-$json = file_get_contents("infoclient.json");
+$json = file_get_contents("data/infoclient.json");
 $utilisateurs = json_decode($json, true);
 
 // Récupérer l'ID passé dans l'URL
