@@ -23,7 +23,7 @@
             if (empty($erreur)) {
 
                 $mail = htmlspecialchars($_POST["mail"]);
-                $fichier = "infoclient.json";
+                $fichier = "data/infoclient.json";
                 $trouve = false;
 
                 if (file_exists($fichier)) {
@@ -41,7 +41,7 @@
                 }
 
                 if ($trouve) {
-                    // ✅ Redirection vers la page de connexion
+                    // Redirection vers la page de connexion
                     header("Location: connexion.php");
                     exit();
                 } else {
