@@ -1,55 +1,47 @@
 <?php
 session_start();
 
-// Lire le panier
-$panierFile = 'data/panier.json';
-
-if (file_exists($panierFile)) {
-    $panier = json_decode(file_get_contents($panierFile), true);
-} else {
-    $panier = [];
+// Vérifier si utilisateur connecté
+if (!isset($_SESSION['id'])) {
+    header("Location: connexion.php");
+    exit();
 }
 
-$userId = $_GET['id'] ?? null;
+// Lire le panier
+$panierFile = 'data/panier.json';
+$panier = file_exists($panierFile) ? json_decode(file_get_contents($panierFile), true) : [];
 
 // Charger tous les clients
 $clientFile = 'data/infoclient.json';
 $clients = file_exists($clientFile) ? json_decode(file_get_contents($clientFile), true) : [];
 
-// Chercher le bon client
+// Trouver l'utilisateur connecté via session
+$id = $_SESSION['id'];
 $client = null;
-
-if ($userId) {
-    foreach ($clients as $c) {
-        if ($c['id'] == $userId) {
-            $client = $c;
-            break;
-        }
+foreach ($clients as $c) {
+    if ($c['id'] == $id) {
+        $client = $c;
+        break;
     }
 }
-
 $client = $client ?? [];
-?>
 
-<?php
 // Calcul du total
 $total = 0;
 foreach($panier as $item) {
     $total += $item['prix'] * $item['quantite'];
 }
-?>
 
-<?php
+// Gestion suppression produit
 if(isset($_POST['supprimer_index'])) {
     $index = $_POST['supprimer_index'];
-    array_splice($panier, $index, 1); // supprime l’élément
+    array_splice($panier, $index, 1);
     file_put_contents($panierFile, json_encode($panier, JSON_PRETTY_PRINT));
-    header("Location: panier.php"); // évite le double POST
+    header("Location: panier.php");
     exit();
 }
-?>
 
-<?php
+// Gestion mise à jour quantité
 if(isset($_POST['mettre_a_jour'])) {
     $index = $_POST['index'];
     $panier[$index]['quantite'] = intval($_POST['quantite'][$index]);
@@ -57,39 +49,35 @@ if(isset($_POST['mettre_a_jour'])) {
     header("Location: panier.php");
     exit();
 }
-?>
 
-<?php if (isset($_POST['type_commande'])) {
+// Type de commande
+if(isset($_POST['type_commande'])) {
     $_SESSION['type_commande'] = $_POST['type_commande'];
     $type_commande = $_POST['type_commande'];
 } else {
     $type_commande = $_SESSION['type_commande'] ?? 'sur_place';
-} ?>
-
-<?php
-
-
-if (isset($_POST['type_commande'])) {
-    $_SESSION['type_commande'] = $_POST['type_commande'];
-    header("Location: panier.php?id=" . urlencode($userId));
-    exit();
 }
 
-$type_commande = $_SESSION['type_commande'] ?? 'sur_place';
+// Déterminer date livraison finale
+if ($type_commande === 'livraison') {
+    $dateLivraisonFinale = $_SESSION['date_livraison'] ?? null; // date choisie par l'utilisateur
+} else { // sur_place
+    $dateLivraisonFinale = date('Y-m-d'); // date de la commande
+}
 
-$dateLivraison = $_POST['date_livraison'] ?? null;
+// Stocker infos dans session pour retour paiement
+$_SESSION['commande_temp'] = [
+    "type_commande" => $type_commande,
+    "date_livraison" => $dateLivraisonFinale
+];
 
-?>
-<?php
+// Paiement
 require('getapikey.php');
-
 if (isset($_POST['payer'])) {
-
-    // Données
     $transaction = uniqid();
     $montant = number_format($total, 2, '.', '');
-    $vendeur = "MI-2_F"; 
-    $retour = "http://localhost:8000/retour_paiement.php?session=s&id=" . urlencode($userId);
+    $vendeur = "MI-2_F";
+    $retour = "http://localhost:8000/retour_paiement.php?session=s"; // plus d'id dans l'URL
     $api_key = getAPIKey($vendeur);
 
     $control = md5(
