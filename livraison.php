@@ -41,7 +41,7 @@ foreach ($commandes as $cmd) {
 
 // commandes disponibles
 $commandes_filtrees = array_filter($commandes, function($cmd) {
-    return $cmd['type_commande'] === 'livraison' && $cmd['statut'] === 'preparation';
+    return $cmd['type_commande'] === 'livraison' && $cmd['statut'] === 'commande préparée';
 });
 ?>
 
