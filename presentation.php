@@ -131,9 +131,16 @@ if (isset($_POST['ajouter_panier'])) {
         <img src="images/Iconprofil.png" alt="Profil" class="icon">
 
         <div class="profil-bulle">
-            <a href="inscription.html">Inscription</a>
-            <a href="connexion.html">Connexion</a>
-        </div>
+    <?php if (isset($_SESSION["connecte"]) && $_SESSION["connecte"]): ?>
+        <!-- Utilisateur connecté -->
+        <a href="profil.php">Mon profil</a>
+        <a href="logout.php">Se déconnecter</a>
+    <?php else : ?>
+        <!-- Visiteur -->
+        <a href="inscription.php">S'Inscrire</a>
+        <a href="connexion.php">Connexion</a>
+    <?php endif; ?>
+</div>
     </div>
 
 
