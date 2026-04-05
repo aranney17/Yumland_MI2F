@@ -86,7 +86,7 @@
 
                     <div class="commande-details">
                         <?php foreach ($commande['produits'] as $produit): ?>
-                            <?= $produit['nom'] ?> x<?= $produit['quantite'] ?><br>
+                            <?= $produit['produit'] ?> x<?= $produit['quantite'] ?><br>
                         <?php endforeach; ?>
                     </div>
                     <a href="commandes.php?terminer=<?= $commande['reference'] ?>" class="btn"> Terminer </a>
