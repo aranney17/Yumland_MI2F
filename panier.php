@@ -1,9 +1,22 @@
 <?php
 session_start();
+
+// Lire le panier
+$panierFile = 'data/panier.json';
+
+if (file_exists($panierFile)) {
+    $panier = json_decode(file_get_contents($panierFile), true);
+} else {
+    $panier = [];
+}
+
 $userId = $_GET['id'] ?? null;
 
-// Charger les infos clients
-$clients = file_exists('data/infoclient.json') ? json_decode(file_get_contents('data/infoclient.json'), true) : [];
+// Charger tous les clients
+$clientFile = 'data/infoclient.json';
+$clients = file_exists($clientFile) ? json_decode(file_get_contents($clientFile), true) : [];
+
+// Chercher le bon client
 $client = null;
 
 if ($userId) {
@@ -14,19 +27,11 @@ if ($userId) {
         }
     }
 }
+
 $client = $client ?? [];
 ?>
 
 <?php
-
-// Lire le panier
-$panierFile = 'data/panier.json';
-$panier = file_exists($panierFile) ? json_decode(file_get_contents($panierFile), true) : [];
-
-// Lire infos client
-$clientFile = 'data/infoclient.json';
-$client = file_exists($clientFile) ? json_decode(file_get_contents($clientFile), true) : [];
-
 // Calcul du total
 $total = 0;
 foreach($panier as $item) {
@@ -62,11 +67,11 @@ if(isset($_POST['mettre_a_jour'])) {
 } ?>
 
 <?php
-session_start();
+
 
 if (isset($_POST['type_commande'])) {
     $_SESSION['type_commande'] = $_POST['type_commande'];
-    header("Location: panier.php");
+    header("Location: panier.php?id=" . urlencode($userId));
     exit();
 }
 
@@ -83,7 +88,7 @@ if (isset($_POST['payer'])) {
     // Données
     $transaction = uniqid();
     $montant = number_format($total, 2, '.', '');
-    $vendeur = "MI-1_F"; 
+    $vendeur = "MI-2_F"; 
     $retour = "http://localhost:8000/retour_paiement.php?session=s&id=" . urlencode($userId);
     $api_key = getAPIKey($vendeur);
 
@@ -126,8 +131,8 @@ if (isset($_POST['payer'])) {
         <img src="images/Iconprofil.png" alt="Profil" class="icon">
 
         <div class="profil-bulle">
-            <a href="inscription.html">Inscription</a>
-            <a href="connexion.html">Connexion</a>
+            <a href="inscription.php">Inscription</a>
+            <a href="connexion.php">Connexion</a>
         </div>
     </div>
 
