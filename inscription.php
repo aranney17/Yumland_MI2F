@@ -84,7 +84,7 @@
             }
             
             // 3. Vérifier un type de voie avec in_array
-            $typesVoie = array("rue", "avenue", "boulevard", "place", "impasse", "allee", "chemin", "route", "cours");
+            $typesVoie = array("rue", "avenue", "boulevard", "place", "impasse", "allée", "allee", "chemin", "route", "cours");
             $aUneVoie = false;
             $adresseLower = strtolower($adresse);
             foreach ($typesVoie as $voie) {
@@ -162,7 +162,7 @@
 
             function nettoyerChamp($valeur) {
                 // Remplace les ; par des espaces
-                return str_replace(";", " ", $valeur);
+                return str_replace(",", " ", $valeur);
             }
             
             // Construction de la ligne avec les infos séparées par des espaces
