@@ -1,3 +1,8 @@
+<?php
+$json = file_get_contents("infoclient.json");
+$utilisateurs = json_decode($json, true);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,51 +36,53 @@
     <nav class="menu-horizontal">
     <ul>
         <li>
-            <a href="admministrateur.html" class="active">Utilisateurs</a>
+            <a href="administrateur.php" class="active">Utilisateurs</a>
         </li>
 
         <li>
-            <a href="administrateur2.html">Commandes</a>
+            <a href="administrateur2.php">Commandes</a>
         </li>
     </ul>
 </nav>  
 
     <main>
-        <p class="filtre">
+        <button class="filtre">
             Filtrer  <img src="images/filter.png">
-        </p>
+        </button>
         <section>
             <table>
                 <tr>
                     <th>Nom</th>
+                    <th>Prénom</th>
                     <th>Email</th>
                     <th>Statut</th>
                     <th>Commandes</th>
+                    <th>Remise</th>
+                    <th>Actions</th>
                 </tr>
-                <tr class="ligne">
-                    <td>Utilisateur1</td>
-                    <td>Email1</td>
-                    <td>client</td>
-                    <td>0</td>
+
+                <?php foreach ($utilisateurs as $user): ?>
+                <tr class="ligne">  <!--voir-->
+                    <td><a href="profil_admin.php?id=<?= $user['id'] ?>"><?= $user['nom'] ?></a></td>
+                    <td><?= $user['prenom'] ?></td>
+                    <td><?= $user['mail'] ?></td>
+                    <td><?= $user['role'] ?></td>
+                    <td><?= $user['commandes'] ?></td>
+                    <td><?= $user['remise'] ?>%</td>
+
+                    <td>
+
+                        <!-- Bloquer / débloquer -->
+                        <?php if ($user['bloque']): ?>
+                            <button class="filtre">Débloquer</button>
+                        <?php else: ?>
+                            <button class="filtre">Bloquer</button>
+                        <?php endif; ?>
+
+                        <button class="filtre">Modifier</button>
+                    </td>
                 </tr>
-                <tr class="ligne">
-                    <td>Utilisateur2</td>
-                    <td>Email2</td>
-                    <td>livreur</td>
-                    <td>0</td>
-                </tr>
-                <tr class="ligne">
-                    <td>Utilisateur3</td>
-                    <td>Email3</td>
-                    <td>administrateur</td>
-                    <td>0</td>
-                </tr>
-                <tr class="ligne">
-                    <td>Utilisateur4</td>
-                    <td>Email4</td>
-                    <td>Cuisinier</td>
-                    <td>0</td>
-                </tr>
+                <?php endforeach; ?>
             </table>
         </section>
     </main>
