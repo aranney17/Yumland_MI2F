@@ -60,7 +60,7 @@ if(isset($_POST['type_commande'])) {
 
 // Déterminer date livraison finale
 if ($type_commande === 'livraison') {
-    $dateLivraisonFinale = $_SESSION['date_livraison'] ?? null; // date choisie par l'utilisateur
+    $dateLivraisonFinale = $_SESSION['date_livraison'] ?? null; 
 } else { // sur_place
     $dateLivraisonFinale = date('Y-m-d'); // date de la commande
 }
@@ -77,7 +77,7 @@ if (isset($_POST['payer'])) {
     $transaction = uniqid();
     $montant = number_format($total, 2, '.', '');
     $vendeur = "MI-2_F";
-    $retour = "http://localhost:8000/retour_paiement.php?session=s"; // plus d'id dans l'URL
+    $retour = "http://localhost:8000/retour_paiement.php?session=s"; 
     $api_key = getAPIKey($vendeur);
 
     $control = md5(
@@ -216,7 +216,7 @@ if (isset($_POST['payer'])) {
                 <p><strong>Téléphone :</strong> <?= htmlspecialchars($client['telephone'] ?? '') ?></p>
                 <p><strong>Adresse :</strong> <?= htmlspecialchars($client['adresse'] ?? '') ?></p>
 
-                <!-- NOUVEAU CHAMP -->
+                
                 <label>Date de livraison :</label>
                 <input type="date" name="date_livraison" required>
 
