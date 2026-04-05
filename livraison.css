@@ -94,15 +94,15 @@ h2 {
 }
 
 .finish-btn {
-    width: 100%; /* reste plein conteneur */
-    max-width: 400px; /* limite la largeur maximale si tu veux */
-    margin: 20px auto 0 auto; /* centrage si max-width est utilisé */
-    padding: 18px; /* plus de padding = bouton plus grand */
+    width: 100%; 
+    max-width: 400px; 
+    margin: 20px auto 0 auto; 
+    padding: 18px; 
     border-radius: 12px;
     border: 2px solid var(--article-background);
     background: var(--article-background);
     color: var(--main-title);
-    font-size: 18px; /* texte plus gros */
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
