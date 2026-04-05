@@ -140,7 +140,7 @@
                 return str_replace(",", " ", $valeur);
             }
 
-            $fichier = "infoclient.json";
+            $fichier = "data/infoclient.json";
             $utilisateurs = array();
 
             if (file_exists($fichier)) {
@@ -155,7 +155,7 @@
 
             $tel = str_replace(" ", "", $_POST["tel"]);
 
-            // ✅ Hash sécurisé du mot de passe (remplace md5)
+            // hash du mot de passe 
             $mdp_hash = password_hash($_POST["mdp"], PASSWORD_DEFAULT);
 
             $nbUtilisateurs = count($utilisateurs);
@@ -170,7 +170,7 @@
                 "telephone" => $tel,
                 "adresse" => nettoyerChamp($_POST["adresse"]),
                 "mail" => $_POST["mail"],
-                "mdp" => $mdp_hash, // ✅ mot de passe hashé
+                "mdp" => $mdp_hash, 
                 "role" => "client",
                 "commandes" => 0,
                 "bloque" => false,
@@ -201,13 +201,13 @@
             <span></span>
             <span></span>
         </div>
-        <h1><a href="accueil.html" class="logo">La Cour des Délices</a></h1>
+        <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
         <div class="top-icons">
             <div class="profil-menu">
                 <img src="images/Iconprofil.png" alt="Profil" class="icon">
                 <div class="profil-bulle">
-                    <a href="inscription.html">Inscription</a>
-                    <a href="connexion.html">Connexion</a>
+                    <a href="inscription.php">Inscription</a>
+                    <a href="connexion.php">Connexion</a>
                 </div>
             </div>
             <a href="">
@@ -285,7 +285,7 @@
                 </div>
 
                 <input class="bouton" type="submit" value="CRÉER UN COMPTE"/>
-                <p class="inscription">Vous avez déjà un compte ? <a class="lien" href="connexion.html">Se connecter</a></p>
+                <p class="inscription">Vous avez déjà un compte ? <a class="lien" href="connexion.php">Se connecter</a></p>
 
             </fieldset>
         </form>
