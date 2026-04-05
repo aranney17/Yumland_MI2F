@@ -1,82 +1,19 @@
 <?php
 session_start();
-
-$userId = $_GET['id'] ?? null;
-
-// Charger client
-$clients = json_decode(file_get_contents('data/infoclient.json'), true);
-$client = null;
-
-foreach ($clients as $c) {
-    if ($c['id'] == $userId) {
-        $client = $c;
-        break;
-    }
+$userId = $_SESSION['id'] ?? null;
+if (!$userId) {
+    die("Utilisateur non connecté ou session expirée.");
 }
 
-// Charger panier
-$panier = json_decode(file_get_contents('data/panier.json'), true);
-
-// Générer référence
-$reference = strtoupper(substr(md5(uniqid()), 0, 10));
-
-// Date actuelle
-$dateCommande = date('Y-m-d');
-
-// 🔥 récupérer date livraison depuis session
-$dateLivraison = $_SESSION['date_livraison'] ?? null;
-
-// Calcul total
-$total = 0;
-foreach ($panier as $p) {
-    $total += $p['prix'] * $p['quantite'];
-}
-
-// Nouvelle commande
-$commande = [
-    "id" => time(),
-    "nom" => $client['nom'],
-    "prenom" => $client['prenom'],
-    "date" => $dateCommande,
-    "datelivraison" => $dateLivraison,
-    "telephone" => $client['telephone'],
-    "reference" => $reference,
-    "montant" => $total,
-    "paiement" => "payee",
-    "adresse" => $client['adresse'],
-    "statut" => "preparation",
-    "produits" => $panier
-];
-
-// Lire anciennes commandes
-$fichier = 'data/commande.json';
-$commandes = file_exists($fichier) ? json_decode(file_get_contents($fichier), true) : [];
-
-// Ajouter
-$commandes[] = $commande;
-
-// Sauvegarder
-file_put_contents($fichier, json_encode($commandes, JSON_PRETTY_PRINT));
-
-// Vider panier
-file_put_contents('data/panier.json', json_encode([]));
-
-// Nettoyer session
-unset($_SESSION['date_livraison']);
-?>
-
-<?php
-require('getapikey.php');
-
-// Récupération des paramètres envoyés par CY Bank
+// Récupérer les paramètres envoyés par CYBank
 $transaction = $_GET['transaction'] ?? '';
 $montant = $_GET['montant'] ?? '';
 $vendeur = $_GET['vendeur'] ?? '';
 $status = $_GET['status'] ?? '';
 $control_recu = $_GET['control'] ?? '';
-$session = $_GET['session'] ?? ''; // si tu veux récupérer la session
 
-// Vérification du contrôle
+// Recalcul du contrôle
+require('getapikey.php');
 $api_key = getAPIKey($vendeur);
 $control_calcule = md5(
     $api_key . "#" .
@@ -86,12 +23,66 @@ $control_calcule = md5(
     $status . "#"
 );
 
-// Vérification du panier seulement si paiement accepté
-if ($control_recu === $control_calcule && $status === "accepted") {
-    // vider le panier
-    file_put_contents('data/panier.json', json_encode([], JSON_PRETTY_PRINT));
+// Vérifier utilisateur
+if (!isset($_SESSION['id'])) {
+    die("Utilisateur non connecté ou session expirée.");
+}
+$userId = $_SESSION['id'];
+
+// Charger client
+$clients = file_exists('data/infoclient.json') ? json_decode(file_get_contents('data/infoclient.json'), true) : [];
+$client = null;
+foreach ($clients as $c) {
+    if ($c['id'] == $userId) {
+        $client = $c;
+        break;
+    }
+}
+$client = $client ?? [];
+
+// Récupérer le panier
+$panier = file_exists('data/panier.json') ? json_decode(file_get_contents('data/panier.json'), true) : [];
+
+// Récupérer date livraison et type commande depuis session
+$type_commande = $_SESSION['commande_temp']['type_commande'] ?? 'sur_place';
+$dateLivraison = $_SESSION['commande_temp']['date_livraison'] ?? date('Y-m-d'); // fallback date du jour
+
+// Calcul total
+$total = 0;
+foreach ($panier as $p) {
+    $total += $p['prix'] * $p['quantite'];
 }
 
+// Générer référence et date commande
+$reference = strtoupper(substr(md5(uniqid()), 0, 10));
+$dateCommande = date('Y-m-d');
+
+// Créer commande complète
+$commande = [
+    "id" => time(),
+    "nom" => $client['nom'] ?? '',
+    "prenom" => $client['prenom'] ?? '',
+    "date" => $dateCommande,
+    "datelivraison" => $dateLivraison,
+    "type_commande" => $type_commande, // nouveau champ
+    "telephone" => $client['telephone'] ?? '',
+    "reference" => $reference,
+    "montant" => $total,
+    "paiement" => "payee",
+    "adresse" => $client['adresse'] ?? '',
+    "statut" => "preparation",
+    "produits" => $panier
+];
+
+// Sauvegarder commandes
+$fichier = 'data/commande.json';
+$commandes = file_exists($fichier) ? json_decode(file_get_contents($fichier), true) : [];
+$commandes[] = $commande;
+file_put_contents($fichier, json_encode($commandes, JSON_PRETTY_PRINT));
+
+// Vider panier et nettoyer session
+file_put_contents('data/panier.json', json_encode([], JSON_PRETTY_PRINT));
+unset($_SESSION['date_livraison'], $_SESSION['commande_temp']);
 ?>
 
 <?php
@@ -144,8 +135,8 @@ $client = $client ?? [];
         <img src="images/Iconprofil.png" alt="Profil" class="icon">
 
         <div class="profil-bulle">
-            <a href="inscription.html">Inscription</a>
-            <a href="connexion.html">Connexion</a>
+            <a href="inscription.php">Inscription</a>
+            <a href="connexion.php">Connexion</a>
         </div>
     </div>
 
@@ -166,9 +157,6 @@ $client = $client ?? [];
         <li><u>Montant payé :</u> <?= htmlspecialchars($montant) ?> €</li>
         <li><u>Vendeur :</u> <?= htmlspecialchars($vendeur) ?></li>
         <li><u>Statut :</u> <?= htmlspecialchars($status) ?></li>
-        <!-- Affichage des infos client -->
-        <li><u>Nom :</u> <?= htmlspecialchars($client['nom'] ?? '') ?></li>
-        <li><u>Prénom :</u> <?= htmlspecialchars($client['prenom'] ?? '') ?></li>
     </ul>
 
      <?php else: ?>
