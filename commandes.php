@@ -60,7 +60,7 @@
                 <img src="images/Iconprofil.png" alt="Profil" class="icon">
                 <div class="profil-bulle">
                     <a href="profil.php">Profil</a>
-                    <a href="accueil.php">Déconnexion</a>
+                    <a href="logout.php">Déconnexion</a>
                 </div>
             </div>
         </div>
