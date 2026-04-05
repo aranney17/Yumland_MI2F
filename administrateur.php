@@ -21,10 +21,10 @@ $utilisateurs = json_decode($json, true);
             <span></span>
         </div> 
 
-        <h1><a href="accueil.html" class="logo">La Cour des Délices</a></h1>
+        <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
         <div class="top-icons">
-            <a href="profil.html"> <img src="images/Iconprofil.png" alt="Profil" class="icon"> </a>
-            <a href="accueil.html"><p class="deconnexion">déconnexion</p></a>
+            <a href="profil.php"> <img src="images/Iconprofil.png" alt="Profil" class="icon"> </a>
+            <a href="logout.php"><p class="deconnexion">déconnexion</p></a>
         </div>
     </header>
 
