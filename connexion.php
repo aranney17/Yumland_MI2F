@@ -59,10 +59,18 @@
                     $_SESSION["id"] = $utilisateurTrouve["id"];
                     $_SESSION["mail"] = $utilisateurTrouve["mail"];
                     $_SESSION["nom"] = $utilisateurTrouve["nom"] ?? ""; // si tu as ce champ
-
+                    $_SESSION["role"] = $utilisateurTrouve["role"];
                     // ✅ Redirection vers l'accueil (corrigé : guillemets autour de l'id)
-                    header("Location: accueil.php");
-                    exit();
+                    if($_SESSION["role"] == "client"){
+                        header("Location: accueil.php");
+                    } elseif($_SESSION["role"] == "cuisinier"){
+                        header("Location: commandes.php");
+                    } elseif($_SESSION["role"] == "administrateur"){
+                        header("Location: administrateur.php");
+                    } elseif($_SESSION["role"] == "livreur"){
+                        header("Location: livraison.php");
+                    }
+                        exit();
                 } else {
                     $erreur["mail"] = "E-mail ou mot de passe incorrect";
                     $erreur["mdp"] = "E-mail ou mot de passe incorrect";
