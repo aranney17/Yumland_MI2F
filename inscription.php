@@ -174,7 +174,8 @@
                 "role" => "client",
                 "commandes" => 0,
                 "bloque" => false,
-                "remise" => 0
+                "remise" => 0,
+                "dateinscription" => date("Y-m-d")
             );
 
             $utilisateurs[] = $nouvelUtilisateur;
