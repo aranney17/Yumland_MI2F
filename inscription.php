@@ -33,7 +33,10 @@
             $erreur["anniv"] = "Date invalide";
         }
         // TELEPHONE - Suppression des espaces avant vérification
-        if ($_POST["tel"] != "") {
+        if ($_POST["tel"] == "") {
+            $erreur["tel"] = "Veuillez renseigner ce champ";
+        }
+        else {
             // Supprimer tous les espaces du numéro
             $tel = str_replace(" ", "", $_POST["tel"]);
             
@@ -46,28 +49,93 @@
                 $erreur["tel"] = "Numéro de tel incorrect (doit commencer par 0)";
             }
         }
-        // ADRESSE - strpos() est autorisé (dans la doc)
+        // ADRESSE - Validation stricte avec API (uniquement fonctions autorisées)
         if ($_POST["adresse"] == "") {
             $erreur["adresse"] = "Veuillez renseigner ce champ";
         } else {
-            // Appel à l'API Adresse.data.gouv.fr
-            $adresseEncoded = urlencode($_POST["adresse"]);
-            $url = "https://api-adresse.data.gouv.fr/search/?q=" . $adresseEncoded . "&limit=1";
+            $adresse = $_POST["adresse"];
+            $longueur = strlen($adresse);
             
-            // Lecture de l'API
-            $response = file_get_contents($url);
-            $data = json_decode($response, true);
-            
-            if ($data && isset($data['features']) && count($data['features']) > 0) {
-                // L'adresse existe dans la base de données
-                $score = $data['features'][0]['properties']['score'];
-                if ($score < 0.5) {
-                    $erreur["adresse"] = "Adresse non reconnue ou incomplète";
+            // 1. Vérifier la présence d'un code postal VALIDE (5 chiffres exactement)
+            $codePostalValide = false;
+            $codePostal = "";
+            for ($i = 0; $i < $longueur - 4; $i++) {
+                $sub = substr($adresse, $i, 5);
+                // Vérifie que ce sont EXACTEMENT 5 chiffres avec ctype_digit
+                if (ctype_digit($sub)) {
+                    $cp = intval($sub);
+                    // Code postal français valide (01000 à 95999)
+                    if ($cp >= 1000 && $cp <= 95999) {
+                        $codePostalValide = true;
+                        $codePostal = $sub;
+                        break;
+                    }
                 }
+            }
+            
+            // 2. Vérifier un numéro de rue (au moins un chiffre)
+            $aUnNumero = false;
+            for ($i = 0; $i < $longueur; $i++) {
+                $caractere = substr($adresse, $i, 1);
+                if (ctype_digit($caractere)) {
+                    $aUnNumero = true;
+                    break;
+                }
+            }
+            
+            // 3. Vérifier un type de voie avec in_array
+            $typesVoie = array("rue", "avenue", "boulevard", "place", "impasse", "allee", "chemin", "route", "cours");
+            $aUneVoie = false;
+            $adresseLower = strtolower($adresse);
+            foreach ($typesVoie as $voie) {
+                if (strpos($adresseLower, $voie) !== false) {
+                    $aUneVoie = true;
+                    break;
+                }
+            }
+            
+            // 4. Vérifier les caractères indésirables (accents, symboles)
+            $caracteresIndesirables = array("&", "$", "*", "=", "+", "|", "{", "}", "[", "]", "<", ">");
+            $aCaractereInvalide = false;
+            foreach ($caracteresIndesirables as $car) {
+                if (strpos($adresseLower, $car) !== false) {
+                    $aCaractereInvalide = true;
+                    break;
+                }
+            }
+            
+            // 5. Validation de base
+            if (!$codePostalValide) {
+                $erreur["adresse"] = "Adresse invalide : code postal français requis (5 chiffres entre 01xxx et 95xxx)";
+            } elseif (!$aUnNumero) {
+                $erreur["adresse"] = "Adresse invalide : doit contenir un numéro de rue";
+            } elseif (!$aUneVoie) {
+                $erreur["adresse"] = "Adresse invalide : doit contenir un type de voie (rue, avenue, boulevard...)";
+            } elseif ($aCaractereInvalide) {
+                $erreur["adresse"] = "Adresse invalide : caractères non autorises (accents, symboles...)";
+            } elseif (strlen($adresse) < 15) {
+                $erreur["adresse"] = "Adresse trop courte, soyez plus precis";
             } else {
-                $erreur["adresse"] = "Adresse non trouvée";
+                // Appel à l'API Adresse.data.gouv.fr
+                $adresseEncoded = urlencode($_POST["adresse"]);
+                $url = "https://api-adresse.data.gouv.fr/search/?q=" . $adresseEncoded . "&limit=1";
+                
+                // Lecture de l'API
+                $response = file_get_contents($url);
+                $data = json_decode($response, true);
+                
+                if ($data && isset($data['features']) && count($data['features']) > 0) {
+                    // L'adresse existe dans la base de données
+                    $score = $data['features'][0]['properties']['score'];
+                    if ($score < 0.5) {
+                        $erreur["adresse"] = "Adresse non reconnue ou incomplète";
+                    }
+                } else {
+                    $erreur["adresse"] = "Adresse non trouvée";
+                }
             }
         }
+        
         // EMAIL - Validation sans filter_var()
         if ($_POST["mail"] == "") {
             $erreur["mail"] = "Veuillez renseigner ce champ";
@@ -87,31 +155,43 @@
         if (empty($erreur)) {
             // Ouverture du fichier en écriture (ajout à la fin)
             $infoclient = fopen("infoclient.json", "a");
+
+            if (!$infoclient) {
+                die("ERREUR : impossible d'ouvrir le fichier");
+            }
+
+            function nettoyerChamp($valeur) {
+                // Remplace les ; par des espaces
+                return str_replace(";", " ", $valeur);
+            }
             
             // Construction de la ligne avec les infos séparées par des espaces
             // Format: civilite prenom nom anniv tel adresse mail mdp role
-            $ligne = "";
-            $ligne .= $_POST["civilite"] . " ";
-            $ligne .= ucfirst(strtolower($_POST["prenom"])) . " ";
-            $ligne .= $_POST["nom"] . " ";
-            $ligne .= $_POST["anniv"] . " ";
-            $ligne .= $tel . " ";
-            $ligne .= $_POST["adresse"] . " ";
-            $ligne .= $_POST["mail"] . " ";
-            $ligne .= $_POST["mdp"] . " ";
-            $ligne .= "client";
+            $tel = str_replace(" ", "", $_POST["tel"]);
+            $mdp_hash = md5($_POST["mdp"]); 
+            
+
+            $data = array(
+                "civilite" => $_POST["civilite"],
+                "prenom" => nettoyerChamp(ucfirst(strtolower($_POST["prenom"]))),
+                "nom" => nettoyerChamp(strtoupper($_POST["nom"])),
+                "anniv" => $_POST["anniv"],
+                "tel" => $tel,
+                "adresse" => nettoyerChamp($_POST["adresse"]),
+                "mail" => $_POST["mail"],
+                "mdp" => $mdp_hash,
+                "role" => "client"
+            );
+            $ligne = json_encode($data) . "\n";
             
             // Écriture de la ligne dans le fichier
             fwrite($infoclient, $ligne);
-            
-            // Ajout d'un retour à la ligne
-            fwrite($infoclient, "\n");
             
             // Fermeture du fichier
             fclose($infoclient);
 
             // Redirection vers la page de connexion
-            header("Location: connexion.html");
+            header("Location: connexion.php");
             exit();
         }
     }
@@ -175,7 +255,7 @@
                 </div>
 
                 <div class="champ">
-                    Téléphone
+                    Téléphone *
                     <input type="text"  id="tel" name="tel" placeholder="01 23 54 67 88" value="<?= isset($_POST['tel']) ? htmlspecialchars($_POST['tel']) : '' ?>" class="<?= isset($erreur['tel']) ? 'erreur' : '' ?>" />
                     <small><?= $erreur['tel'] ?? '' ?></small>
                 </div>
