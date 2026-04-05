@@ -11,6 +11,61 @@
 
 <body>
 
+    <?php
+        $erreur = [];
+        
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // EMAIL
+            if ($_POST["mail"] == "") {
+                $erreur["mail"] = "Veuillez renseigner ce champ";
+            }
+            // MDP
+            if ($_POST["mdp"] == "") {
+                $erreur["mdp"] = "Veuillez renseigner ce champ";
+            }
+            
+            if (empty($erreur)) {
+                $mail = $_POST["mail"];
+                $mdp = $_POST["mdp"];
+                $mdp_hash = md5($mdp);
+                
+                // Lire le fichier JSON
+                $fichier = "infoclient.json";
+                $connecte = false;
+                
+                if (file_exists($fichier)) {
+                    $lignes = file($fichier);
+                    
+                    foreach ($lignes as $ligne) {
+                        $ligne = trim($ligne);
+                        if ($ligne != "") {
+                            $utilisateur = json_decode($ligne, true);
+                            
+                            if ($utilisateur && $utilisateur["mail"] == $mail && $utilisateur["mdp"] == $mdp_hash) {
+                                $connecte = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if ($connecte) {
+                    // Connexion réussie
+                    session_start();
+                    $_SESSION["user"] = $mail;
+                    $_SESSION["prenom"] = $utilisateur["prenom"];
+                    $_SESSION["nom"] = $utilisateur["nom"];
+                    header("Location: accueil.html");
+                    exit();
+                } else {
+                    $erreur["mail"] = "E-mail ou mot de passe incorrect";
+                    $erreur["mdp"] = "E-mail ou mot de passe incorrect";
+                }
+            }
+        }
+    ?>
+
+
     <header>
             <div class="barres">
                 <span></span>
@@ -39,18 +94,20 @@
         </header>
     
     <main>
-        <form action="page1.php" method="POST">
+        <form action="connexion.php" method="POST">
             <fieldset>
                 <legend>Connexion</legend>
                 <div class="champ">
                     E-mail *
                     <br />
-                    <input type="email" id="mail" name="mail" placeholder="nom@email.com"  />
+                    <input type="email" id="mail" name="mail" placeholder="nom@email.com" value="<?= isset($_POST['mail']) ? htmlspecialchars($_POST['mail']) : '' ?>" class="<?= isset($erreur['mail']) ? 'erreur' : '' ?>" />
+                    <small><?= $erreur['mail'] ?? '' ?></small>
                 </div>
                 <div class="champ" >
                     Mot de passe *
                     <br />
-                    <input type="password"  id="mdp" name="mdp"  />
+                    <input type="password"  id="mdp" name="mdp" maxlength=20 class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
+                    <small><?= $erreur['mdp'] ?? '' ?></small>
                     <img src="images/oeil.png" alt="Afficher mot de passe">
                 </div>
                 <a class="lien" href="mdpoublie.html">Mot de passe oublié ?</a>
