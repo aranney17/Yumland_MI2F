@@ -1,0 +1,138 @@
+body {
+    background-color: var(--main-background);
+    margin: 0;
+    font-family:"DM Serif Display";
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-x:hidden;
+}
+
+.ligne-produit {
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 20px;
+    padding:10px 0;
+}
+
+.img-produit {
+    width:150px;
+    height:150px;
+    object-fit: cover;
+}
+
+.info-produit {
+    flex:1;
+    font-size: 20px;
+}
+
+.prix-produit {
+    width:80px;
+    font-size: 30px;
+    text-align:right;
+    color: var(--article-price);
+}
+
+.total {
+    display:flex;
+    justify-content: space-between;
+    font-weight:bold;
+    font-size:30px;
+    padding-top:10px;
+    background-color: var(--article-price);
+    color: var(--main-background);
+}
+
+
+/* Bloc choix (images) */
+.choix-commande {
+    display: flex;
+    justify-content: center; /* centré */
+    gap: 40px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+/* Cacher les radio */
+.choix-commande input[type="radio"] {
+    display: none;
+}
+
+/* Image de choix */
+.choix-img {
+    width: 120px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 15px;
+}
+
+/* Hover */
+.choix-img:hover {
+    transform: scale(1.05);
+}
+
+/* Sélection + HALO */
+.choix-commande input[type="radio"]:checked + .choix-img {
+    border: 3px solid var(--article-background);
+    box-shadow: 0 0 15px var(--article-background); 
+}
+
+/* Infos livraison */
+.infos-livraison {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* Bouton valider */
+.btn-commande {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin: 40px auto 0 auto; /* centre + espace */
+    padding: 15px;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.bloc-livraison {
+    background-color: var(--main-title);
+    padding: 20px;
+    color: var(--article-background);
+    border-radius: 20px;
+    margin: 40px auto 0 auto; /* centre + espace */
+    min-width: 250px;
+    max-width: 350px;
+
+    box-shadow: 0 0 20px var(--article-background);
+}
+
+.titre-livraison {
+    font-size: 18px;
+    margin-bottom: 15px; /* espace avant les inputs */
+    font-weight: bold;
+}
+
+.bloc-sur-place {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+.bloc-sur-place h3 {
+    margin-top: 0;
+}
+
+.inputs-date {
+    display: flex;        /* mettre jour + heure sur la même ligne */
+    justify-content: center; /* centrer horizontalement */
+    gap: 20px;            /* espace entre jour et heure */
+    margin-top: 10px;     /* espace au-dessus si besoin */
+}
+
+.inputs-date label {
+    margin-right: 5px;
+}
