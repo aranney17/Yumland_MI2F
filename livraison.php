@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 $commandes = json_decode(file_get_contents('data/commande.json'), true);
 if (!$commandes) $commandes = [];
 
-// 👉 ACTION : démarrer
+//démarrer
 if (isset($_POST['start_id'])) {
     foreach ($commandes as &$cmd) {
         if ($cmd['id'] == $_POST['start_id']) {
@@ -18,7 +18,7 @@ if (isset($_POST['start_id'])) {
     exit;
 }
 
-// 👉 ACTION : terminer
+// terminer
 if (isset($_POST['finish_id'])) {
     foreach ($commandes as &$cmd) {
         if ($cmd['id'] == $_POST['finish_id']) {
@@ -77,7 +77,7 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
 
 <?php if ($commande_en_cours): ?>
 
-<!-- ✅ COMMANDE EN COURS -->
+<!-- COMMANDE EN COURS -->
 <div class="container">
 
     <div class="commande-card">
@@ -108,7 +108,7 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
 
 <?php else: ?>
 
-<!-- ✅ LISTE DES COMMANDES -->
+<!-- LISTE DES COMMANDES -->
 <div class="container">
 
 <?php foreach ($commandes_filtrees as $cmd): ?>
