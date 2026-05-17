@@ -141,12 +141,12 @@ tr.ligne:hover {
     transition: 0.3s;
 }
 
-// Effet hover 
+/* Effet hover */
 .menu-horizontal a:hover {
     color: var(--article-background);
 }
 
-// Soulignage animé
+/* Soulignage animé */
 .menu-horizontal a::after {
     content: "";
     position: absolute;
@@ -158,11 +158,12 @@ tr.ligne:hover {
     transition: 0.3s;
 }
 
-//apparition du trait
+/* Hover = apparition du trait */
 .menu-horizontal a:hover::after {
     width: 100%;
 }
 
+/* Page active */
 .menu-horizontal a.active {
     color: var(--article-background);
 }
@@ -170,18 +171,3 @@ tr.ligne:hover {
 .menu-horizontal a.active::after {
     width: 100%;
 }
-
-.btn-bloquer { padding: 5px 10px; cursor: pointer; }
-        .btn-bloquer.est-bloque { background: #c03030; color: white; }
-        tr.ligne-bloque { opacity: 0.5; }
-        .select-role { padding: 4px 6px; }
-        .select-role:disabled { background: #eee; cursor: not-allowed; }
-        body.dark .select-role:disabled { background: #2a2a2a; color: #888; }
-
-        .feedback-role {
-            display: inline-block; margin-left: 8px;
-            font-size: 12px; color: #40b040;
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .feedback-role.show { opacity: 1; }
-        .feedback-role.erreur { color: #c03030; }
