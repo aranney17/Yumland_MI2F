@@ -63,7 +63,7 @@ h2 {
 
 /* Texte */
 .ref {
-    color: var(--article-background);
+    color: var(--main-title);
     margin-bottom: 15px;
 }
 
