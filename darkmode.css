@@ -1,16 +1,17 @@
-// MODE SOMBRE
-
 body.dark {
-    --main-background:   #1f1814;   
-    --article-background:#3d2d1f;   
-    --main-title:        #f5e6d3;   
-    --article-price:     #d4a574;   
+    /* Surcharge des variables d'origine */
+    --main-background:   #1f1814;   /* brun chocolat tres fonce */
+    --article-background:#3d2d1f;   /* brun moyen pour les cartes */
+    --main-title:        #f5e6d3;   /* beige clair pour le texte */
+    --article-price:     #d4a574;   /* dore caramel pour les prix */
 
+    /* Appliquer le fond et la couleur de texte au body */
     background-color: var(--main-background);
     color: var(--main-title);
 }
 
-// Titres
+
+/* Titres */
 body.dark h1, body.dark h2, body.dark h3,
 body.dark h4, body.dark h5, body.dark h6 {
     color: #fcf9f4;
@@ -20,7 +21,7 @@ body.dark .titre-section {
     color: #d4a574; /* dore pour les titres de section */
 }
 
-// Liens 
+/* Liens */
 body.dark a {
     color: #e6c79c;
 }
@@ -28,7 +29,7 @@ body.dark a.logo {
     color: #fcf9f4;
 }
 
-// Cartes, blocs 
+/* Cartes / blocs : tons brun chocolat */
 body.dark .produit,
 body.dark .commande-case,
 body.dark .commande-card,
@@ -46,14 +47,14 @@ body.dark .custom-cake {
     border-color: #5a4435;
 }
 
-// Prix
+/* Prix - mise en valeur doree */
 body.dark .prix,
 body.dark .prix-produit,
 body.dark .prix-ligne {
     color: #d4a574;
 }
 
-// Formulaires
+/* Formulaires */
 body.dark input,
 body.dark select,
 body.dark textarea {
@@ -63,13 +64,13 @@ body.dark textarea {
 }
 body.dark input::placeholder { color: #b8a288; }
 
-// Boutons
+/* Boutons */
 body.dark button,
 body.dark .btn,
 body.dark .panier,
 body.dark .btn-commande,
 body.dark .finish-btn {
-    background-color: #5c3a2e;  
+    background-color: #5c3a2e;  /* repris de ton --article-price original */
     color: #fcf9f4;
     border: none;
 }
@@ -80,19 +81,19 @@ body.dark .btn-commande:hover {
     background-color: #7a4e3d;
 }
 
-// Categories 
+/* Categories en haut (cartes cliquables) */
 body.dark .categorie {
     background-color: #2d231c;
     color: #f0e4d2;
 }
 
-// Search bar
+/* Search bar */
 body.dark .search-bar input {
     background-color: #3d2d1f;
     color: #f5e6d3;
 }
 
-// Menu horizontal 
+/* Menu horizontal */
 body.dark .menu-horizontal {
     background-color: #261d11;
 }
@@ -103,17 +104,18 @@ body.dark .menu-horizontal .active {
     color: #a1784c;
 }
 
-// Filtres
+/* Filtres (page presentation) */
 body.dark .barre-filtres {
     background-color: #2d231c;
     color: #f0e4d2;
 }
 
+/* Total panier */
 body.dark .total {
     color: #1f150b;
 }
 
-// Footer
+/* Footer */
 body.dark footer {
     background-color: #14100c;
     color: #b8a288;
@@ -122,22 +124,23 @@ body.dark footer .info span {
     color: #b8a288;
 }
 
-//notification livraison
+/* Bandeau notification livraison */
 body.dark .notif-livraison {
     background-color: #4a6b2a; /* vert plus sombre */
 }
 
-// Badges statut 
+/* Badges statut (page commandes) */
 body.dark .badge-a-preparer    { background: #c88a30; }
 body.dark .badge-en-preparation { background: #3060c0; }
 
-// Statuts mes commandes 
+/* Statuts mes commandes */
 body.dark .statut-a-preparer  { background: #c88a30; }
 body.dark .statut-en-prep     { background: #3060c0; }
 body.dark .statut-prepare     { background: #6030b0; }
 body.dark .statut-livraison   { background: #c03030; }
 body.dark .statut-terminee    { background: #308030; }
 
+/* Bordures separatrices */
 body.dark hr {
     border-color: #5a4435;
 }
@@ -145,18 +148,22 @@ body.dark .produit-ligne {
     border-bottom-color: #5a4435;
 }
 
+/* Message info */
 body.dark .info-msg {
     background-color: #3d2d1f;
     border-color: #d4a574;
     color: #f0e4d2;
 }
 
+/* 
+   BOUTON FLOTTANT TOGGLE MODE SOMBRE
+*/
 .btn-darkmode {
     position: fixed;
     bottom: 20px;
     right: 20px;
     z-index: 9999;
-    background: #322119;     
+    background: #322119;     /* brun fonce, style patisserie */
     color: #fcf9f4;
     border: none;
     border-radius: 50%;
@@ -173,7 +180,7 @@ body.dark .info-msg {
 }
 
 body.dark .btn-darkmode {
-    background: #d4a574;     
+    background: #d4a574;   
     color: #1f1814;
     box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
 }
