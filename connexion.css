@@ -88,11 +88,19 @@ body::before{
         padding-right: 45px;
     }
 
-    .champ small {
+    .champ small{
         display: block;
         margin-top: 5px;
         font-size: 13px;
+    }
+
+    .erreur{
         color: red;
+    }
+
+    .compteur{
+        text-align: right;
+        color: var(--main-title);
     }
 
     .champ img {
