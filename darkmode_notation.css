@@ -1,12 +1,3 @@
-/* ============================================================
-   MODE SOMBRE - SPECIFIQUE page NOTATION
-
-   A charger APRES darkmode.css :
-     <link rel="stylesheet" href="notation.css">
-     <link rel="stylesheet" href="darkmode.css">
-     <link rel="stylesheet" href="darkmode_notation.css">
-============================================================ */
-
 /* Carte du formulaire de notation */
 body.dark .review {
     background: #2d231c !important;
