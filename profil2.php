@@ -373,11 +373,11 @@ foreach ($notations as $notation) {
                             <?php endif; ?>
                             
                             <?php
-                                    $ref = $commande['reference'];
+                                    $ref = $cmd['reference'];
                                     $dejaNoted = isset($notationsParRef[$ref]);
                                 ?>
  
-                                <?php if ($commande['statut'] === 'terminee') : ?>
+                                <?php if ($cmd['statut'] === 'terminee') : ?>
                                     <?php if ($dejaNoted) : ?>
                                         <!-- Affiche la note de satisfaction + lien pour voir le détail -->
                                         <div style="margin-top: 8px;">
