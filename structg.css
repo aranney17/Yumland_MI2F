@@ -216,3 +216,6 @@ footer{
     height: 40px;
     cursor: pointer;
 }
+
+.acces-refuse { text-align:center; margin-top:80px; }
+.acces-refuse a { display:inline-block; margin-top:20px; }
