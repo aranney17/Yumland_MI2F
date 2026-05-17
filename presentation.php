@@ -10,12 +10,6 @@ if (isset($_POST['ajouter_panier'])) {
     $prix     = $_POST['prix'];<?php
 session_start();
 
-/* -------------------------------------------------------------
-   AJOUT : si on est connecte, on verifie qu'on n'est pas bloque
-   et que le role est bien "client" (sinon redirection vers la
-   page principale du role).
-   Le check bloque DETRUIT la session et affiche un message.
-------------------------------------------------------------- */
 if (isset($_SESSION['id'])) {
     $usersCheck = json_decode(file_get_contents("data/infoclient.json"), true) ?? [];
     foreach ($usersCheck as $u) {
@@ -81,16 +75,6 @@ $listeCategories = array_keys($produitsParCategorie);
     <link rel="stylesheet" href="structg.css">
     <link rel="stylesheet" href="cssaccueil.css">
     <link rel="stylesheet" href="darkmode.css">
-    <style>
-        .barre-filtres {
-            max-width: 900px; margin: 20px auto; padding: 15px;
-            background: #f5f5f5; border-radius: 8px;
-            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
-        }
-        .barre-filtres label { font-weight: bold; margin-right: 8px; }
-        .barre-filtres select { padding: 6px 10px; }
-        body.dark .barre-filtres { background: #2a2a2a; }
-    </style>
 </head>
 <body>
 
@@ -367,9 +351,7 @@ $listeCategories = array_keys($produitsParCategorie);
 </nav>
 
 
-<!-- ============================================================
-     BARRE DE FILTRES
-============================================================ -->
+<!-- BARRE DE FILTRES -->
 <div class="barre-filtres">
     <div>
         <label for="filtre-tri">Trier par prix :</label>
@@ -416,13 +398,7 @@ $listeCategories = array_keys($produitsParCategorie);
 <a href="" id="btn-top">↑</a>
 
 
-<!-- ============================================================
-     SECTIONS PRODUITS
-     Pour permettre le tri JS, j'ai mis tous les produits d'une
-     categorie dans UN SEUL conteneur .produits (au lieu de les
-     decouper 2 par 2). Le CSS de .produits (flex/grid) gerera
-     l'affichage en lignes naturellement.
-============================================================ -->
+<!-- SECTIONS PRODUITS -->
 
 <?php foreach ($produitsParCategorie as $categorie => $produitsCat):
     $idAncre = strtolower($categorie);
@@ -477,9 +453,7 @@ $listeCategories = array_keys($produitsParCategorie);
 <?php endforeach; ?>
 
 
-<!-- ============================================================
-     JAVASCRIPT : tri par prix + filtre par categorie
-============================================================ -->
+<!-- tri par prix + filtre js -->
 <script>
 const selectTri       = document.getElementById('filtre-tri');
 const selectCategorie = document.getElementById('filtre-categorie');
