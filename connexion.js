@@ -110,6 +110,60 @@ function verificationInscription(){
         document.getElementById("erreurtel").innerHTML = "";
     }
 
+    //numero et nom de rue
+    let rue = document.getElementById("rue").value.trim();
+    if(rue == ""){
+        document.getElementById("erreurrue").innerHTML = "Veuillez renseigner ce champ";
+        valide = false;
+    }
+    else if(!/\d/.test(rue)){
+        document.getElementById("erreurrue").innerHTML = "Doit contenir un numéro de rue";
+        valide = false;
+    }
+    else if(!/(rue|avenue|boulevard|place|impasse|allée|allee|chemin|route|cours)/i.test(rue)){
+        document.getElementById("erreurrue").innerHTML = "Doit contenir un type de voie (rue, avenue...)";
+        valide = false;
+    }
+    else if(rue.length < 5){
+        document.getElementById("erreurrue").innerHTML = "Adresse trop courte";
+        valide = false;
+    }
+    else{
+        document.getElementById("erreurrue").innerHTML = "";
+    }
+
+    //code postal
+    let codepostal = document.getElementById("code_postal").value.trim();
+    if(codepostal == ""){
+        document.getElementById("erreurcode_postal").innerHTML = "Veuillez renseigner ce champ";
+        valide = false;
+    }
+    else if(!/^[0-9]{5}$/.test(codepostal)){
+        document.getElementById("erreurcode_postal").innerHTML = "5 chiffres requis";
+        valide = false;
+    }
+    else if(parseInt(codepostal) < 1000 || parseInt(codepostal) > 95999){
+        document.getElementById("erreurcode_postal").innerHTML = "Code postal français invalide (01xxx à 95xxx)";
+        valide = false;
+    }
+    else{
+        document.getElementById("erreurcode_postal").innerHTML = "";
+    }
+
+    //ville
+    let ville = document.getElementById("ville").value.trim();
+    if(ville == ""){
+        document.getElementById("erreurville").innerHTML = "Veuillez renseigner ce champ";
+        valide = false;
+    }
+    else if(!/^[a-zA-ZÀ-ÿ\s\-']+$/.test(ville)){
+        document.getElementById("erreurville").innerHTML = "Caractères invalides dans la ville";
+        valide = false;
+    }
+    else{
+        document.getElementById("erreurville").innerHTML = "";
+    }
+
     //email
     let mail = document.getElementById("mail").value.trim();
     if(mail == ""){
