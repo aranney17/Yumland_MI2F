@@ -24,6 +24,7 @@ $control_calcule = md5(
 $controleOK      = ($control_recu === $control_calcule);
 $paiementAccepte = ($controleOK && $status === "accepted");
 
+
 $estPaiementSupplement = isset($_SESSION['paiement_supplement']);
 
 $fichierPanier    = 'data/panier.json';
@@ -33,7 +34,7 @@ $fichierCommandes = 'data/commande.json';
 
 if ($estPaiementSupplement) {
 
-    
+    /*  CAS 1 PAIEMENT D'UN SUPPLEMENT (modification commande) */
     $infoSup = $_SESSION['paiement_supplement'];
     $refCmd  = $infoSup['ref'];
     $sup     = floatval($infoSup['supplement']);
@@ -56,11 +57,13 @@ if ($estPaiementSupplement) {
         unset($cmd);
         file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
     }
+    
 
     unset($_SESSION['paiement_supplement']);
 
 } else {
 
+    /* CAS 2 : PAIEMENT INITIAL D'UNE NOUVELLE COMMANDE*/
     if ($paiementAccepte) {
 
         // Charger client
