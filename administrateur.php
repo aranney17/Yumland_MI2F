@@ -1,4 +1,14 @@
 <?php
+session_start();
+
+// Vérifier connexion
+if (!isset($_SESSION['id'])) {
+    header("Location: connexion.php");
+    exit();
+}
+if($_SESSION["role"] != "administrateur"){
+    header("Location: connexion.php");
+}
 $json = file_get_contents("data/infoclient.json");
 $utilisateurs = json_decode($json, true);
 ?>
@@ -112,3 +122,4 @@ $utilisateurs = json_decode($json, true);
     
 </body>
 </html>
+
