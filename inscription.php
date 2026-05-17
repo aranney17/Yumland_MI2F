@@ -26,9 +26,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST["prenom"] == "") {
         $erreur["prenom"] = "Veuillez renseigner ce champ";
     }
+    elseif (strlen(trim($_POST["prenom"])) < 2) {
+        $erreur["prenom"] = "Le prénom doit contenir au moins 2 caractères";
+    }
+    elseif (!preg_match("/^[a-zA-ZÀ-ÿ\- ]+$/", trim($_POST["prenom"]))) {
+        $erreur["prenom"] = "Le prénom doit contenir uniquement des lettres";
+    }
     // NOM
     if ($_POST["nom"] == "") {
         $erreur["nom"] = "Veuillez renseigner ce champ";
+    }
+    elseif (strlen(trim($_POST["nom"])) < 2) {
+        $erreur["nom"] = "Le nom doit contenir au moins 2 caractères";
+    }
+    elseif (!preg_match("/^[a-zA-ZÀ-ÿ\- ]+$/", trim($_POST["nom"]))) {
+        $erreur["nom"] = "Le nom doit contenir uniquement des lettres";
     }
     // DATE
     if ($_POST["anniv"] == "") {
@@ -131,6 +143,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST["mdp"] == "" || $_POST["mdpconfirme"] == "") {
         $erreur["mdp"] = "Veuillez renseigner ce champ";
     } 
+    elseif (strlen($_POST["mdp"]) < 8) {
+        $erreur["mdp"] = "Le mot de passe doit contenir au moins 8 caractères";
+    }
     elseif ($_POST["mdp"] != $_POST["mdpconfirme"]) {
         $erreur["mdp"]= "Les mots de passe ne correspondent pas";
         $erreur["mdpconfirme"] = "Les mots de passe ne correspondent pas";
@@ -246,7 +261,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="champ">
                 Date de naissance *
                 <input type="date" id="anniv" name="anniv" value="<?= htmlspecialchars($_POST['anniv'] ?? '') ?>" class="<?= isset($erreur['anniv']) ? 'erreur' : '' ?>" />
-                <small class="erreur" id="erreuraniv"><?= $erreur['anniv'] ?? '' ?></small>
+                <small class="erreur" id="erreuranniv"><?= $erreur['anniv'] ?? '' ?></small>
             </div>
 
             <div class="champ">
@@ -263,8 +278,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="champ">
                 Code postal *
-                <input type="text" id="code_postal" name="code_postal" placeholder="75116" maxlength="5" value="<?= htmlspecialchars($_POST['code_postal'] ?? '') ?>" class="<?= isset($erreur['code_postal']) ? 'erreur' : '' ?>" />
+                <input type="text" id="code_postal" name="code_postal" placeholder="75116" maxlength="5" oninput="compteur('code_postal','compteurcode_postal',5) value="<?= htmlspecialchars($_POST['code_postal'] ?? '') ?>" class="<?= isset($erreur['code_postal']) ? 'erreur' : '' ?>" />
                 <small class="erreur" id="erreurcode_postal"><?= $erreur['code_postal'] ?? '' ?></small>
+                <small class="compteur" id="compteurcode_postal">0 / 5 caractères</small>
             </div>
 
             <div class="champ">
