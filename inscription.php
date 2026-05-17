@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="structg.css">
     <link rel="stylesheet" href="couleurs.css">
     <link rel="stylesheet" href="darkmode.css">
+    <script src="connexion.js" defer></script>
     <title>Inscription</title>
 </head>
+    
 <body>
 
 <?php
@@ -48,13 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    /* -------------------------------------------------------------
-       ADRESSE - separee en 3 champs : rue / code postal / ville
-    ------------------------------------------------------------- */
+    //Adresse
     // Numero + nom de rue
     if (empty($_POST["rue"])) {
         $erreur["rue"] = "Veuillez renseigner ce champ";
-    } else {
+    } 
+    else {
         $rue = trim($_POST["rue"]);
         // Doit contenir au moins un chiffre (numero) et un mot
         $aUnNumero = preg_match('/\d/', $rue);
@@ -63,21 +64,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $aUneVoie = false;
         $rueLower = strtolower($rue);
         foreach ($typesVoie as $voie) {
-            if (strpos($rueLower, $voie) !== false) { $aUneVoie = true; break; }
+            if (strpos($rueLower, $voie) !== false){ 
+                $aUneVoie = true; break;
+            }
         }
-        if (!$aUnNumero)        $erreur["rue"] = "Doit contenir un numéro de rue";
-        elseif (!$aUneVoie)     $erreur["rue"] = "Doit contenir un type de voie (rue, avenue...)";
-        elseif (strlen($rue) < 5) $erreur["rue"] = "Adresse trop courte";
+        if (!$aUnNumero){
+            $erreur["rue"] = "Doit contenir un numéro de rue";
+        }
+        elseif (!$aUneVoie){
+            $erreur["rue"] = "Doit contenir un type de voie (rue, avenue...)";
+        }
+        elseif (strlen($rue) < 5){
+            $erreur["rue"] = "Adresse trop courte";
+        }
     }
 
     // Code postal
     if (empty($_POST["code_postal"])) {
         $erreur["code_postal"] = "Veuillez renseigner ce champ";
-    } else {
+    } 
+    else {
         $cp = trim($_POST["code_postal"]);
         if (!ctype_digit($cp) || strlen($cp) != 5) {
             $erreur["code_postal"] = "5 chiffres requis";
-        } else {
+        } 
+        else {
             $cpInt = intval($cp);
             if ($cpInt < 1000 || $cpInt > 95999) {
                 $erreur["code_postal"] = "Code postal français invalide (01xxx à 95xxx)";
@@ -88,7 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ville
     if (empty($_POST["ville"])) {
         $erreur["ville"] = "Veuillez renseigner ce champ";
-    } else {
+    } 
+    else {
         $ville = trim($_POST["ville"]);
         // Lettres, espaces, tirets, apostrophes uniquement
         if (!preg_match("/^[a-zA-ZÀ-ÿ\s\-']+$/", $ville)) {
@@ -96,10 +108,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // EMAIL - format + UNICITE
+    // EMAIL
     if ($_POST["mail"] == "") {
         $erreur["mail"] = "Veuillez renseigner ce champ";
-    } else {
+    } 
+    else {
         $mailSaisi = trim(strtolower($_POST["mail"]));
         // Verifier que l'email n'est pas deja utilise
         $fichier = "data/infoclient.json";
@@ -117,8 +130,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // MDP
     if ($_POST["mdp"] == "" || $_POST["mdpconfirme"] == "") {
         $erreur["mdp"] = "Veuillez renseigner ce champ";
-    } elseif ($_POST["mdp"] != $_POST["mdpconfirme"]) {
-        $erreur["mdp"]         = "Les mots de passe ne correspondent pas";
+    } 
+    elseif ($_POST["mdp"] != $_POST["mdpconfirme"]) {
+        $erreur["mdp"]= "Les mots de passe ne correspondent pas";
         $erreur["mdpconfirme"] = "Les mots de passe ne correspondent pas";
     }
     // CGU
@@ -126,9 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $erreur["cgu"] = "Veuillez cocher la case";
     }
 
-    /* -------------------------------------------------------------
-       Si tout est OK : enregistrer le nouvel utilisateur
-    ------------------------------------------------------------- */
+    //sauvegarde du nv utilisateur
     if (empty($erreur)) {
 
         function nettoyerChamp($valeur) {
@@ -141,17 +153,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             : [];
 
         $tel = str_replace(" ", "", $_POST["tel"]);
+        // hash du mot de passe
         $mdp_hash = password_hash($_POST["mdp"], PASSWORD_DEFAULT);
 
-        // ID propre : max + 1 (evite les doublons si suppression)
+        // id du nv utilisateur
         $maxId = 0;
         foreach ($utilisateurs as $u) {
-            if ($u["id"] > $maxId) $maxId = $u["id"];
+            if ($u["id"] > $maxId){
+                $maxId = $u["id"];
+            }
         }
         $nouvelId = $maxId + 1;
 
-        // Reconstituer une adresse complete pour la compatibilite
-        // avec les pages qui utilisent encore $user['adresse']
+        // adresse complète
         $rue         = nettoyerChamp($_POST["rue"]);
         $code_postal = trim($_POST["code_postal"]);
         $ville       = nettoyerChamp(ucwords(strtolower($_POST["ville"])));
@@ -164,11 +178,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "nom"              => nettoyerChamp(strtoupper($_POST["nom"])),
             "date_naissance"   => $_POST["anniv"],
             "telephone"        => $tel,
-            // Nouveaux champs separes :
             "rue"              => $rue,
             "code_postal"      => $code_postal,
             "ville"            => $ville,
-            // Champ concatene pour compatibilite avec l'existant :
             "adresse"          => $adresseComplete,
             "mail"             => strtolower(trim($_POST["mail"])),
             "mdp"              => $mdp_hash,
@@ -183,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $utilisateurs[] = $nouvelUtilisateur;
         file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT));
 
-        // Redirection avec flag pour afficher message de succes
+        
         header("Location: connexion.php?inscription=ok");
         exit();
     }
@@ -207,81 +219,86 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <main>
     <h2>Créer un nouveau compte</h2>
-    <form action="inscription.php" method="POST">
+    <form action="inscription.php" method="POST" onsubmit="return verificationInscription()">
         <fieldset>
 
             <div class="civilite">
                 Civilité *
-                <input type="radio" name="civilite" value="Mme" <?= (isset($_POST["civilite"]) && $_POST["civilite"]=="Mme") ? 'checked' : '' ?>> Mme
-                <input type="radio" name="civilite" value="M" <?= (isset($_POST["civilite"]) && $_POST["civilite"]=="M") ? 'checked' : '' ?>> M.<br>
-                <small><?= $erreur['civilite'] ?? '' ?></small>
+                <input type="radio" id="civilite_mme" name="civilite" value="Mme" <?= (isset($_POST["civilite"]) && $_POST["civilite"]=="Mme") ? 'checked' : '' ?>> Mme
+                <input type="radio" id="civilite_m" name="civilite" value="M" <?= (isset($_POST["civilite"]) && $_POST["civilite"]=="M") ? 'checked' : '' ?>> M.<br>
+                <small class="erreur" id="erreurcivilite"><?= $erreur['civilite'] ?? '' ?></small>
             </div>
 
             <div class="champ">
                 Prénom *
-                <input type="text" name="prenom" maxlength="20" value="<?= htmlspecialchars($_POST['prenom'] ?? '') ?>" class="<?= isset($erreur['prenom']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['prenom'] ?? '' ?></small>
+                <input type="text" id="prenom" name="prenom" minlength=2 maxlength="20" value="<?= htmlspecialchars($_POST['prenom'] ?? '') ?>" oninput="compteur('prenom','compteurprenom',20)" class="<?= isset($erreur['prenom']) ? 'erreur' : '' ?>" />
+                <small class="erreur" id="erreurprenom" ><?= $erreur['prenom'] ?? '' ?></small>
+                <small class="compteur" id="compteurprenom">0 / 20 caractères</small>
             </div>
 
             <div class="champ">
                 Nom *
-                <input type="text" name="nom" maxlength="20" value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>" class="<?= isset($erreur['nom']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['nom'] ?? '' ?></small>
+                <input type="text" id="nom" name="nom" minlength=2 maxlength="20" value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>" oninput="compteur('nom','compteurnom',20)" class="<?= isset($erreur['nom']) ? 'erreur' : '' ?>" />
+                <small class="erreur" id="erreurnom"><?= $erreur['nom'] ?? '' ?></small>
+                <small class="compteur" id="compteurnom">0 / 20 caractères</small>
             </div>
 
             <div class="champ">
                 Date de naissance *
-                <input type="date" name="anniv" value="<?= htmlspecialchars($_POST['anniv'] ?? '') ?>" class="<?= isset($erreur['anniv']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['anniv'] ?? '' ?></small>
+                <input type="date" id="anniv" name="anniv" value="<?= htmlspecialchars($_POST['anniv'] ?? '') ?>" class="<?= isset($erreur['anniv']) ? 'erreur' : '' ?>" />
+                <small class="erreur" id="erreuraniv"><?= $erreur['anniv'] ?? '' ?></small>
             </div>
 
             <div class="champ">
                 Téléphone *
-                <input type="text" name="tel" placeholder="01 23 54 67 88" value="<?= htmlspecialchars($_POST['tel'] ?? '') ?>" class="<?= isset($erreur['tel']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['tel'] ?? '' ?></small>
+                <input type="text" id="tel" name="tel" placeholder="01 23 54 67 88" value="<?= htmlspecialchars($_POST['tel'] ?? '') ?>" class="<?= isset($erreur['tel']) ? 'erreur' : '' ?>" />
+                <small class="erreur" id="erreurtel"><?= $erreur['tel'] ?? '' ?></small>
             </div>
 
-            <!-- ADRESSE EN 3 CHAMPS -->
             <div class="champ">
                 Numéro et nom de rue *
-                <input type="text" name="rue" placeholder="57 avenue Victor Hugo" value="<?= htmlspecialchars($_POST['rue'] ?? '') ?>" class="<?= isset($erreur['rue']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['rue'] ?? '' ?></small>
+                <input type="text" id="rue" name="rue" placeholder="57 avenue Victor Hugo" value="<?= htmlspecialchars($_POST['rue'] ?? '') ?>" class="<?= isset($erreur['rue']) ? 'erreur' : '' ?>" />
+                <small class="erreur" id="erreurrue"><?= $erreur['rue'] ?? '' ?></small>
             </div>
 
             <div class="champ">
                 Code postal *
-                <input type="text" name="code_postal" placeholder="75116" maxlength="5" value="<?= htmlspecialchars($_POST['code_postal'] ?? '') ?>" class="<?= isset($erreur['code_postal']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['code_postal'] ?? '' ?></small>
+                <input type="text" id="code_postal" name="code_postal" placeholder="75116" maxlength="5" value="<?= htmlspecialchars($_POST['code_postal'] ?? '') ?>" class="<?= isset($erreur['code_postal']) ? 'erreur' : '' ?>" />
+                <small class="erreur" id="erreurcode_postal"><?= $erreur['code_postal'] ?? '' ?></small>
             </div>
 
             <div class="champ">
                 Ville *
-                <input type="text" name="ville" placeholder="Paris" value="<?= htmlspecialchars($_POST['ville'] ?? '') ?>" class="<?= isset($erreur['ville']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['ville'] ?? '' ?></small>
+                <input type="text" id="ville" name="ville" placeholder="Paris" value="<?= htmlspecialchars($_POST['ville'] ?? '') ?>" class="<?= isset($erreur['ville']) ? 'erreur' : '' ?>" />
+                <small class="erreur" id="erreurville"><?= $erreur['ville'] ?? '' ?></small>
             </div>
 
             <div class="champ">
                 Votre adresse e-mail *
-                <input type="email" name="mail" placeholder="nom@email.com" value="<?= htmlspecialchars($_POST['mail'] ?? '') ?>" class="<?= isset($erreur['mail']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['mail'] ?? '' ?></small>
+                <input type="email" id="mail" name="mail" placeholder="nom@email.com" value="<?= htmlspecialchars($_POST['mail'] ?? '') ?>" class="<?= isset($erreur['mail']) ? 'erreur' : '' ?>" />
+                <small class="erreur" id="erreurmail"><?= $erreur['mail'] ?? '' ?></small>
             </div>
 
             <div class="champ">
                 Créez votre mot de passe *
-                <input type="password" name="mdp" maxlength="20" class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['mdp'] ?? '' ?></small>
+                <input type="password" id="mdp" name="mdp" minlength=8 maxlength="20" oninput="compteur('mdp','compteurmdp',20)" class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
+                <img src="images/oeil.png" alt="Afficher mot de passe"  onclick="visibilitemdp('mdp', this)">
+                <small class="erreur" id="erreurmdp"><?= $erreur['mdp'] ?? '' ?></small>
+                <small class="compteur" id="compteurmdp">0 / 20 caractères</small>
             </div>
 
             <div class="champ">
                 Confirmer le mot de passe *
-                <input type="password" name="mdpconfirme" maxlength="20" class="<?= isset($erreur['mdpconfirme']) ? 'erreur' : '' ?>" />
-                <small><?= $erreur['mdpconfirme'] ?? '' ?></small>
+                <input type="password" id="mdpconfirme" name="mdpconfirme" minlength=8 maxlength="20" oninput="compteur('mdpconfirme','compteurmdpconfirme',20)" class="<?= isset($erreur['mdpconfirme']) ? 'erreur' : '' ?>" />
+                <img src="images/oeil.png" alt="Afficher mot de passe" onclick="visibilitemdp('mdpconfirme', this)">
+                <small class="erreur" id="erreurmdpconfirme"><?= $erreur['mdpconfirme'] ?? '' ?></small>
+                <small class="compteur" id="compteurmdpconfirme">0 / 20 caractères</small>
             </div>
 
             <div class="conditions">
-                <input type="checkbox" name="cgu" <?= isset($_POST['cgu']) ? 'checked' : '' ?> />
+                <input type="checkbox" id="cgu" name="cgu" <?= isset($_POST['cgu']) ? 'checked' : '' ?> />
                 J'accepte les <a href="conditions.html">CGU</a> *<br>
-                <small><?= $erreur['cgu'] ?? '' ?></small>
+                <small class="erreur" id="erreurcgu"><?= $erreur['cgu'] ?? '' ?></small>
             </div>
 
             <input class="bouton" type="submit" value="CRÉER UN COMPTE"/>
