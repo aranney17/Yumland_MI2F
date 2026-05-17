@@ -11,7 +11,7 @@ $fichierCommandes = "data/commande.json";
 
 $utilisateurs = json_decode(file_get_contents($fichierClients), true) ?? [];
 
-/* SECURITE admin + bloque */
+//securisation
 $roleConnecte = null;
 $bloqueConnecte = false;
 foreach ($utilisateurs as $u) {
@@ -32,9 +32,6 @@ if ($roleConnecte !== 'administrateur') {
 
 $ROLES_VALIDES = ['client', 'livreur', 'cuisinier', 'administrateur'];
 
-/* -------------------------------------------------------------
-   ENDPOINT AJAX 1 : toggle bloque (+ suppression commandes si bloque)
-------------------------------------------------------------- */
 if (isset($_POST['action']) && $_POST['action'] === 'toggle_bloque') {
     header('Content-Type: application/json');
     $idCible = (int) $_POST['user_id'];
@@ -77,9 +74,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'toggle_bloque') {
     exit;
 }
 
-/* -------------------------------------------------------------
-   ENDPOINT AJAX 2 : changer le role d'un utilisateur
-------------------------------------------------------------- */
+//change le role d'utilisateur
 if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
     header('Content-Type: application/json');
 
@@ -186,7 +181,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
                 <td><?= htmlspecialchars($user['prenom']) ?></td>
                 <td><?= htmlspecialchars($user['mail']) ?></td>
 
-                <!-- ROLE : select editable directement (sauf pour soi-meme) -->
                 <td>
                     <select class="select-role"
                             data-id="<?= $user['id'] ?>"
@@ -234,15 +228,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
     <h5>© 2026 Pâtisserie</h5>
 </footer>
 
-
-<!-- ============================================================
-     JAVASCRIPT
-     - toggleBloque : AJAX bloquer/debloquer (deja vu)
-     - changerRole : AJAX changement de role via le select
-       * Confirmation avant action
-       * Si l'admin annule, on revient a l'ancienne valeur
-       * Petit feedback visuel "✓ Role modifie"
-============================================================ -->
 <script>
 function toggleBloque(btn) {
     const userId = btn.dataset.id;
