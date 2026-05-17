@@ -1,15 +1,8 @@
 <?php
-// Lire tous les produits
-$fichierProduits = 'data/produits.json';
-$produits = json_decode(file_get_contents($fichierProduits), true);
-
-/* Ajout au panier (inchange) */
-if (isset($_POST['ajouter_panier'])) {
-    $nom      = $_POST['nom'];
-    $produit  = $_POST['produit'];
-    $prix     = $_POST['prix'];
 session_start();
 
+/* si on est connecte, on verifie qu'on n'est pas bloque
+   et que le role est bien client */
 if (isset($_SESSION['id'])) {
     $usersCheck = json_decode(file_get_contents("data/infoclient.json"), true) ?? [];
     foreach ($usersCheck as $u) {
@@ -75,6 +68,16 @@ $listeCategories = array_keys($produitsParCategorie);
     <link rel="stylesheet" href="structg.css">
     <link rel="stylesheet" href="cssaccueil.css">
     <link rel="stylesheet" href="darkmode.css">
+    <style>
+        .barre-filtres {
+            max-width: 900px; margin: 20px auto; padding: 15px;
+            background: #f5f5f5; border-radius: 8px;
+            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
+        }
+        .barre-filtres label { font-weight: bold; margin-right: 8px; }
+        .barre-filtres select { padding: 6px 10px; }
+        body.dark .barre-filtres { background: #2a2a2a; }
+    </style>
 </head>
 <body>
 
