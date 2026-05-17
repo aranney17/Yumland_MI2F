@@ -375,3 +375,26 @@ h2 {
     background-color: var(--article-background);
 }
 
+ .notif-livraison {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .notif-livraison button {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            cursor: pointer;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
