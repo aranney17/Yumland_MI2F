@@ -278,7 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="champ">
                 Code postal *
-                <input type="text" id="code_postal" name="code_postal" placeholder="75116" maxlength="5" oninput="compteur('code_postal','compteurcode_postal',5) value="<?= htmlspecialchars($_POST['code_postal'] ?? '') ?>" class="<?= isset($erreur['code_postal']) ? 'erreur' : '' ?>" />
+                <input type="text" id="code_postal" name="code_postal" placeholder="75116" maxlength="5" value="<?= htmlspecialchars($_POST['code_postal'] ?? '') ?>" oninput="compteur('code_postal','compteurcode_postal',5)" class="<?= isset($erreur['code_postal']) ? 'erreur' : '' ?>" />
                 <small class="erreur" id="erreurcode_postal"><?= $erreur['code_postal'] ?? '' ?></small>
                 <small class="compteur" id="compteurcode_postal">0 / 5 caractères</small>
             </div>
