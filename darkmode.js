@@ -1,10 +1,3 @@
-/* ============================================================
-   MODE SOMBRE
-   Sauvegarde la preference dans un cookie nomme "darkmode".
-   Valeurs : "true" (active) ou "false" (inactif).
-   Duree : 365 jours.
-============================================================ */
-
 // Lire un cookie
 function getCookie(nom) {
     const cookies = document.cookie.split('; ');
@@ -37,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.textContent = '☾';
     }
 
-    // Toggle au clic
     btn.addEventListener('click', function() {
         document.body.classList.toggle('dark');
         const estActif = document.body.classList.contains('dark');
