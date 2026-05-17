@@ -141,12 +141,12 @@ tr.ligne:hover {
     transition: 0.3s;
 }
 
-/* Effet hover */
+// Effet hover 
 .menu-horizontal a:hover {
     color: var(--article-background);
 }
 
-/* Soulignage animé */
+// Soulignage animé
 .menu-horizontal a::after {
     content: "";
     position: absolute;
@@ -158,12 +158,11 @@ tr.ligne:hover {
     transition: 0.3s;
 }
 
-/* Hover = apparition du trait */
+//apparition du trait
 .menu-horizontal a:hover::after {
     width: 100%;
 }
 
-/* Page active */
 .menu-horizontal a.active {
     color: var(--article-background);
 }
