@@ -126,7 +126,7 @@ foreach ($users as $user) {
             const formData = new FormData(form);
  
             // Envoi asynchrone vers profil_modifier.php
-            fetch('profil_modifier.php', {
+            fetch('modifier_profil2.php', {
                 method: 'POST',
                 body: formData
             })
