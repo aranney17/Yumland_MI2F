@@ -66,7 +66,7 @@ $produitTartealaframboise = getProduit('Tarteàlaframboise', $produits);
 ?>
 
 <?php
-
+/* NOTIFICATION DE LIVRAISON */
 $notifMessage = null;
 
 if ($userId) {
