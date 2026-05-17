@@ -7,7 +7,7 @@ $produits = json_decode(file_get_contents($fichierProduits), true);
 if (isset($_POST['ajouter_panier'])) {
     $nom      = $_POST['nom'];
     $produit  = $_POST['produit'];
-    $prix     = $_POST['prix'];<?php
+    $prix     = $_POST['prix'];
 session_start();
 
 if (isset($_SESSION['id'])) {
