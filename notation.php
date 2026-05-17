@@ -119,6 +119,8 @@ function afficherEtoiles($note) {
     <link rel="stylesheet" href="structg.css">
     <link rel="stylesheet" href="couleurs.css">
     <link rel="stylesheet" href="notation.css">
+    <link rel="stylesheet" href="darkmode.css">
+<link rel="stylesheet" href="darkmode_notation.css">
 
     <style>
         /* Étoiles statiques pour affichage note existante */
@@ -265,5 +267,7 @@ function afficherEtoiles($note) {
         </div>
         <h5>© 2026 Pâtisserie</h5>    
     </footer>
+<button id="btn-darkmode" class="btn-darkmode">☾</button>
+<script src="darkmode.js"></script>
 </body>
 </html>
