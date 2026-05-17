@@ -1,0 +1,137 @@
+/* ============================================================
+   MODE SOMBRE - SPECIFIQUE pages ADMINISTRATEUR
+   (administrateur.php et administrateur2.php)
+
+   Surcharge les couleurs hardcodees "white", "#E7E7E7", "#555"
+   que tes CSS administrateur.css / administrateur2.css forcent
+   et qui ne passent pas en sombre avec les variables seules.
+
+   A charger APRES darkmode.css :
+     <link rel="stylesheet" href="administrateur.css">
+     <link rel="stylesheet" href="darkmode.css">
+     <link rel="stylesheet" href="darkmode_admin.css">
+============================================================ */
+
+/* Carte principale qui contient le tableau */
+body.dark section {
+    background: #2d231c !important;
+    color: #f0e4d2;
+    box-shadow: 0 0 20px #5a4435;
+}
+
+/* Tableau : bordures et alignement */
+body.dark th {
+    color: #d4a574;
+}
+body.dark td {
+    border-top: 2px solid #5a4435;
+    color: #f0e4d2;
+}
+
+/* Hover sur les lignes - chocolat plus clair */
+body.dark tr.ligne:hover {
+    background: #3d2d1f !important;
+}
+
+/* Boutons de filtre (et tous les .filtre) */
+body.dark .filtre {
+    background: #3d2d1f !important;
+    border: 1px solid #d4a574;
+    color: #f0e4d2;
+}
+
+/* Barre de recherche */
+body.dark .search-bar input {
+    background: #3d2d1f;
+    color: #f5e6d3;
+    border-color: #d4a574;
+}
+body.dark .search-bar input::placeholder {
+    color: #b8a288;
+}
+body.dark .search-bar button {
+    background: #d4a574;
+    border-color: #d4a574;
+}
+
+/* Menu horizontal (Utilisateurs / Commandes) */
+body.dark .menu-horizontal {
+    background-color: #2d231c !important;
+    border-bottom: 2px solid #5a4435;
+}
+body.dark .menu-horizontal a {
+    color: #b8a288 !important;
+}
+body.dark .menu-horizontal a:hover,
+body.dark .menu-horizontal a.active {
+    color: #d4a574 !important;
+}
+body.dark .menu-horizontal a::after,
+body.dark .menu-horizontal a:hover::after,
+body.dark .menu-horizontal a.active::after {
+    background-color: #d4a574;
+}
+
+/* Texte "déconnexion" */
+body.dark .deconnexion {
+    color: #f0e4d2 !important;
+}
+
+/* Liens dans le tableau (nom cliquable) */
+body.dark .ligne a {
+    color: #d4a574;
+}
+body.dark .ligne a:hover {
+    color: #fcf9f4;
+}
+
+/* Select pour le changement de role */
+body.dark .select-role {
+    background: #3d2d1f;
+    color: #f5e6d3;
+    border: 1px solid #d4a574;
+}
+body.dark .select-role:disabled {
+    background: #1f1814;
+    color: #888;
+}
+
+/* Bouton bloquer/debloquer en mode bloque */
+body.dark .btn-bloquer.est-bloque {
+    background: #c03030;
+    color: white;
+}
+
+/* Bloc notation dans administrateur2 (deja stylé mais on reforce) */
+body.dark .bloc-notation {
+    background: #3d2d1f !important;
+    border-left-color: #d4a574;
+}
+body.dark .bloc-notation .etoiles {
+    color: #d4a574;
+}
+body.dark .bloc-notation .commentaire {
+    color: #b8a288;
+}
+
+/* Cases statut paiement / commande : on inverse leg er les couleurs
+   pour rester visibles sans casser leur signification */
+body.dark .case.payee,
+body.dark .case.livraison {
+    background: #1e4a3a;
+    color: #6fd9a8;
+}
+body.dark .case.preparation {
+    background: #2a2360;
+    color: #a89fff;
+}
+
+/* Tableau details (dans le detail deplie) */
+body.dark .table-details {
+    background: #1f1814;
+}
+body.dark .table-details th,
+body.dark .table-details td {
+    border-color: #5a4435;
+    color: #f0e4d2;
+}
