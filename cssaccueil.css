@@ -31,12 +31,12 @@ h2 {
     object-position:center;
 }
 
-/* enlève espace autour de la page */
+// enlève espace autour de la page 
 .categories::-webkit-scrollbar {
     display: none;
 }
 
-/* menu horizontal catégorie */
+// menu horizontal catégorie 
 .categorie {
     text-decoration: none;
     color: var(--main-title);
@@ -44,7 +44,7 @@ h2 {
     min-width: 120px;
 }
 
-/* cercle image */
+// cercle image 
 .categorie img {
     width: 100px;
     height: 100px;
@@ -52,13 +52,12 @@ h2 {
     object-fit: cover;  
 }
 
-/* titre */
+// titre 
 .categorie p {
     margin-top: 8px;
     font-size: 1rem;
 }
 
-/* grand encadré */
 .hero {
     width: 100%;
     aspect-ratio: 4/3;
@@ -84,7 +83,6 @@ h2 {
     color: var(--main-background);
 }
 
-/* bouton */
 .btn-commande {
     background-color: var(--article-background);
     color: var(--main-title);
@@ -112,7 +110,6 @@ h2 {
 }
 
 
-/* CONTENEUR DES IMAGES */
 .background-slider {
     position: absolute;
     top:0;
@@ -138,7 +135,6 @@ h2 {
     animation: slideShow 15s infinite;
 }
 
-/* carrousel */
 .background-slider span:nth-child(1) {
     background-image: url("images/Buffetfond1.png");
     animation-delay: 0s;
@@ -174,14 +170,12 @@ h2 {
     color: var(--main-background);
 }
 
-/* PARAGRAPHE gateau sur mesure */
 .custom-content p {
     font-size: 1.3rem;
     line-height: 1.6;
     margin-bottom: 25px;
 }
 
-/* BOUTON */
 .btn-custom {
     padding: 14px 28px;
     font-weight: bold;
@@ -211,7 +205,7 @@ h2 {
     font-size: 40px;
 }
 
-/* grille produits */
+// grille produits
 .produits {
     display: flex;
     flex-wrap: wrap;
@@ -221,14 +215,14 @@ h2 {
     padding:0;
 }
 
-/* un produit = moitié écran */
+
 .produit {
     width: 50%;
     padding: 15px;
     box-sizing: border-box;
 }
 
-/* image produit */
+// image produit 
 .produit > a > img {
     width: 100%;
     height: auto;
@@ -247,7 +241,6 @@ h2 {
     transform: scale(1.03);
 }
 
-/* zone texte + panier */
 .produit-info {
     display: flex;
     gap: 20px;
@@ -259,7 +252,7 @@ h2 {
     color: var(--article-price);
 }
 
-/* icône panier */
+// icône panier
 .icon-panier {
     width: 25px;
     height: 25px;
@@ -318,7 +311,6 @@ h2 {
     transition: 0.25s ease;
 }
 
-/* apparition au hover */
 .panier-menu:hover .panier-bulle {
     opacity: 1;
     visibility: visible;
@@ -326,7 +318,6 @@ h2 {
 }
 
 
-/* style interne */
 .panier-bulle input,
 .panier-bulle select {
     width: 100%;
@@ -351,7 +342,6 @@ h2 {
 }
 
 
-/* bouton retour en haut (n'apparait pas car utilise javascript)*/
 #btn-top {
     position: fixed;
     bottom: 20px;
