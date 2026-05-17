@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="structg.css">
     <link rel="stylesheet" href="couleurs.css">
     <link rel="stylesheet" href="darkmode.css">
+    <link rel="stylesheet" href="darkmode_connexion.css">
     <script src="connexion.js" defer></script>
     <title>Connexion</title>
 </head>
@@ -14,24 +15,16 @@
 
 <?php
 session_start();
-
 $erreur = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // EMAIL
-    if ($_POST["mail"] == ""){
-        $erreur["mail"] = "Veuillez renseigner ce champ";
-    }
-    // MDP
-    if ($_POST["mdp"]  == ""){
-        $erreur["mdp"]  = "Veuillez renseigner ce champ";
-    }
+    if ($_POST["mail"] == "") $erreur["mail"] = "Veuillez renseigner ce champ";
+    if ($_POST["mdp"]  == "") $erreur["mdp"]  = "Veuillez renseigner ce champ";
 
     if (empty($erreur)) {
         $mail = strtolower(trim($_POST["mail"]));
-        $mdp = $_POST["mdp"];
-        
-        // Lit le fichier sur les informations des clients
+        $mdp  = $_POST["mdp"];
+
         $fichier = "data/infoclient.json";
         $connecte = false;
         $utilisateurTrouve = null;
@@ -50,37 +43,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if ($connecte) {
-            foreach ($utilisateurs as &$user) {
-                if ($user["id"] == $utilisateurTrouve["id"]) {
-                    $user["dateconnexion"] = date("Y-m-d");
-                    break;
+            /* -------------------------------------------------------------
+               AJOUT : refuser la connexion si le compte est bloque.
+               On detecte ca AVANT de creer la session.
+            ------------------------------------------------------------- */
+            if ($utilisateurTrouve['bloque'] ?? false) {
+                $erreur["mail"] = "Votre compte a été bloqué. Contactez l'administrateur.";
+                $erreur["mdp"]  = "";
+            } else {
+                // Mise a jour date de connexion
+                foreach ($utilisateurs as &$user) {
+                    if ($user["id"] == $utilisateurTrouve["id"]) {
+                        $user["dateconnexion"] = date("Y-m-d");
+                        break;
+                    }
                 }
-            }
-            unset($user);
-            //sauvegarde dans le fichier JSON
-            file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT));
-            
-            //Stockage des infos utiles
-            $_SESSION["connecte"] = true;
-            $_SESSION["id"] = $utilisateurTrouve["id"];
-            $_SESSION["mail"]= $utilisateurTrouve["mail"];
-            $_SESSION["nom"] = $utilisateurTrouve["nom"] ?? "";
-            $_SESSION["role"]= $utilisateurTrouve["role"];
+                unset($user);
+                file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT));
 
-            // Redirection vers les pages en fonction des roles
-            if ($_SESSION["role"] == "client"){
-                header("Location: accueil.php");
+                $_SESSION["connecte"] = true;
+                $_SESSION["id"]       = $utilisateurTrouve["id"];
+                $_SESSION["mail"]     = $utilisateurTrouve["mail"];
+                $_SESSION["nom"]      = $utilisateurTrouve["nom"] ?? "";
+                $_SESSION["role"]     = $utilisateurTrouve["role"];
+
+                if      ($_SESSION["role"] == "client")         header("Location: accueil.php");
+                elseif  ($_SESSION["role"] == "cuisinier")      header("Location: commandes.php");
+                elseif  ($_SESSION["role"] == "administrateur") header("Location: administrateur.php");
+                elseif  ($_SESSION["role"] == "livreur")        header("Location: livraison.php");
+                exit();
             }
-            elseif ($_SESSION["role"] == "cuisinier"){
-                header("Location: commandes.php");
-            }
-            elseif($_SESSION["role"] == "administrateur"){
-                header("Location: administrateur.php");
-            }
-            elseif ($_SESSION["role"] == "livreur"){
-                header("Location: livraison.php");
-            }
-            exit();
         } else {
             $erreur["mail"] = "E-mail ou mot de passe incorrect";
             $erreur["mdp"]  = "E-mail ou mot de passe incorrect";
@@ -104,10 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </header>
 
-
-<?php
-    // Message de succes inscription
-    if (isset($_GET['inscription']) && $_GET['inscription'] === 'ok'): ?>
+<?php if (isset($_GET['inscription']) && $_GET['inscription'] === 'ok'): ?>
     <div class="message-succes">
         ✓ Votre inscription a bien été prise en compte. Vous pouvez maintenant vous connecter.
     </div>
@@ -126,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="champ">
                 Mot de passe *
                 <br />
-                <input type="password" id="mdp" name="mdp" minlength=8 maxlength="20" oninput="compteur('mdp','compteurmdp',20)" class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
+                <input type="password" id="mdp" name="mdp" minlength="8" maxlength="20" oninput="compteur('mdp','compteurmdp',20)" class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
                 <img src="images/oeil.png" alt="Afficher mot de passe" onclick="visibilitemdp('mdp', this)">
                 <small class="erreur" id="erreurmdp"><?= $erreur['mdp'] ?? '' ?></small>
                 <small class="compteur" id="compteurmdp">0 / 20 caractères</small>
@@ -137,8 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </fieldset>
     </form>
     <p class="connexion">
-        Vous n'êtes toujours pas client chez nous ?
-        <br />
+        Vous n'êtes toujours pas client chez nous ?<br />
         Créez un compte en quelques clics.
     </p>
     <a class="bouton" href="inscription.php">CRÉER UN COMPTE</a>
