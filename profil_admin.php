@@ -103,12 +103,10 @@ if ($id !== null) {
     <div class="block">Ville :
         <br><?= htmlspecialchars($userTrouve['ville'] ?? 'N/A') ?>
     </div>
-    <!-- CORRECTION : c'est 'mail' dans le JSON, pas 'email' -->
     <div class="block">Adresse mail :
         <br><?= htmlspecialchars($userTrouve['mail'] ?? 'N/A') ?>
     </div>
     <div class="block">Mot de passe :<br>*********</div>
-    <!-- CORRECTION : c'est 'role', pas 'statut' -->
     <div class="block">Rôle :
         <br><?= htmlspecialchars($userTrouve['role'] ?? 'N/A') ?>
     </div>
