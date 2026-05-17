@@ -1,12 +1,13 @@
 <?php
 session_start();
 
+// Vérifier connexion
 if (!isset($_SESSION['id'])) {
     header("Location: connexion.php");
     exit();
 }
 
-/* Securite : reserve aux cuisiniers */
+
 $clients = json_decode(file_get_contents('data/infoclient.json'), true) ?? [];
 $role = null;
 foreach ($clients as $c) {
@@ -18,11 +19,13 @@ if ($role !== 'cuisinier') {
     exit();
 }
 
+// Charger JSON
 $fichierCommandes = "data/commande.json";
 $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
 
 $modifie = false;
 
+//Commencer
 if (isset($_GET['commencer'])) {
     $ref = $_GET['commencer'];
     foreach ($commandes as &$cmd) {
@@ -37,6 +40,7 @@ if (isset($_GET['commencer'])) {
     unset($cmd);
 }
 
+// Terminer
 if (isset($_GET['terminer'])) {
     $ref = $_GET['terminer'];
     foreach ($commandes as &$cmd) {
