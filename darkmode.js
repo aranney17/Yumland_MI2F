@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.textContent = '☾';
     }
 
+    // annimation au clic
     btn.addEventListener('click', function() {
         document.body.classList.toggle('dark');
         const estActif = document.body.classList.contains('dark');
