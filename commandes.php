@@ -1,37 +1,40 @@
 <?php
 session_start();
 
-// Vérifier connexion
 if (!isset($_SESSION['id'])) {
     header("Location: connexion.php");
     exit();
 }
 
-
+/* SECURITE cuisinier + bloque */
 $clients = json_decode(file_get_contents('data/infoclient.json'), true) ?? [];
 $role = null;
+$bloque = false;
 foreach ($clients as $c) {
-    if ($c['id'] == $_SESSION['id']) { $role = $c['role']; break; }
+    if ($c['id'] == $_SESSION['id']) {
+        $role = $c['role'];
+        $bloque = $c['bloque'] ?? false;
+        break;
+    }
+}
+if ($bloque) {
+    session_destroy();
+    die("Votre compte a été bloqué. <a href='connexion.php'>Retour</a>");
 }
 if ($role !== 'cuisinier') {
     http_response_code(403);
-    echo "<h1>Acces refuse</h1><p>Cette page est reservee aux cuisiniers.</p><a href='accueil.php'>Retour</a>";
-    exit();
+    die("Accès refusé. Cette page est réservée aux cuisiniers.");
 }
 
-// Charger JSON
 $fichierCommandes = "data/commande.json";
 $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
 
 $modifie = false;
-
-//Commencer
 if (isset($_GET['commencer'])) {
     $ref = $_GET['commencer'];
     foreach ($commandes as &$cmd) {
         if ($cmd['reference'] === $ref && $cmd['statut'] === "a preparer") {
             $cmd['statut'] = "en preparation";
-            // Le client ne peut plus modifier : on retire le flag "modifiee"
             $cmd['modifie_par_client'] = false;
             $modifie = true;
             break;
@@ -39,8 +42,6 @@ if (isset($_GET['commencer'])) {
     }
     unset($cmd);
 }
-
-// Terminer
 if (isset($_GET['terminer'])) {
     $ref = $_GET['terminer'];
     foreach ($commandes as &$cmd) {
@@ -52,7 +53,6 @@ if (isset($_GET['terminer'])) {
     }
     unset($cmd);
 }
-
 if ($modifie) {
     file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
     header("Location: commandes.php");
@@ -72,12 +72,23 @@ $ajd = date("Y-m-d");
     <link rel="stylesheet" href="couleurs.css">
     <link rel="stylesheet" href="darkmode.css">
     <title>Commandes</title>
+    <style>
+        .commande-case.a-preparer     { border-left: 6px solid #f0a040; }
+        .commande-case.en-preparation { border-left: 6px solid #4080f0; }
+        .badge-statut { display:inline-block; padding:2px 8px; border-radius:10px; font-size:12px; color:white; margin-right:5px; }
+        .badge-a-preparer     { background: #f0a040; }
+        .badge-en-preparation { background: #4080f0; }
+        .badge-modifiee       { background: #c03030; }
+        .alerte-modif { background:#ffe8e8; border-left:4px solid #c03030; padding:6px 10px; margin:8px 0; font-size:13px; }
+        body.dark .alerte-modif { background:#4a2020; }
+    </style>
 </head>
 <body>
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+    <!-- LOGO : confine au cuisinier -->
+    <h1><a href="commandes.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
             <img src="images/Iconprofil.png" class="icon">
@@ -91,67 +102,49 @@ $ajd = date("Y-m-d");
 
 <main>
     <h2>Commandes du jour</h2>
-
     <div class="commandes">
-
     <?php foreach ($commandes as $cmd):
         $estAPreparer     = ($cmd['statut'] === "a preparer");
         $estEnPreparation = ($cmd['statut'] === "en preparation");
         $estModifiee      = !empty($cmd['modifie_par_client']);
-
         if (($estAPreparer || $estEnPreparation) && $cmd['datelivraison'] === $ajd):
             $classeCase = $estAPreparer ? "a-preparer" : "en-preparation";
     ?>
-
         <div class="commande-case <?= $classeCase ?>">
-
             <div class="commande-header">
                 <span class="numero"><?= $cmd['reference'] ?></span>
                 <span class="prix"><?= $cmd['montant'] ?>€</span>
             </div>
-
             <p>
                 <?php if ($estAPreparer): ?>
                     <span class="badge-statut badge-a-preparer">À préparer</span>
                 <?php else: ?>
                     <span class="badge-statut badge-en-preparation">En préparation</span>
                 <?php endif; ?>
-
                 <?php if ($estModifiee && $estAPreparer): ?>
                     <span class="badge-statut badge-modifiee">⚠ Modifiée</span>
                 <?php endif; ?>
             </p>
-
             <?php if ($estModifiee && $estAPreparer): ?>
                 <div class="alerte-modif">
-                    Le client a modifié sa commande
+                    Commande modifiée par le client
                     <?php if (!empty($cmd['date_revalidation'])): ?>
                         le <?= $cmd['date_revalidation'] ?>
-                    <?php endif; ?>
-                    . Vérifiez le détail avant de commencer.
+                    <?php endif; ?>.
                 </div>
             <?php endif; ?>
-
             <div class="commande-details">
                 <?php foreach ($cmd['produits'] as $produit): ?>
                     <?= $produit['produit'] ?> x<?= $produit['quantite'] ?><br>
                 <?php endforeach; ?>
             </div>
-
             <?php if ($estAPreparer): ?>
-                <a href="commandes.php?commencer=<?= $cmd['reference'] ?>" class="btn">
-                    Commencer la préparation
-                </a>
+                <a href="commandes.php?commencer=<?= $cmd['reference'] ?>" class="btn">Commencer la préparation</a>
             <?php else: ?>
-                <a href="commandes.php?terminer=<?= $cmd['reference'] ?>" class="btn">
-                    Terminer
-                </a>
+                <a href="commandes.php?terminer=<?= $cmd['reference'] ?>" class="btn">Terminer</a>
             <?php endif; ?>
-
         </div>
-
     <?php endif; endforeach; ?>
-
     </div>
 </main>
 
