@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="champ">
                 Mot de passe *
                 <br />
-                <input type="password" id="mdp" name="mdp" minlength=8 maxlength="20" oninput="compteur('mdpconfirme','compteurmdpconfirme',20)" class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
+                <input type="password" id="mdp" name="mdp" minlength=8 maxlength="20" oninput="compteur('mdp','compteurmdp',20)" class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
                 <img src="images/oeil.png" alt="Afficher mot de passe" onclick="visibilitemdp('mdp', this)">
                 <small class="erreur" id="erreurmdp"><?= $erreur['mdp'] ?? '' ?></small>
                 <small class="compteur" id="compteurmdp">0 / 20 caractères</small>
