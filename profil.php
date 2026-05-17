@@ -6,12 +6,133 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-$users = json_decode(file_get_contents("data/infoclient.json"), true) ?? [];
+$fichierClients   = "data/infoclient.json";
+$fichierCommandes = "data/commande.json";
+
+$users = json_decode(file_get_contents($fichierClients), true) ?? [];
+
+/* User connecte + check bloque */
 $id = $_SESSION['id'];
 $userTrouve = null;
-foreach ($users as $user) {
-    if ($user['id'] == $id) { $userTrouve = $user; break; }
+foreach ($users as $u) {
+    if ($u['id'] == $id) { $userTrouve = $u; break; }
 }
+if (!$userTrouve) { die("Utilisateur introuvable."); }
+if ($userTrouve['bloque'] ?? false) {
+    session_destroy();
+    die("Votre compte a été bloqué.");
+}
+
+/* -------------------------------------------------------------
+   ENDPOINT AJAX : update d'un champ du profil
+   Champs autorises : tout sauf role, bloque, remise, id, mdp...
+   Apres update, on propage aux commandes "en cours" du user
+------------------------------------------------------------- */
+if (isset($_POST['action']) && $_POST['action'] === 'update_profil') {
+    header('Content-Type: application/json');
+
+    $champ  = $_POST['champ']  ?? '';
+    $valeur = trim($_POST['valeur'] ?? '');
+
+    $champsAutorises = [
+        'civilite', 'prenom', 'nom', 'date_naissance',
+        'telephone', 'rue', 'code_postal', 'ville', 'mail'
+    ];
+
+    if (!in_array($champ, $champsAutorises)) {
+        echo json_encode(['success' => false, 'erreur' => 'Champ non autorisé']);
+        exit;
+    }
+
+    // Validation basique cote serveur
+    if ($valeur === '') {
+        echo json_encode(['success' => false, 'erreur' => 'Le champ ne peut pas être vide']);
+        exit;
+    }
+    if ($champ === 'telephone' && !preg_match('/^\d{10}$/', str_replace(' ', '', $valeur))) {
+        echo json_encode(['success' => false, 'erreur' => 'Téléphone invalide (10 chiffres)']);
+        exit;
+    }
+    if ($champ === 'code_postal' && !preg_match('/^\d{5}$/', $valeur)) {
+        echo json_encode(['success' => false, 'erreur' => 'Code postal invalide (5 chiffres)']);
+        exit;
+    }
+    if ($champ === 'mail' && !filter_var($valeur, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['success' => false, 'erreur' => 'Email invalide']);
+        exit;
+    }
+    if ($champ === 'date_naissance' && $valeur > date('Y-m-d')) {
+        echo json_encode(['success' => false, 'erreur' => 'Date invalide']);
+        exit;
+    }
+    // Email unique
+    if ($champ === 'mail') {
+        foreach ($users as $u) {
+            if ($u['id'] != $id && strtolower($u['mail']) === strtolower($valeur)) {
+                echo json_encode(['success' => false, 'erreur' => 'Cet email est déjà utilisé']);
+                exit;
+            }
+        }
+    }
+
+    // On garde l'ancien user pour retrouver les commandes
+    $ancien = $userTrouve;
+
+    // Update user
+    foreach ($users as &$u) {
+        if ($u['id'] == $id) {
+            $u[$champ] = $valeur;
+            // Si rue/cp/ville changent, on recompose adresse
+            if (in_array($champ, ['rue', 'code_postal', 'ville'])) {
+                $u['adresse'] = ($u['rue'] ?? '') . ' '
+                              . ($u['code_postal'] ?? '') . ' '
+                              . ($u['ville'] ?? '');
+            }
+            $nouveau = $u;
+            break;
+        }
+    }
+    unset($u);
+    file_put_contents($fichierClients, json_encode($users, JSON_PRETTY_PRINT));
+
+    // Propagation aux commandes en cours (statut != "terminee")
+    $statutsEnCours = ['a preparer', 'en preparation', 'commande préparée', 'en_livraison'];
+    $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
+    $modifCmd = false;
+    foreach ($commandes as &$cmd) {
+        // On retrouve les commandes via l'ancien nom/prenom/tel
+        $estDuUser = strtolower($cmd['nom']) === strtolower($ancien['nom'])
+                  && strtolower($cmd['prenom']) === strtolower($ancien['prenom'])
+                  && $cmd['telephone'] === $ancien['telephone'];
+
+        if ($estDuUser && in_array($cmd['statut'], $statutsEnCours)) {
+            $cmd['nom']       = $nouveau['nom'];
+            $cmd['prenom']    = $nouveau['prenom'];
+            $cmd['telephone'] = $nouveau['telephone'];
+            $cmd['adresse']   = $nouveau['adresse'] ?? $cmd['adresse'];
+            $modifCmd = true;
+        }
+    }
+    unset($cmd);
+    if ($modifCmd) {
+        file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
+    }
+
+    echo json_encode([
+        'success'      => true,
+        'valeur'       => $valeur,
+        'cmd_majees'   => $modifCmd
+    ]);
+    exit;
+}
+
+/* -------------------------------------------------------------
+   Determiner le lien du logo selon le role
+------------------------------------------------------------- */
+$logoTarget = 'accueil.php';
+if      ($userTrouve['role'] === 'cuisinier')      $logoTarget = 'commandes.php';
+elseif  ($userTrouve['role'] === 'livreur')        $logoTarget = 'livraison.php';
+elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur.php';
 ?>
 
 <!DOCTYPE html>
@@ -23,12 +144,38 @@ foreach ($users as $user) {
     <link rel="stylesheet" href="structg.css">
     <link rel="stylesheet" href="profil.css">
     <link rel="stylesheet" href="darkmode.css">
+    <style>
+        .block, .inline {
+            display: flex; flex-direction: column;
+            margin-bottom: 15px; position: relative;
+        }
+        .label-champ { font-weight: bold; }
+        .value-champ { padding: 4px 0; }
+        .input-edit  { width: 250px; padding: 5px; }
+        .actions-edit { margin-top: 5px; }
+        .btn-edit, .btn-save, .btn-cancel {
+            cursor: pointer; padding: 4px 8px; margin-right: 5px;
+            border: 1px solid #aaa; background: #f5f5f5;
+        }
+        body.dark .btn-edit,
+        body.dark .btn-save,
+        body.dark .btn-cancel { background: #3d2d1f; color: #f0e4d2; border-color: #5a4435; }
+
+        .msg-confirm {
+            display: none; color: #40b040; font-size: 13px;
+            margin-left: 10px;
+        }
+        .msg-erreur {
+            display: none; color: #c03030; font-size: 13px;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="<?= $logoTarget ?>" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
             <img src="images/Iconprofil.png" class="icon">
@@ -45,67 +192,64 @@ foreach ($users as $user) {
 <aside class="sidebar">
     <ul class="menu">
         <li><a href="profil.php"><strong>Informations</strong></a></li>
-        <li><a href="profil2.php">Historique de commandes</a></li>
-        <li>Données personnelles</li>
+        <?php if ($userTrouve['role'] === 'client'): ?>
+            <li><a href="profil2.php">Historique de commandes</a></li>
+        <?php endif; ?>
     </ul>
     <br>
     <a href="logout.php"><p class="logout">Déconnexion</p></a>
 </aside>
 
 <section class="informations">
+    <h2 class="title">Informations</h2>
 
-<?php if ($userTrouve): ?>
+    <!-- Chaque champ a son crayon. Au clic → on bascule en mode edition.
+         Au valider → fetch AJAX vers profil.php (cette meme page) qui
+         repond en JSON. -->
 
-<h2 class="title">
-    Informations
-    <a href="modifier_profil.php"><img src="images/crayon.png" width="15"></a>
-</h2>
+    <?php
+    // Helper pour generer un champ editable
+    function champEditable($cle, $label, $valeur, $type = 'text') {
+        $val = htmlspecialchars($valeur ?? '');
+        echo <<<HTML
+        <div class="block" data-champ="{$cle}" data-type="{$type}">
+            <span class="label-champ">{$label} :</span>
+            <span class="value-champ">{$val}</span>
+            <div class="actions-edit">
+                <button class="btn-edit" type="button">✎ Modifier</button>
+                <input type="{$type}" class="input-edit" style="display:none" value="{$val}">
+                <button class="btn-save"   type="button" style="display:none">✓ Valider</button>
+                <button class="btn-cancel" type="button" style="display:none">✗ Annuler</button>
+                <span class="msg-confirm">✓ enregistré</span>
+                <span class="msg-erreur"></span>
+            </div>
+        </div>
+        HTML;
+    }
 
-<div class="block">Civilité :
-    <br><?= htmlspecialchars($userTrouve['civilite'] ?? '') ?>
-</div>
+    champEditable('civilite',        'Civilité',          $userTrouve['civilite']        ?? '');
+    champEditable('prenom',          'Prénom',            $userTrouve['prenom']          ?? '');
+    champEditable('nom',             'Nom',               $userTrouve['nom']             ?? '');
+    champEditable('date_naissance',  'Date de naissance', $userTrouve['date_naissance']  ?? '', 'date');
+    champEditable('telephone',       'Téléphone',         $userTrouve['telephone']       ?? '');
+    champEditable('rue',             'Rue',               $userTrouve['rue']             ?? '');
+    champEditable('code_postal',     'Code postal',       $userTrouve['code_postal']     ?? '');
+    champEditable('ville',           'Ville',             $userTrouve['ville']           ?? '');
+    champEditable('mail',            'Adresse mail',      $userTrouve['mail']            ?? '', 'email');
+    ?>
 
-<span class="inline">Nom :
-    <br><?= htmlspecialchars($userTrouve['nom']) ?>
-</span>
+    <!-- Role : LECTURE SEULE (un livreur ne peut pas se changer en cuisinier) -->
+    <div class="block">
+        <span class="label-champ">Rôle :</span>
+        <span class="value-champ"><?= htmlspecialchars($userTrouve['role']) ?></span>
+        <small><em>(non modifiable)</em></small>
+    </div>
 
-<span class="inline">Prénom :
-    <br><?= htmlspecialchars($userTrouve['prenom']) ?>
-</span>
-
-<div class="block">Date de naissance :
-    <br><?= htmlspecialchars($userTrouve['date_naissance'] ?? '') ?>
-</div>
-
-<div class="block">Téléphone :
-    <br><?= htmlspecialchars($userTrouve['telephone'] ?? '') ?>
-</div>
-
-<!-- AFFICHAGE ADRESSE SEPAREE -->
-<div class="block">Rue :
-    <br><?= htmlspecialchars($userTrouve['rue'] ?? '') ?>
-</div>
-
-<div class="block">Code postal :
-    <br><?= htmlspecialchars($userTrouve['code_postal'] ?? '') ?>
-</div>
-
-<div class="block">Ville :
-    <br><?= htmlspecialchars($userTrouve['ville'] ?? '') ?>
-</div>
-
-<div class="block">Adresse mail :
-    <br><?= htmlspecialchars($userTrouve['mail']) ?>
-</div>
-
-<div class="block">Mot de passe :
-    <br>*********
-</div>
-
-<?php else: ?>
-<p>Utilisateur introuvable</p>
-<?php endif; ?>
-
+    <div class="block">
+        <span class="label-champ">Mot de passe :</span>
+        <span class="value-champ">*********</span>
+        <a href="modifier_profil.php">Changer mon mot de passe</a>
+    </div>
 </section>
 </main>
 
@@ -121,6 +265,77 @@ foreach ($users as $user) {
     </div>
     <h5>© 2026 Pâtisserie</h5>
 </footer>
+
+
+<!-- ============================================================
+     JAVASCRIPT : edition AJAX champ par champ
+============================================================ -->
+<script>
+document.querySelectorAll('.block[data-champ]').forEach(function(bloc) {
+
+    const valueSpan = bloc.querySelector('.value-champ');
+    const input     = bloc.querySelector('.input-edit');
+    const btnEdit   = bloc.querySelector('.btn-edit');
+    const btnSave   = bloc.querySelector('.btn-save');
+    const btnCancel = bloc.querySelector('.btn-cancel');
+    const msgOk     = bloc.querySelector('.msg-confirm');
+    const msgKo     = bloc.querySelector('.msg-erreur');
+
+    function modeEdition() {
+        input.value = valueSpan.textContent.trim();
+        valueSpan.style.display = 'none';
+        btnEdit.style.display = 'none';
+        input.style.display = '';
+        btnSave.style.display = '';
+        btnCancel.style.display = '';
+        msgOk.style.display = 'none';
+        msgKo.style.display = 'none';
+        input.focus();
+    }
+
+    function modeAffichage() {
+        valueSpan.style.display = '';
+        btnEdit.style.display = '';
+        input.style.display = 'none';
+        btnSave.style.display = 'none';
+        btnCancel.style.display = 'none';
+    }
+
+    btnEdit.addEventListener('click', modeEdition);
+    btnCancel.addEventListener('click', modeAffichage);
+
+    btnSave.addEventListener('click', function() {
+        const champ  = bloc.dataset.champ;
+        const valeur = input.value;
+
+        const formData = new FormData();
+        formData.append('action', 'update_profil');
+        formData.append('champ',  champ);
+        formData.append('valeur', valeur);
+
+        fetch('profil.php', { method: 'POST', body: formData })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    valueSpan.textContent = data.valeur;
+                    modeAffichage();
+                    msgOk.textContent = data.cmd_majees
+                        ? '✓ enregistré (commandes en cours mises à jour)'
+                        : '✓ enregistré';
+                    msgOk.style.display = '';
+                    setTimeout(() => { msgOk.style.display = 'none'; }, 3000);
+                } else {
+                    msgKo.textContent = '✗ ' + (data.erreur || 'Erreur');
+                    msgKo.style.display = '';
+                }
+            })
+            .catch(err => {
+                msgKo.textContent = '✗ Erreur réseau';
+                msgKo.style.display = '';
+            });
+    });
+});
+</script>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
 <script src="darkmode.js"></script>
