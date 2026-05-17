@@ -1,13 +1,4 @@
-/* ============================================================
-   MODE SOMBRE - palette adaptee a l'identite "patisserie"
-   Au lieu d'un sombre gris/bleu froid, on garde des tons
-   chauds : brun chocolat fonce + beige + accents dores.
-
-   On redefinit les variables CSS de :root, donc si ton code
-   utilise var(--main-background) etc., tout se propage.
-   Les regles specifiques en dessous sont la pour les
-   elements qui n'utilisent pas les variables.
-============================================================ */
+/* MODE SOMBRE */
 
 body.dark {
     /* Surcharge des variables d'origine */
@@ -20,11 +11,6 @@ body.dark {
     background-color: var(--main-background);
     color: var(--main-title);
 }
-
-/* ============================================================
-   REGLES SPECIFIQUES pour les elements qui peuvent avoir
-   des couleurs en dur dans tes autres CSS
-============================================================ */
 
 /* Titres */
 body.dark h1, body.dark h2, body.dark h3,
@@ -85,7 +71,7 @@ body.dark .btn,
 body.dark .panier,
 body.dark .btn-commande,
 body.dark .finish-btn {
-    background-color: #5c3a2e;  /* repris de ton --article-price original */
+    background-color: #5c3a2e;  
     color: #fcf9f4;
     border: none;
 }
@@ -109,11 +95,14 @@ body.dark .search-bar input {
 }
 
 /* Menu horizontal */
+body.dark .menu-horizontal {
+    background-color: #261d11;
+}
 body.dark .menu-horizontal a {
-    color: #f0e4d2;
+    color: #cca97c;
 }
 body.dark .menu-horizontal .active {
-    color: #d4a574;
+    color: #a1784c;
 }
 
 /* Filtres (page presentation) */
@@ -124,7 +113,7 @@ body.dark .barre-filtres {
 
 /* Total panier */
 body.dark .total {
-    color: #d4a574;
+    color: #1f150b;
 }
 
 /* Footer */
@@ -141,8 +130,7 @@ body.dark .notif-livraison {
     background-color: #4a6b2a; /* vert plus sombre */
 }
 
-/* Badges statut (page commandes) - on garde les couleurs vives
-   mais on les rend un peu plus mates */
+/* Badges statut (page commandes) */
 body.dark .badge-a-preparer    { background: #c88a30; }
 body.dark .badge-en-preparation { background: #3060c0; }
 
@@ -168,9 +156,7 @@ body.dark .info-msg {
     color: #f0e4d2;
 }
 
-/* ============================================================
-   BOUTON FLOTTANT TOGGLE MODE SOMBRE
-============================================================ */
+/* BOUTON FLOTTANT MODE SOMBRE */
 .btn-darkmode {
     position: fixed;
     bottom: 20px;
@@ -193,7 +179,7 @@ body.dark .info-msg {
 }
 
 body.dark .btn-darkmode {
-    background: #d4a574;     /* dore caramel, contraste sur fond sombre */
+    background: #d4a574;     
     color: #1f1814;
     box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
 }
