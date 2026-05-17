@@ -1,168 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="connexion.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="connexion.css">
     <link rel="stylesheet" href="structg.css">
- 	<link rel="stylesheet" href="couleurs.css">
-	<title>Connexion</title>
+    <link rel="stylesheet" href="couleurs.css">
+    <link rel="stylesheet" href="darkmode.css">
+    <title>Connexion</title>
+    <style>
+        .message-succes {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+    </style>
 </head>
-
 <body>
 
-    <?php
-        session_start(); 
+<?php
+session_start();
 
-        $erreur = [];
-        
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // EMAIL
-            if ($_POST["mail"] == "") {
-                $erreur["mail"] = "Veuillez renseigner ce champ";
-            }
-            // MDP
-            if ($_POST["mdp"] == "") {
-                $erreur["mdp"] = "Veuillez renseigner ce champ";
-            }
-            
-            if (empty($erreur)) {
-                $mail = htmlspecialchars($_POST["mail"]);
-                $mdp = $_POST["mdp"];
-                
-                // Lit le fichier sur les informations des clients
-                $fichier = "data/infoclient.json";
-                $connecte = false;
-                $utilisateurTrouve = null;
-                
-                if (file_exists($fichier)) {
-                    $contenu = file_get_contents($fichier);
-                    $utilisateurs = json_decode($contenu, true);
-                    
-                    if (is_array($utilisateurs)) {
-                        foreach ($utilisateurs as $utilisateur) {
-                            if ($utilisateur && $utilisateur["mail"] == $mail) {
-                                //compare le mdp saisi avec le hash stocké
-                                if (password_verify($mdp, $utilisateur["mdp"])) {
-                                    $connecte = true;
-                                    $utilisateurTrouve = $utilisateur;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                if ($connecte) {
-					foreach ($utilisateurs as &$user) {
-                        if ($user["id"] == $utilisateurTrouve["id"]) {
-                            $user["dateconnexion"] = date("Y-m-d");
-                            break;
-                        }
-                    }
+$erreur = [];
 
-                    //sauvegarde dans le fichier JSON
-                    file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT));
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_POST["mail"] == "") $erreur["mail"] = "Veuillez renseigner ce champ";
+    if ($_POST["mdp"]  == "") $erreur["mdp"]  = "Veuillez renseigner ce champ";
 
-					
-                    //Stockage des infos utiles 
-                    $_SESSION["connecte"] = true;
-                    $_SESSION["id"] = $utilisateurTrouve["id"];
-                    $_SESSION["mail"] = $utilisateurTrouve["mail"];
-                    $_SESSION["nom"] = $utilisateurTrouve["nom"] ?? ""; 
-                    $_SESSION["role"] = $utilisateurTrouve["role"];
-                    // Redirection vers les pages en fonction des roles
-                    if($_SESSION["role"] == "client"){
-                        header("Location: accueil.php");
-                    } elseif($_SESSION["role"] == "cuisinier"){
-                        header("Location: commandes.php");
-                    } elseif($_SESSION["role"] == "administrateur"){
-                        header("Location: administrateur.php");
-                    } elseif($_SESSION["role"] == "livreur"){
-                        header("Location: livraison.php");
+    if (empty($erreur)) {
+        $mail = strtolower(trim($_POST["mail"]));
+        $mdp  = $_POST["mdp"];
+
+        $fichier = "data/infoclient.json";
+        $connecte = false;
+        $utilisateurTrouve = null;
+
+        if (file_exists($fichier)) {
+            $utilisateurs = json_decode(file_get_contents($fichier), true) ?? [];
+            foreach ($utilisateurs as $u) {
+                if (strtolower($u["mail"]) === $mail) {
+                    if (password_verify($mdp, $u["mdp"])) {
+                        $connecte = true;
+                        $utilisateurTrouve = $u;
+                        break;
                     }
-                        exit();
-                } else {
-                    $erreur["mail"] = "E-mail ou mot de passe incorrect";
-                    $erreur["mdp"] = "E-mail ou mot de passe incorrect";
                 }
             }
         }
-    ?>
 
+        if ($connecte) {
+            foreach ($utilisateurs as &$user) {
+                if ($user["id"] == $utilisateurTrouve["id"]) {
+                    $user["dateconnexion"] = date("Y-m-d");
+                    break;
+                }
+            }
+            unset($user);
+            file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT));
 
-    <header>
-            <div class="barres">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            $_SESSION["connecte"] = true;
+            $_SESSION["id"]       = $utilisateurTrouve["id"];
+            $_SESSION["mail"]     = $utilisateurTrouve["mail"];
+            $_SESSION["nom"]      = $utilisateurTrouve["nom"] ?? "";
+            $_SESSION["role"]     = $utilisateurTrouve["role"];
 
-            <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
-    
-            <div class="top-icons">
-                <div class="profil-menu">
-                    <img src="images/Iconprofil.png" alt="Profil" class="icon">
-                    <div class="profil-bulle">
-                        <a href="inscription.php">Inscription</a>
-                        <a href="connexion.php">Connexion</a>
-                    </div>
-                </div>
-                <a href="">
-                <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
-                </a>
-            </div>
-        </header>
-    
-    <main>
-        <form action="connexion.php" method="POST">
-            <fieldset>
-                <legend>Connexion</legend>
-                <div class="champ">
-                    E-mail *
-                    <br />
-                    <input type="email" id="mail" name="mail" placeholder="nom@email.com" value="<?= isset($_POST['mail']) ? htmlspecialchars($_POST['mail']) : '' ?>" class="<?= isset($erreur['mail']) ? 'erreur' : '' ?>" />
-                    <small><?= $erreur['mail'] ?? '' ?></small>
-                </div>
-                <div class="champ">
-                    Mot de passe *
-                    <br />
-                    <input type="password" id="mdp" name="mdp" maxlength=20 class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
-                    <small><?= $erreur['mdp'] ?? '' ?></small>
-                    <img src="images/oeil.png" alt="Afficher mot de passe">
-                </div>
-                <a class="lien" href="mdpoublie.php">Mot de passe oublié ?</a>
-                <br />
-                <input class="bouton" type="submit" value="ME CONNECTER"/>
-            </fieldset>
-        </form> 
-        <p class="connexion">
-            Vous n'êtes toujours pas client chez nous? 
-            <br />
-            Créez un compte en quelques clics pour profiter pleinement des avantages des avantages du site
-        </p>
-        <a class="bouton" href="inscription.php">CRÉER UN COMPTE</a>
-    </main>    
+            if      ($_SESSION["role"] == "client")         header("Location: accueil.php");
+            elseif  ($_SESSION["role"] == "cuisinier")      header("Location: commandes.php");
+            elseif  ($_SESSION["role"] == "administrateur") header("Location: administrateur.php");
+            elseif  ($_SESSION["role"] == "livreur")        header("Location: livraison.php");
+            exit();
+        } else {
+            $erreur["mail"] = "E-mail ou mot de passe incorrect";
+            $erreur["mdp"]  = "E-mail ou mot de passe incorrect";
+        }
+    }
+}
+?>
 
-    <footer>
-        <p>suivez nous sur nos réseaux!
-            </br>
-                <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
-                <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
-                <img src="images/Icontwitter.png" alt="twitter" class="icon">
-        </p>
-        <div class="infos-footer">
-            <div class="info">
-                <img src="images/Iconlocalisation.png" alt="maps" class="icon">
-                <span>5 avenue de la république, 75015 Paris</span>
-            </div>
-            <div class="info">
-                <img src="images/Iconhorloge.png" alt="horloge" class="icon">
-                <span>Tous les jours 9h - 20h</span>
+<header>
+    <div class="barres"><span></span><span></span><span></span></div>
+    <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+    <div class="top-icons">
+        <div class="profil-menu">
+            <img src="images/Iconprofil.png" alt="Profil" class="icon">
+            <div class="profil-bulle">
+                <a href="inscription.php">Inscription</a>
+                <a href="connexion.php">Connexion</a>
             </div>
         </div>
-        <h5>© 2026 Pâtisserie</h5>
-    </footer>
+        <a href=""><img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier"></a>
+    </div>
+</header>
 
+<?php // Message de succes inscription ?>
+<?php if (isset($_GET['inscription']) && $_GET['inscription'] === 'ok'): ?>
+    <div class="message-succes">
+        ✓ Votre inscription a bien été prise en compte. Vous pouvez maintenant vous connecter.
+    </div>
+<?php endif; ?>
+
+<main>
+    <form action="connexion.php" method="POST">
+        <fieldset>
+            <legend>Connexion</legend>
+            <div class="champ">
+                E-mail *
+                <br />
+                <input type="email" name="mail" placeholder="nom@email.com" value="<?= htmlspecialchars($_POST['mail'] ?? '') ?>" class="<?= isset($erreur['mail']) ? 'erreur' : '' ?>" />
+                <small><?= $erreur['mail'] ?? '' ?></small>
+            </div>
+            <div class="champ">
+                Mot de passe *
+                <br />
+                <input type="password" name="mdp" maxlength="20" class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
+                <small><?= $erreur['mdp'] ?? '' ?></small>
+            </div>
+            <a class="lien" href="mdpoublie.php">Mot de passe oublié ?</a>
+            <br />
+            <input class="bouton" type="submit" value="ME CONNECTER"/>
+        </fieldset>
+    </form>
+    <p class="connexion">
+        Vous n'êtes toujours pas client chez nous ?
+        <br />
+        Créez un compte en quelques clics.
+    </p>
+    <a class="bouton" href="inscription.php">CRÉER UN COMPTE</a>
+</main>
+
+<footer>
+    <p>suivez nous sur nos réseaux!<br>
+        <img src="images/Iconinstagram.jpg" class="icon">
+        <img src="images/Icontiktok.jpg" class="icon">
+        <img src="images/Icontwitter.png" class="icon">
+    </p>
+    <div class="infos-footer">
+        <div class="info"><img src="images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75015 Paris</span></div>
+        <div class="info"><img src="images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 20h</span></div>
+    </div>
+    <h5>© 2026 Pâtisserie</h5>
+</footer>
+
+<button id="btn-darkmode" class="btn-darkmode">☾</button>
+<script src="darkmode.js"></script>
 </body>
 </html>
