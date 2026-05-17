@@ -87,7 +87,6 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
 
 <div class="barres"><span></span><span></span><span></span></div>
 
-<!-- LOGO : confine au livreur (ne renvoie PAS vers accueil) -->
 <h1><a href="livraison.php" class="logo">La Cour des Délices</a></h1>
 
 <div class="top-icons">
