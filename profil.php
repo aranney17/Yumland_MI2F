@@ -23,11 +23,6 @@ if ($userTrouve['bloque'] ?? false) {
     die("Votre compte a été bloqué.");
 }
 
-/* -------------------------------------------------------------
-   ENDPOINT AJAX : update d'un champ du profil
-   Champs autorises : tout sauf role, bloque, remise, id, mdp...
-   Apres update, on propage aux commandes "en cours" du user
-------------------------------------------------------------- */
 if (isset($_POST['action']) && $_POST['action'] === 'update_profil') {
     header('Content-Type: application/json');
 
@@ -95,7 +90,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'update_profil') {
     unset($u);
     file_put_contents($fichierClients, json_encode($users, JSON_PRETTY_PRINT));
 
-    // Propagation aux commandes en cours (statut != "terminee")
     $statutsEnCours = ['a preparer', 'en preparation', 'commande préparée', 'en_livraison'];
     $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
     $modifCmd = false;
@@ -126,9 +120,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'update_profil') {
     exit;
 }
 
-/* -------------------------------------------------------------
-   Determiner le lien du logo selon le role
-------------------------------------------------------------- */
 $logoTarget = 'accueil.php';
 if      ($userTrouve['role'] === 'cuisinier')      $logoTarget = 'commandes.php';
 elseif  ($userTrouve['role'] === 'livreur')        $logoTarget = 'livraison.php';
@@ -203,12 +194,8 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
 <section class="informations">
     <h2 class="title">Informations</h2>
 
-    <!-- Chaque champ a son crayon. Au clic → on bascule en mode edition.
-         Au valider → fetch AJAX vers profil.php (cette meme page) qui
-         repond en JSON. -->
 
     <?php
-    // Helper pour generer un champ editable
     function champEditable($cle, $label, $valeur, $type = 'text') {
         $val = htmlspecialchars($valeur ?? '');
         echo <<<HTML
@@ -238,7 +225,6 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
     champEditable('mail',            'Adresse mail',      $userTrouve['mail']            ?? '', 'email');
     ?>
 
-    <!-- Role : LECTURE SEULE (un livreur ne peut pas se changer en cuisinier) -->
     <div class="block">
         <span class="label-champ">Rôle :</span>
         <span class="value-champ"><?= htmlspecialchars($userTrouve['role']) ?></span>
@@ -267,9 +253,6 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
 </footer>
 
 
-<!-- ============================================================
-     JAVASCRIPT : edition AJAX champ par champ
-============================================================ -->
 <script>
 document.querySelectorAll('.block[data-champ]').forEach(function(bloc) {
 
