@@ -32,13 +32,7 @@ $notations = file_exists("data/notation.json")
     ? (json_decode(file_get_contents("data/notation.json"), true) ?? [])
     : [];
 
-/* -------------------------------------------------------------
-   HELPERS
 
-   FIX du matching : on compare avec trim() ET strtoupper() pour
-   tolerer espaces et casse. La reference "8bf40649bd " (avec
-   espace ou minuscules) va maintenant matcher "8BF40649BD".
-------------------------------------------------------------- */
 function normaliserRef($s) {
     return strtoupper(trim((string) $s));
 }
@@ -59,11 +53,6 @@ function etoiles($note) {
     return str_repeat('★', $note) . str_repeat('☆', 5 - $note);
 }
 
-/* -------------------------------------------------------------
-   DEBUG : active temporairement en mettant ?debug=1 dans l'URL
-   pour voir toutes les references cote commande et cote notation.
-   A retirer une fois le probleme regle.
-------------------------------------------------------------- */
 $debugMode = isset($_GET['debug']);
 ?>
 
@@ -77,42 +66,6 @@ $debugMode = isset($_GET['debug']);
     <link rel="stylesheet" href="administrateur2.css">
     <link rel="stylesheet" href="darkmode.css">
     <link rel="stylesheet" href="darkmode_admin.css">
-    <style>
-        .ligne-details { display: none; }
-        .ligne-details.ouverte { display: table-row; }
-
-        .bloc-notation {
-            margin-top: 15px; padding: 12px 15px;
-            background: #fff8e1; border-left: 4px solid #f0a040;
-            border-radius: 4px;
-        }
-        body.dark .bloc-notation {
-            background: #2d231c; border-left-color: #d4a574;
-        }
-        .bloc-notation h4 { margin: 0 0 8px 0; }
-        .bloc-notation .ligne-note { margin: 6px 0; }
-        .bloc-notation .etoiles {
-            color: #f0a040; font-size: 18px; margin-right: 8px;
-        }
-        body.dark .bloc-notation .etoiles { color: #d4a574; }
-        .bloc-notation .commentaire {
-            font-style: italic; color: #666;
-        }
-        body.dark .bloc-notation .commentaire { color: #b8a288; }
-
-        .pas-de-note {
-            margin-top: 10px; color: #888; font-style: italic;
-        }
-
-        /* Debug box */
-        .debug-box {
-            background: #fffae0; border: 2px dashed #c0a050;
-            padding: 15px; margin: 20px 10px;
-            font-family: monospace; font-size: 13px;
-        }
-        .debug-box h3 { margin-top: 0; }
-        .debug-box pre { white-space: pre-wrap; word-break: break-all; }
-    </style>
 </head>
 <body>
 
