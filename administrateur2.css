@@ -232,36 +232,36 @@ tr.ligne:hover {
 }
 
 .ligne-details { display: none; }
-        .ligne-details.ouverte { display: table-row; }
+.ligne-details.ouverte { display: table-row; }
 
-        .bloc-notation {
-            margin-top: 15px; padding: 12px 15px;
-            background: #fff8e1; border-left: 4px solid #f0a040;
-            border-radius: 4px;
-        }
-        body.dark .bloc-notation {
-            background: #2d231c; border-left-color: #d4a574;
-        }
-        .bloc-notation h4 { margin: 0 0 8px 0; }
-        .bloc-notation .ligne-note { margin: 6px 0; }
-        .bloc-notation .etoiles {
-            color: #f0a040; font-size: 18px; margin-right: 8px;
-        }
-        body.dark .bloc-notation .etoiles { color: #d4a574; }
-        .bloc-notation .commentaire {
-            font-style: italic; color: #666;
-        }
-        body.dark .bloc-notation .commentaire { color: #b8a288; }
+.bloc-notation {
+	margin-top: 15px; padding: 12px 15px;
+    background: #fff8e1; border-left: 4px solid #f0a040;
+    border-radius: 4px;
+}
+body.dark .bloc-notation {
+    background: #2d231c; border-left-color: #d4a574;
+}
+.bloc-notation h4 { margin: 0 0 8px 0; }
+.bloc-notation .ligne-note { margin: 6px 0; }
+.bloc-notation .etoiles {
+    color: #f0a040; font-size: 18px; margin-right: 8px;
+}
+body.dark .bloc-notation .etoiles { color: #d4a574; }
+.bloc-notation .commentaire {
+    font-style: italic; color: #666;
+}
+body.dark .bloc-notation .commentaire { color: #b8a288; }
 
-        .pas-de-note {
-            margin-top: 10px; color: #888; font-style: italic;
-        }
+.pas-de-note {
+    margin-top: 10px; color: #888; font-style: italic;
+}
 
-        /* Debug box */
-        .debug-box {
-            background: #fffae0; border: 2px dashed #c0a050;
-            padding: 15px; margin: 20px 10px;
-            font-family: monospace; font-size: 13px;
-        }
-        .debug-box h3 { margin-top: 0; }
-        .debug-box pre { white-space: pre-wrap; word-break: break-all; }
+/* Debug box */
+.debug-box {
+    background: #fffae0; border: 2px dashed #c0a050;
+    padding: 15px; margin: 20px 10px;
+    font-family: monospace; font-size: 13px;
+}
+.debug-box h3 { margin-top: 0; }
+.debug-box pre { white-space: pre-wrap; word-break: break-all; }
