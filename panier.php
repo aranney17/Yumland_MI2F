@@ -137,7 +137,6 @@ if (isset($_POST['payer'])) {
         <div class="info-produit">
             <p><?= $item['produit'] ?></p>
 
-            <!-- Plus de bouton refresh : JS gere tout -->
             <div class="quantite" id="nocolumn">
                 <input type="number"
                        class="input-quantite"
@@ -266,17 +265,12 @@ document.querySelectorAll('.input-quantite').forEach(function(input) {
     });
 });
 
-// Quand on change le type de commande : on s'assure que les
-// quantites sont sauvegardees AVANT de submit le form, sinon
-// PHP relit l'ancien panier.json et perd les modifs.
 function soumettreFormType() {
     sauvegarderQuantites().then(function() {
         document.getElementById('form-type-commande').submit();
     });
 }
 
-// Avant le submit du form paiement, on injecte les qtes (au cas
-// ou l'AJAX n'aurait pas eu le temps)
 document.getElementById('form-paiement').addEventListener('submit', function() {
     const form = this;
     form.querySelectorAll('input.qte-hidden').forEach(e => e.remove());
