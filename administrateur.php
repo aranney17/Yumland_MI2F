@@ -124,22 +124,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
     <link rel="stylesheet" href="administrateur.css">
     <link rel="stylesheet" href="darkmode.css">
     <link rel="stylesheet" href="darkmode_admin.css"> 
-    <style>
-        .btn-bloquer { padding: 5px 10px; cursor: pointer; }
-        .btn-bloquer.est-bloque { background: #c03030; color: white; }
-        tr.ligne-bloque { opacity: 0.5; }
-        .select-role { padding: 4px 6px; }
-        .select-role:disabled { background: #eee; cursor: not-allowed; }
-        body.dark .select-role:disabled { background: #2a2a2a; color: #888; }
-
-        .feedback-role {
-            display: inline-block; margin-left: 8px;
-            font-size: 12px; color: #40b040;
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .feedback-role.show { opacity: 1; }
-        .feedback-role.erreur { color: #c03030; }
-    </style>
 </head>
 <body>
 
