@@ -39,8 +39,7 @@ function recalculerMontant(&$cmd) {
 }
 
 
-/*  modif quantite / suppression / ajout / revalidation
-   Toutes restreintes aux commandes "a preparer" du client connecte */
+/*  modifications */
 $messageInfo = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -92,10 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $cmd['modifie_par_client'] = true;
             }
         }
-        elseif ($action === 'revalider') {
-            // Bouton "Revalider" : on confirme les modifs et on
-            // met une date pour que le cuisinier sache que la
-            // commande a ete touchee recemment.
+        elseif ($action === 'revalider') { // confirmation des modifs met une date pour que le cuisinier sache que la commande a ete touchee recemment.
             $cmd['modifie_par_client'] = true;
             $cmd['date_revalidation']  = date('Y-m-d H:i:s');
             $messageInfo = "Votre commande a été revalidée. Le cuisinier verra la mise à jour.";
@@ -298,9 +294,7 @@ foreach ($notations as $notation) {
 
                             <?php if ($modifiable): ?>
 
-                                <!-- ============================
-                                     ZONE DE MODIFICATION
-                                ============================ -->
+                                <!-- MODIFICATIONS -->
                                 <div class="zone-modif">
 
                                     <h3>Modifier cette commande</h3>
