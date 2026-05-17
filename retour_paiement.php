@@ -1,18 +1,27 @@
 <?php
 session_start();
-$userId = $_SESSION['id'] ?? null;
-if (!$userId) {
+
+/* -------------------------------------------------------------
+   1. VERIFICATIONS PRELIMINAIRES
+------------------------------------------------------------- */
+if (!isset($_SESSION['id'])) {
     die("Utilisateur non connecté ou session expirée.");
 }
+$userId = $_SESSION['id'];
 
-// Récupérer les paramètres envoyés par CYBank
-$transaction = $_GET['transaction'] ?? '';
-$montant = $_GET['montant'] ?? '';
-$vendeur = $_GET['vendeur'] ?? '';
-$status = $_GET['status'] ?? '';
-$control_recu = $_GET['control'] ?? '';
+/* -------------------------------------------------------------
+   2. RECUPERATION DES PARAMETRES RENVOYES PAR CYBANK
+------------------------------------------------------------- */
+$transaction  = $_GET['transaction'] ?? '';
+$montant      = $_GET['montant']     ?? '';
+$vendeur      = $_GET['vendeur']     ?? '';
+$status       = $_GET['status']      ?? '';
+$control_recu = $_GET['control']     ?? '';
 
-// Recalcul du contrôle
+/* -------------------------------------------------------------
+   3. RECALCUL DU CONTROLE (verifie que les donnees n'ont pas
+      ete falsifiees)
+------------------------------------------------------------- */
 require('getapikey.php');
 $api_key = getAPIKey($vendeur);
 $control_calcule = md5(
@@ -23,89 +32,90 @@ $control_calcule = md5(
     $status . "#"
 );
 
-// Vérifier utilisateur
-if (!isset($_SESSION['id'])) {
-    die("Utilisateur non connecté ou session expirée.");
-}
-$userId = $_SESSION['id'];
+/* -------------------------------------------------------------
+   4. DETERMINATION DU RESULTAT
+      - controleOK       : les donnees sont authentiques
+      - paiementAccepte  : controle OK ET status = "accepted"
+------------------------------------------------------------- */
+$controleOK      = ($control_recu === $control_calcule);
+$paiementAccepte = ($controleOK && $status === "accepted");
 
-// Charger client
-$clients = file_exists('data/infoclient.json') ? json_decode(file_get_contents('data/infoclient.json'), true) : [];
-$client = null;
-foreach ($clients as $c) {
-    if ($c['id'] == $userId) {
-        $client = $c;
-        break;
-    }
-}
-$client = $client ?? [];
 
-// Récupérer le panier
-$panier = file_exists('data/panier.json') ? json_decode(file_get_contents('data/panier.json'), true) : [];
+/* -------------------------------------------------------------
+   5. SI PAIEMENT ACCEPTE : on enregistre la commande, on vide
+      le panier, on nettoie la session.
+      SINON : on vide le panier (demande de Haroun) et on
+      n'enregistre RIEN dans commande.json.
+------------------------------------------------------------- */
+$fichierPanier    = 'data/panier.json';
+$fichierClients   = 'data/infoclient.json';
+$fichierCommandes = 'data/commande.json';
 
-// Récupérer date livraison et type commande depuis session
-$type_commande = $_SESSION['commande_temp']['type_commande'] ?? 'sur_place';
-$dateLivraison = $_SESSION['commande_temp']['date_livraison'] ?? date('Y-m-d'); 
+if ($paiementAccepte) {
 
-// Calcul total
-$total = 0;
-foreach ($panier as $p) {
-    $total += $p['prix'] * $p['quantite'];
-}
-
-// Générer référence et date commande
-$reference = strtoupper(substr(md5(uniqid()), 0, 10));
-$dateCommande = date('Y-m-d');
-
-// Créer commande complète
-$commande = [
-    "id" => time(),
-    "nom" => $client['nom'] ?? '',
-    "prenom" => $client['prenom'] ?? '',
-    "date" => $dateCommande,
-    "datelivraison" => $dateLivraison,
-    "type_commande" => $type_commande, 
-    "telephone" => $client['telephone'] ?? '',
-    "reference" => $reference,
-    "montant" => $total,
-    "paiement" => "payee",
-    "adresse" => $client['adresse'] ?? '',
-    "statut" => "a preparer",
-    "produits" => $panier
-];
-
-// Sauvegarder commandes
-$fichier = 'data/commande.json';
-$commandes = file_exists($fichier) ? json_decode(file_get_contents($fichier), true) : [];
-$commandes[] = $commande;
-file_put_contents($fichier, json_encode($commandes, JSON_PRETTY_PRINT));
-
-// Vider panier et nettoyer session
-file_put_contents('data/panier.json', json_encode([], JSON_PRETTY_PRINT));
-unset($_SESSION['date_livraison'], $_SESSION['commande_temp']);
-?>
-
-<?php
-// ... ton code existant ...
-
-$userId = $_GET['id'] ?? null; 
-
-// Charger le fichier des clients
-$clients = file_exists('data/infoclient.json') ? json_decode(file_get_contents('data/infoclient.json'), true) : [];
-$client = null;
-
-// Trouver le client correspondant
-if ($userId) {
+    // Charger le client connecte
+    $clients = file_exists($fichierClients)
+        ? json_decode(file_get_contents($fichierClients), true)
+        : [];
+    $client = [];
     foreach ($clients as $c) {
-        if ($c['id'] == $userId) {
-            $client = $c;
-            break;
-        }
+        if ($c['id'] == $userId) { $client = $c; break; }
     }
-}
 
-// Si aucun client trouvé, fallback sur tableau vide
-$client = $client ?? [];
+    // Charger le panier (les produits commandes)
+    $panier = file_exists($fichierPanier)
+        ? json_decode(file_get_contents($fichierPanier), true)
+        : [];
+
+    // Recuperer infos commande temporaires
+    $type_commande = $_SESSION['commande_temp']['type_commande'] ?? 'sur_place';
+    $dateLivraison = $_SESSION['commande_temp']['date_livraison'] ?? date('Y-m-d');
+
+    // Calcul total
+    $total = 0;
+    foreach ($panier as $p) {
+        $total += $p['prix'] * $p['quantite'];
+    }
+
+    // Generer reference
+    $reference = strtoupper(substr(md5(uniqid()), 0, 10));
+
+    // Creer commande
+    $commande = [
+        "id"            => time(),
+        "nom"           => $client['nom']       ?? '',
+        "prenom"        => $client['prenom']    ?? '',
+        "date"          => date('Y-m-d'),
+        "datelivraison" => $dateLivraison,
+        "type_commande" => $type_commande,
+        "telephone"     => $client['telephone'] ?? '',
+        "reference"     => $reference,
+        "montant"       => $total,
+        "paiement"      => "payee",
+        "adresse"       => $client['adresse']   ?? '',
+        "statut"        => "a preparer",
+        "notif_vue"     => false, // pour la notification cote client
+        "produits"      => $panier
+    ];
+
+    // Enregistrer la commande
+    $commandes = file_exists($fichierCommandes)
+        ? json_decode(file_get_contents($fichierCommandes), true)
+        : [];
+    $commandes[] = $commande;
+    file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
+
+    // Vider le panier et nettoyer la session
+    file_put_contents($fichierPanier, json_encode([], JSON_PRETTY_PRINT));
+    unset($_SESSION['date_livraison'], $_SESSION['commande_temp']);
+
+} else {
+    // PAIEMENT REFUSE OU CONTROLE INVALIDE
+    // On vide le panier (demande explicite) et on nettoie la session.
+    // AUCUNE commande n'est enregistree.
+    file_put_contents($fichierPanier, json_encode([], JSON_PRETTY_PRINT));
+    unset($_SESSION['date_livraison'], $_SESSION['commande_temp']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -116,9 +126,8 @@ $client = $client ?? [];
     <link rel="stylesheet" href="panier.css">
     <link rel="stylesheet" href="couleurs.css">
     <link rel="stylesheet" href="structg.css">
-     <link rel="stylesheet" href="../pageproduit/pageproduit.css">
-     
-
+    <link rel="stylesheet" href="../pageproduit/pageproduit.css">
+    <link rel="stylesheet" href="darkmode.css">
 </head>
 <body>
     <div class="barres">
@@ -128,12 +137,10 @@ $client = $client ?? [];
     </div>
 
     <h1> <a href="accueil.php" class="logo">La Cour des Délices</a></h1>
-    
-<div class="top-icons">
 
+<div class="top-icons">
     <div class="profil-menu">
         <img src="images/Iconprofil.png" alt="Profil" class="icon">
-
         <div class="profil-bulle">
             <a href="inscription.php">Inscription</a>
             <a href="connexion.php">Connexion</a>
@@ -143,49 +150,54 @@ $client = $client ?? [];
     <a href="panier.php">
         <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
     </a>
+</div>
+
+<div class="confirmation">
+
+    <?php if (!$controleOK): ?>
+
+        <!-- Cas 1 : donnees corrompues / falsifiees -->
+        <h1>Erreur de sécurité !</h1>
+        <p>Les données de paiement sont invalides. Aucune commande n'a été enregistrée.</p>
+
+    <?php elseif ($paiementAccepte): ?>
+
+        <!-- Cas 2 : paiement validé -->
+        <h1>Merci pour votre commande !</h1>
+        <p>Votre paiement a bien été validé.</p>
+        <ul class="bloc-livraison">
+            <li><u>Référence de transaction :</u> <?= htmlspecialchars($transaction) ?></li>
+            <li><u>Montant payé :</u> <?= htmlspecialchars($montant) ?> €</li>
+            <li><u>Vendeur :</u> <?= htmlspecialchars($vendeur) ?></li>
+            <li><u>Statut :</u> <?= htmlspecialchars($status) ?></li>
+        </ul>
+
+    <?php else: ?>
+
+        <!-- Cas 3 : paiement refusé -->
+        <h1>Paiement refusé !</h1>
+        <p>Votre paiement n'a pas été accepté. Aucune commande n'a été enregistrée et votre panier a été vidé.</p>
+
+    <?php endif; ?>
+
+    <!-- Bouton commun aux 3 cas pour revenir a la boutique -->
+    <a href="accueil.php" class="panier btn-commande">Revenir à la boutique</a>
 
 </div>
 
-    <div class="confirmation">
-        <?php if ($control_recu !== $control_calcule): ?>
-            <h1>Erreur de sécurité !</h1>
-            <p>Les données de paiement sont invalides.</p>
-        <?php elseif ($status === "accepted"): ?>
-    <h1>Merci pour votre commande !</h1>
-    <ul class="bloc-livraison">
-        <li><u>Référence de commande :</u> <?= htmlspecialchars($transaction) ?></li>
-        <li><u>Montant payé :</u> <?= htmlspecialchars($montant) ?> €</li>
-        <li><u>Vendeur :</u> <?= htmlspecialchars($vendeur) ?></li>
-        <li><u>Statut :</u> <?= htmlspecialchars($status) ?></li>
-    </ul>
-
-     <?php else: ?>
-            <h1>Paiement refusé !</h1>
-            <p>Votre paiement n’a pas été accepté. Veuillez réessayer.</p>
-        <?php endif; ?>
-
-        <!-- Bouton pour revenir à la boutique -->
-        
-        <a href="accueil.php" class="panier btn-commande">Revenir à la boutique</a>
-        
-    </div>
-
-
-    <footer>
+<footer>
 <p>suivez nous sur nos réseaux!
-    </br>
+    <br>
         <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
         <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
         <img src="images/Icontwitter.png" alt="twitter" class="icon">
 </p>
 
 <div class="infos-footer">
-
     <div class="info">
         <img src="images/Iconlocalisation.png" alt="maps" class="icon">
         <span>5 avenue de la république, 75015 Paris</span>
     </div>
-
     <div class="info">
         <img src="images/Iconhorloge.png" alt="horloge" class="icon">
         <span>Tous les jours 9h - 20h</span>
@@ -193,5 +205,7 @@ $client = $client ?? [];
 </div>
        <h5>© 2026 Pâtisserie</h5>
 </footer>
+<button id="btn-darkmode" class="btn-darkmode">☾</button>
+<script src="darkmode.js"></script>
 </body>
 </html>
