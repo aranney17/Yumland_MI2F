@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-/* -------------------------------------------------------------
-   SECURITE : seul un administrateur peut consulter cette page
-------------------------------------------------------------- */
 if (!isset($_SESSION['id'])) {
     header("Location: connexion.php");
     exit();
@@ -11,21 +8,24 @@ if (!isset($_SESSION['id'])) {
 
 $utilisateurs = json_decode(file_get_contents("data/infoclient.json"), true) ?? [];
 
-// Verifier que l'utilisateur connecte est admin
 $roleConnecte = null;
+$bloqueConnecte = false;
 foreach ($utilisateurs as $u) {
     if ($u['id'] == $_SESSION['id']) {
         $roleConnecte = $u['role'];
+        $bloqueConnecte = $u['bloque'] ?? false;
         break;
     }
 }
+if ($bloqueConnecte) {
+    session_destroy();
+    die("Votre compte a été bloqué.");
+}
 if ($roleConnecte !== 'administrateur') {
     http_response_code(403);
-    echo "<h1>Acces refuse</h1><p>Cette page est reservee aux administrateurs.</p><a href='accueil.php'>Retour</a>";
-    exit();
+    die("Accès refusé. Cette page est réservée aux administrateurs.");
 }
 
-// ID de l'utilisateur a consulter
 $id = $_GET['id'] ?? null;
 $userTrouve = null;
 if ($id !== null) {
@@ -39,7 +39,6 @@ if ($id !== null) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Admin</title>
     <link rel="stylesheet" href="couleurs.css">
     <link rel="stylesheet" href="structg.css">
@@ -50,12 +49,12 @@ if ($id !== null) {
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="accueil.php" class="logo">Pâtisserie</a></h1>
+    <h1><a href="administrateur.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
             <img src="images/Iconprofil.png" class="icon">
             <div class="profil-bulle">
-                <a href="profil_admin.php?id=<?= htmlspecialchars($id) ?>">Profil</a>
+                <a href="profil.php">Mon profil</a>
                 <a href="logout.php">Déconnexion</a>
             </div>
         </div>
@@ -66,16 +65,13 @@ if ($id !== null) {
 
 <aside class="sidebar">
     <ul class="menu">
-        <li><a href="profil_admin.php?id=<?= htmlspecialchars($id) ?>">Informations</a></li>
-        <li><a href="profil2_admin.php?id=<?= htmlspecialchars($id) ?>">Historique de commandes</a></li>
-        <li>Données personnelles</li>
+        <li><a href="administrateur.php">← Retour à la liste</a></li>
+        <li><a href="profil_admin.php?id=<?= htmlspecialchars($id) ?>"><strong>Informations</strong></a></li>
     </ul>
 </aside>
 
 <section class="informations">
-
 <?php if ($userTrouve): ?>
-
     <h2 class="title">
         Informations
         <a href="modifier_admin.php?id=<?= htmlspecialchars($id) ?>">
@@ -98,8 +94,6 @@ if ($id !== null) {
     <div class="block">Téléphone :
         <br><?= htmlspecialchars($userTrouve['telephone'] ?? 'N/A') ?>
     </div>
-
-    <!-- ADRESSE SEPAREE (avec fallback sur l'ancien champ adresse) -->
     <div class="block">Rue :
         <br><?= htmlspecialchars($userTrouve['rue'] ?? 'N/A') ?>
     </div>
@@ -109,33 +103,24 @@ if ($id !== null) {
     <div class="block">Ville :
         <br><?= htmlspecialchars($userTrouve['ville'] ?? 'N/A') ?>
     </div>
-
     <!-- CORRECTION : c'est 'mail' dans le JSON, pas 'email' -->
     <div class="block">Adresse mail :
         <br><?= htmlspecialchars($userTrouve['mail'] ?? 'N/A') ?>
     </div>
-
-    <div class="block">Mot de passe :
-        <br>*********
-    </div>
-
-    <!-- CORRECTION : c'est 'role' dans le JSON, pas 'statut' -->
+    <div class="block">Mot de passe :<br>*********</div>
+    <!-- CORRECTION : c'est 'role', pas 'statut' -->
     <div class="block">Rôle :
         <br><?= htmlspecialchars($userTrouve['role'] ?? 'N/A') ?>
     </div>
-
     <div class="block">Remise :
         <br><?= htmlspecialchars($userTrouve['remise'] ?? 0) ?>%
     </div>
-
     <div class="block">Compte bloqué :
         <br><?= ($userTrouve['bloque'] ?? false) ? 'Oui' : 'Non' ?>
     </div>
-
 <?php else: ?>
     <p>Utilisateur introuvable</p>
 <?php endif; ?>
-
 </section>
 </main>
 
