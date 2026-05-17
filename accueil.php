@@ -5,7 +5,7 @@ $userId = $_SESSION['id'] ?? null; //id de l'utilisateur connecté
 
 <?php
  // Lire tous les produits
-$fichierProduits = 'data/produits.json'; // adapte le chemin
+$fichierProduits = 'data/produits.json';
 $produits = json_decode(file_get_contents($fichierProduits), true);
 ?>
 
@@ -16,7 +16,7 @@ function getProduit($nom, $produits) {
             return $p;
         }
     }
-    return null; // si produit introuvable
+    return null;
 } ?>
 
 <!-- formatage de chaque produit pour les petits paniers -->
@@ -44,17 +44,67 @@ $produitTartealaframboise = getProduit('Tarteàlaframboise', $produits);
 ?>
 
 <?php
+/* -------------------------------------------------------------
+   NOTIFICATION DE LIVRAISON
+   On regarde si l'utilisateur connecte a une commande avec
+   statut "terminee" et qu'il n'a pas encore vu la notif.
+   Si oui : on prepare un message et on marque notif_vue = true
+   pour que la notif ne s'affiche qu'une seule fois.
+------------------------------------------------------------- */
+$notifMessage = null;
+
+if ($userId) {
+    // Trouver les infos du client connecte
+    $fichierClients = 'data/infoclient.json';
+    $listeClients = json_decode(file_get_contents($fichierClients), true) ?? [];
+    $clientConnecte = null;
+    foreach ($listeClients as $c) {
+        if ($c['id'] == $userId) {
+            $clientConnecte = $c;
+            break;
+        }
+    }
+
+    if ($clientConnecte) {
+        $fichierCommandes = 'data/commande.json';
+        $listeCommandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
+        $aModifier = false;
+
+        foreach ($listeCommandes as &$cmd) {
+            // On matche nom + prenom + telephone (faute d'id_client dans la commande)
+            if ($cmd['nom']       === $clientConnecte['nom']
+             && $cmd['prenom']    === $clientConnecte['prenom']
+             && $cmd['telephone'] === $clientConnecte['telephone']
+             && $cmd['statut']    === 'terminee'
+             && empty($cmd['notif_vue'])) {
+
+                $notifMessage = "Votre commande #" . $cmd['reference'] . " a été livrée !";
+                $cmd['notif_vue'] = true;
+                $aModifier = true;
+                break; // on n'affiche qu'une notif a la fois
+            }
+        }
+        unset($cmd);
+
+        if ($aModifier) {
+            file_put_contents($fichierCommandes, json_encode($listeCommandes, JSON_PRETTY_PRINT));
+        }
+    }
+}
+?>
+
+<?php
 
 if (isset($_POST['ajouter_panier'])) {
 
-    $nom = $_POST['nom']; 
+    $nom = $_POST['nom'];
     $produit = $_POST['produit'];
     $prix = $_POST['prix'];
     $saveur = $_POST['saveur'];
     $quantite = $_POST['quantite'];
 
     // Lire le panier
-    $fichier = 'data/panier.json'; 
+    $fichier = 'data/panier.json';
 
     if (file_exists($fichier)) {
         $panier = json_decode(file_get_contents($fichier), true);
@@ -64,7 +114,7 @@ if (isset($_POST['ajouter_panier'])) {
 
     // Ajouter produit
     $panier[] = [
-        "nom" => $nom, 
+        "nom" => $nom,
         "produit" => $produit,
         "prix" => $prix,
         "saveur" => $saveur,
@@ -74,7 +124,7 @@ if (isset($_POST['ajouter_panier'])) {
     // Sauvegarder
     file_put_contents($fichier, json_encode($panier, JSON_PRETTY_PRINT));
 
-    // Recharge la page 
+    // Recharge la page
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
@@ -88,16 +138,24 @@ if (isset($_POST['ajouter_panier'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pâtisserie</title>
 
-    
     <link rel="icon" type="images/png" href="images/logosite.png">
     <link rel="stylesheet" href="couleurs.css">
-     <link rel="stylesheet" href="structg.css">
+    <link rel="stylesheet" href="structg.css">
     <link rel="stylesheet" href="cssaccueil.css">
+    <link rel="stylesheet" href="darkmode.css">
+
 </head>
 
 <body>
 
-    
+<?php if ($notifMessage): ?>
+    <div class="notif-livraison" id="notif-livraison">
+        <span><?= htmlspecialchars($notifMessage) ?></span>
+        <button onclick="document.getElementById('notif-livraison').style.display='none'">Fermer</button>
+    </div>
+<?php endif; ?>
+
+
     <div class="barres">
         <span></span>
         <span></span>
@@ -105,7 +163,7 @@ if (isset($_POST['ajouter_panier'])) {
     </div>
 
     <h1> <a href="panier.php?id=<?= urlencode($userId) ?>" class="logo">La Cour des Délices</a></h1>
-    
+
 <div class="top-icons">
 
     <div class="profil-menu">
@@ -113,11 +171,9 @@ if (isset($_POST['ajouter_panier'])) {
 
         <div class="profil-bulle">
     <?php if (isset($_SESSION["connecte"]) && $_SESSION["connecte"]): ?>
-        <!-- Utilisateur connecté -->
         <a href="profil.php">Mon profil</a>
         <a href="logout.php">Se déconnecter</a>
     <?php else : ?>
-        <!-- Visiteur -->
         <a href="inscription.php">S'Inscrire</a>
         <a href="connexion.php">Connexion</a>
     <?php endif; ?>
@@ -129,7 +185,7 @@ if (isset($_POST['ajouter_panier'])) {
     </a>
 
 </div>
-    
+
 <div class="search-bar">
     <input type="search" placeholder=" qu'est-ce qui vous ferait plaisir?">
     <button><img src="images/Iconloupe.png" alt="loupe"></button>
@@ -783,5 +839,7 @@ if (isset($_POST['ajouter_panier'])) {
 </div>
        <h5>© 2026 Pâtisserie</h5>
 </footer>
+<button id="btn-darkmode" class="btn-darkmode">☾</button>
+<script src="darkmode.js"></script>
 </body>
 </html>
