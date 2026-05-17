@@ -1,0 +1,199 @@
+/* ============================================================
+   MODE SOMBRE - palette adaptee a l'identite "patisserie"
+   Au lieu d'un sombre gris/bleu froid, on garde des tons
+   chauds : brun chocolat fonce + beige + accents dores.
+
+   On redefinit les variables CSS de :root, donc si ton code
+   utilise var(--main-background) etc., tout se propage.
+   Les regles specifiques en dessous sont la pour les
+   elements qui n'utilisent pas les variables.
+============================================================ */
+
+body.dark {
+    /* Surcharge des variables d'origine */
+    --main-background:   #1f1814;   /* brun chocolat tres fonce */
+    --article-background:#3d2d1f;   /* brun moyen pour les cartes */
+    --main-title:        #f5e6d3;   /* beige clair pour le texte */
+    --article-price:     #d4a574;   /* dore caramel pour les prix */
+
+    /* Appliquer le fond et la couleur de texte au body */
+    background-color: var(--main-background);
+    color: var(--main-title);
+}
+
+/* ============================================================
+   REGLES SPECIFIQUES pour les elements qui peuvent avoir
+   des couleurs en dur dans tes autres CSS
+============================================================ */
+
+/* Titres */
+body.dark h1, body.dark h2, body.dark h3,
+body.dark h4, body.dark h5, body.dark h6 {
+    color: #fcf9f4;
+}
+
+body.dark .titre-section {
+    color: #d4a574; /* dore pour les titres de section */
+}
+
+/* Liens */
+body.dark a {
+    color: #e6c79c;
+}
+body.dark a.logo {
+    color: #fcf9f4;
+}
+
+/* Cartes / blocs : tons brun chocolat */
+body.dark .produit,
+body.dark .commande-case,
+body.dark .commande-card,
+body.dark .bloc-livraison,
+body.dark .panier-bulle,
+body.dark .profil-bulle,
+body.dark .ligne-produit,
+body.dark .confirmation,
+body.dark .ma-commande,
+body.dark .ajout-produit,
+body.dark .hero,
+body.dark .custom-cake {
+    background-color: #2d231c !important;
+    color: #f0e4d2;
+    border-color: #5a4435;
+}
+
+/* Prix - mise en valeur doree */
+body.dark .prix,
+body.dark .prix-produit,
+body.dark .prix-ligne {
+    color: #d4a574;
+}
+
+/* Formulaires */
+body.dark input,
+body.dark select,
+body.dark textarea {
+    background-color: #3d2d1f;
+    color: #f5e6d3;
+    border: 1px solid #5a4435;
+}
+body.dark input::placeholder { color: #b8a288; }
+
+/* Boutons */
+body.dark button,
+body.dark .btn,
+body.dark .panier,
+body.dark .btn-commande,
+body.dark .finish-btn {
+    background-color: #5c3a2e;  /* repris de ton --article-price original */
+    color: #fcf9f4;
+    border: none;
+}
+body.dark button:hover,
+body.dark .btn:hover,
+body.dark .panier:hover,
+body.dark .btn-commande:hover {
+    background-color: #7a4e3d;
+}
+
+/* Categories en haut (cartes cliquables) */
+body.dark .categorie {
+    background-color: #2d231c;
+    color: #f0e4d2;
+}
+
+/* Search bar */
+body.dark .search-bar input {
+    background-color: #3d2d1f;
+    color: #f5e6d3;
+}
+
+/* Menu horizontal */
+body.dark .menu-horizontal a {
+    color: #f0e4d2;
+}
+body.dark .menu-horizontal .active {
+    color: #d4a574;
+}
+
+/* Filtres (page presentation) */
+body.dark .barre-filtres {
+    background-color: #2d231c;
+    color: #f0e4d2;
+}
+
+/* Total panier */
+body.dark .total {
+    color: #d4a574;
+}
+
+/* Footer */
+body.dark footer {
+    background-color: #14100c;
+    color: #b8a288;
+}
+body.dark footer .info span {
+    color: #b8a288;
+}
+
+/* Bandeau notification livraison */
+body.dark .notif-livraison {
+    background-color: #4a6b2a; /* vert plus sombre */
+}
+
+/* Badges statut (page commandes) - on garde les couleurs vives
+   mais on les rend un peu plus mates */
+body.dark .badge-a-preparer    { background: #c88a30; }
+body.dark .badge-en-preparation { background: #3060c0; }
+
+/* Statuts mes commandes */
+body.dark .statut-a-preparer  { background: #c88a30; }
+body.dark .statut-en-prep     { background: #3060c0; }
+body.dark .statut-prepare     { background: #6030b0; }
+body.dark .statut-livraison   { background: #c03030; }
+body.dark .statut-terminee    { background: #308030; }
+
+/* Bordures separatrices */
+body.dark hr {
+    border-color: #5a4435;
+}
+body.dark .produit-ligne {
+    border-bottom-color: #5a4435;
+}
+
+/* Message info */
+body.dark .info-msg {
+    background-color: #3d2d1f;
+    border-color: #d4a574;
+    color: #f0e4d2;
+}
+
+/* ============================================================
+   BOUTON FLOTTANT TOGGLE MODE SOMBRE
+============================================================ */
+.btn-darkmode {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: #322119;     /* brun fonce, style patisserie */
+    color: #fcf9f4;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(50, 33, 25, 0.4);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.btn-darkmode:hover {
+    transform: scale(1.1);
+}
+
+body.dark .btn-darkmode {
+    background: #d4a574;     /* dore caramel, contraste sur fond sombre */
+    color: #1f1814;
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
+}
