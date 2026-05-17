@@ -1,6 +1,28 @@
 <?php
 session_start();
 $userId = $_SESSION['id'] ?? null; //id de l'utilisateur connecté
+// Check bloque + check role
+if (isset($_SESSION['id'])) {
+    $usersCheck = json_decode(file_get_contents("data/infoclient.json"), true) ?? [];
+    foreach ($usersCheck as $u) {
+        if ($u['id'] == $_SESSION['id']) {
+            if ($u['bloque'] ?? false) {
+                session_destroy();
+                die("Votre compte a été bloqué. <a href='connexion.php'>Retour</a>");
+            }
+            if ($u['role'] !== 'client') {
+                $redir = [
+                    'cuisinier'      => 'commandes.php',
+                    'livreur'        => 'livraison.php',
+                    'administrateur' => 'administrateur.php'
+                ];
+                header("Location: " . ($redir[$u['role']] ?? 'accueil.php'));
+                exit();
+            }
+            break;
+        }
+    }
+}
 ?>
 
 <?php
