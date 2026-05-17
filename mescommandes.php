@@ -8,9 +8,19 @@ if (!isset($_SESSION['id'])) {
 
 $userId = $_SESSION['id'];
 
-/* -------------------------------------------------------------
-   Charger client et toutes les commandes
-------------------------------------------------------------- */
+/* Charger client et toutes les commandes */
+$fichierClients   = 'data/infoclient.json';
+$fichierCo<?php
+session_start();
+
+if (!isset($_SESSION['id'])) {
+    header("Location: connexion.php");
+    exit();
+}
+
+$userId = $_SESSION['id'];
+
+/*  Charger client et toutes les commandes */
 $fichierClients   = 'data/infoclient.json';
 $fichierCommandes = 'data/commande.json';
 $fichierProduits  = 'data/produits.json';
@@ -25,10 +35,8 @@ foreach ($clients as $c) {
 }
 if (!$clientCo) { die("Client introuvable."); }
 
-/* -------------------------------------------------------------
-   Helper : verifier qu'une commande appartient bien au client
-   connecte ET qu'elle est encore modifiable (statut "a preparer")
-------------------------------------------------------------- */
+/*  verifier qu'une commande appartient bien au client
+   connecte ET qu'elle est encore statut "a preparer" */
 function commandeModifiableParClient(&$commande, $clientCo) {
     return $commande['nom']       === $clientCo['nom']
         && $commande['prenom']    === $clientCo['prenom']
@@ -45,14 +53,7 @@ function recalculerMontant(&$commande) {
     $commande['montant'] = $total;
 }
 
-/* -------------------------------------------------------------
-   ACTIONS POST :
-   - modif_quantite : changer la quantite d'un produit
-   - supprimer_produit : retirer un produit
-   - ajouter_produit : ajouter un nouveau produit a la commande
-   Toutes ces actions sont autorisees UNIQUEMENT si la commande
-   est encore au statut "a preparer".
-------------------------------------------------------------- */
+/*  modif_quantite + supprimer_produit + ajouter_produit */
 $messageInfo = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -117,9 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-/* -------------------------------------------------------------
-   Recuperer les commandes du client connecte pour l'affichage
-------------------------------------------------------------- */
+/* Recuperer les commandes du client connecte pour l'affichage */
 $mesCommandes = [];
 foreach ($commandes as $cmd) {
     if ($cmd['nom']       === $clientCo['nom']
