@@ -43,10 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if ($connecte) {
-            /* -------------------------------------------------------------
-               AJOUT : refuser la connexion si le compte est bloque.
-               On detecte ca AVANT de creer la session.
-            ------------------------------------------------------------- */
+            /*  refuser la connexion si le compte est bloque. */
             if ($utilisateurTrouve['bloque'] ?? false) {
                 $erreur["mail"] = "Votre compte a été bloqué. Contactez l'administrateur.";
                 $erreur["mdp"]  = "";
