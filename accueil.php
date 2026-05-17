@@ -66,13 +66,7 @@ $produitTartealaframboise = getProduit('Tarteàlaframboise', $produits);
 ?>
 
 <?php
-/* -------------------------------------------------------------
-   NOTIFICATION DE LIVRAISON
-   On regarde si l'utilisateur connecte a une commande avec
-   statut "terminee" et qu'il n'a pas encore vu la notif.
-   Si oui : on prepare un message et on marque notif_vue = true
-   pour que la notif ne s'affiche qu'une seule fois.
-------------------------------------------------------------- */
+
 $notifMessage = null;
 
 if ($userId) {
