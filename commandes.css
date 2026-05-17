@@ -87,3 +87,27 @@ button{
     text-align: center;
     border: 2px double var(--article-background);
 }
+
+.commande-case.a-preparer     { border-left: 6px solid #f0a040; }
+.commande-case.en-preparation { border-left: 6px solid #4080f0; }
+
+.badge-statut {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: white;
+    margin-right: 5px;
+}
+.badge-a-preparer     { background: #f0a040; }
+.badge-en-preparation { background: #4080f0; }
+.badge-modifiee       { background: #c03030; }
+
+.alerte-modif {
+    background: #ffe8e8;
+    border-left: 4px solid #c03030;
+    padding: 6px 10px;
+    margin: 8px 0;
+    font-size: 13px;
+}
+body.dark .alerte-modif { background: #4a2020; }
