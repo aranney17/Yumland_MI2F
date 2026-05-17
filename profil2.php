@@ -133,6 +133,20 @@ foreach ($commandes as $cmd) {
 usort($mesCommandes, function($a, $b) {
     return strtotime($b['date']) - strtotime($a['date']);
 });
+
+// Charger les notations pour savoir lesquelles ont déjà été notées
+$notations = [];
+if (file_exists("data/notations.json")) {
+    $notations = json_decode(file_get_contents("data/notations.json"), true) ?? [];
+}
+ 
+// Indexer par référence pour accès rapide
+$notationsParRef = [];
+foreach ($notations as $notation) {
+    if ($notation['id_utilisateur'] == $_SESSION['id']) {
+        $notationsParRef[$notation['reference']] = $notation;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -355,9 +369,32 @@ usort($mesCommandes, function($a, $b) {
                                 </div>
 
                             <?php else: ?>
-                                <p><em>Cette commande ne peut plus être modifiée (le cuisinier a commencé la préparation).</em></p>
+                                <p><em>Cette commande ne peut plus être modifiée.</em></p>
                             <?php endif; ?>
-
+                            
+                            <?php
+                                    $ref = $commande['reference'];
+                                    $dejaNoted = isset($notationsParRef[$ref]);
+                                ?>
+ 
+                                <?php if ($commande['statut'] === 'livre') : ?>
+                                    <?php if ($dejaNoted) : ?>
+                                        <!-- Affiche la note de satisfaction + lien pour voir le détail -->
+                                        <div style="margin-top: 8px;">
+                                            <?php
+                                                $noteSat = $notationsParRef[$ref]['satisfaction']['note'];
+                                                for ($i = 1; $i <= 5; $i++) {
+                                                    echo $i <= $noteSat
+                                                    ? '<span style="color:var(--article-background);font-size:1.2em;">★</span>'
+                                                    : '<span style="color:#ccc;font-size:1.2em;">★</span>';
+                                                }
+                                            ?>
+                                            <a href="notation.php?ref=<?= $ref ?>" style="margin-left: 8px;">Voir mon avis</a>
+                                        </div>
+                                    <?php else : ?>
+                                        <a href="notation.php?ref=<?= $ref ?>">Noter la commande</a>
+                                    <?php endif; ?>
+                                <?php endif; ?>
                         </td>
                     </tr>
 
