@@ -1,5 +1,15 @@
 <?php
-$json = file_get_contents("data/commandes.json");
+session_start();
+
+// Vérifier connexion
+if (!isset($_SESSION['id'])) {
+    header("Location: connexion.php");
+    exit();
+}
+if($_SESSION["role"] != "administrateur"){
+    header("Location: connexion.php");
+}
+$json = file_get_contents("data/commande.json");
 $commandes = json_decode($json, true);
 ?>
 
@@ -107,7 +117,7 @@ $commandes = json_decode($json, true);
 
             <?php foreach ($commande['produits'] as $produit): ?>
             <tr>
-                <td><?= $produit['nom'] ?></td>
+                <td><?= $produit['produit'] ?></td>
                 <td><?= $produit['quantite'] ?></td>
                 <td><?= $produit['prix'] ?> €</td>
             </tr>
@@ -146,4 +156,6 @@ $commandes = json_decode($json, true);
     </footer>
 </body>
 </html>
+
+
 
