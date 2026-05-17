@@ -39,7 +39,7 @@ foreach ($commandes as $commande) {
 }
 
 // Sécurité : si commande introuvable ou pas livrée, on redirige
-if (!$commandeTrouvee || $commandeTrouvee['statut'] !== 'livre') {
+if (!$commandeTrouvee || $commandeTrouvee['statut'] !== 'terminee') {
     header("Location: profil2.php");
     exit();
 }
