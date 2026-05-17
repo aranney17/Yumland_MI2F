@@ -9,18 +9,6 @@
     <link rel="stylesheet" href="darkmode.css">
     <script src="connexion.js" defer></script>
     <title>Connexion</title>
-    <style>
-        .message-succes {
-            background: #4CAF50;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            margin: 20px auto;
-            max-width: 600px;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
 
