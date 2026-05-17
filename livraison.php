@@ -1,18 +1,74 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+session_start();
+
+/* ---------------------------------------------------------------
+   SECURITE : seul un utilisateur connecte avec role = "livreur"
+   peut voir cette page.
+   On lit le role directement dans infoclient.json a partir de
+   l'id stocke en session (plus fiable que de se fier a un eventuel
+   $_SESSION['role'] qui peut ne pas avoir ete defini a la connexion).
+--------------------------------------------------------------- */
+if (!isset($_SESSION['id'])) {
+    // Pas connecte du tout
+    header("Location: connexion.php");
+    exit();
+}
+
+$clients = json_decode(file_get_contents('data/infoclient.json'), true) ?? [];
+$roleUtilisateur = null;
+foreach ($clients as $c) {
+    if ($c['id'] == $_SESSION['id']) {
+        $roleUtilisateur = $c['role'];
+        break;
+    }
+}
+
+if ($roleUtilisateur !== 'livreur') {
+    // Page reservee : on bloque
+    http_response_code(403);
+    ?>
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Acces refuse</title>
+        <link rel="stylesheet" href="couleurs.css">
+        <link rel="stylesheet" href="structg.css">
+        <style>
+            .acces-refuse { text-align:center; margin-top:80px; }
+            .acces-refuse a { display:inline-block; margin-top:20px; }
+        </style>
+    </head>
+    <body>
+        <div class="acces-refuse">
+            <h1>Acces refuse</h1>
+            <p>Cette page est reservee aux livreurs.</p>
+            <a href="accueil.php">Retour a l'accueil</a>
+        </div>
+    </body>
+    </html>
+    <?php
+    exit();
+}
+
+/* ---------------------------------------------------------------
+   A partir d'ici, l'utilisateur est forcement un livreur.
+--------------------------------------------------------------- */
 
 // Charger JSON
 $commandes = json_decode(file_get_contents('data/commande.json'), true);
 if (!$commandes) $commandes = [];
 
-//démarrer
+// demarrer
 if (isset($_POST['start_id'])) {
     foreach ($commandes as &$cmd) {
         if ($cmd['id'] == $_POST['start_id']) {
             $cmd['statut'] = 'en_livraison';
         }
     }
+    unset($cmd);
     file_put_contents('data/commande.json', json_encode($commandes, JSON_PRETTY_PRINT));
     header('Location: livraison.php');
     exit;
@@ -23,8 +79,11 @@ if (isset($_POST['finish_id'])) {
     foreach ($commandes as &$cmd) {
         if ($cmd['id'] == $_POST['finish_id']) {
             $cmd['statut'] = 'terminee';
+            // on (re)initialise le flag de notification pour que le client la voie
+            $cmd['notif_vue'] = false;
         }
     }
+    unset($cmd);
     file_put_contents('data/commande.json', json_encode($commandes, JSON_PRETTY_PRINT));
     header('Location: livraison.php');
     exit;
