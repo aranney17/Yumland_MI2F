@@ -36,7 +36,6 @@ h2 {
     display: none;
 }
 
-// menu horizontal catégorie 
 .categorie {
     text-decoration: none;
     color: var(--main-title);
@@ -44,7 +43,6 @@ h2 {
     min-width: 120px;
 }
 
-// cercle image 
 .categorie img {
     width: 100px;
     height: 100px;
@@ -52,7 +50,6 @@ h2 {
     object-fit: cover;  
 }
 
-// titre 
 .categorie p {
     margin-top: 8px;
     font-size: 1rem;
@@ -205,7 +202,7 @@ h2 {
     font-size: 40px;
 }
 
-// grille produits
+
 .produits {
     display: flex;
     flex-wrap: wrap;
@@ -222,7 +219,7 @@ h2 {
     box-sizing: border-box;
 }
 
-// image produit 
+
 .produit > a > img {
     width: 100%;
     height: auto;
