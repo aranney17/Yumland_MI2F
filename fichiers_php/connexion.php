@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="connexion.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="darkmode.css">
-    <link rel="stylesheet" href="darkmode_connexion.css">
-    <script src="connexion.js" defer></script>
+    <link rel="stylesheet" href="fichiers_css/connexion.css">
+    <link rel="stylesheet" href="fichiers_css/structg.css">
+    <link rel="stylesheet" href="fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="fichiers_css/darkmode.css">
+    <link rel="stylesheet" href="fichiers_css/darkmode_connexion.css">
+    <script src="fichiers_js/connexion.js" defer></script>
     <title>Connexion</title>
 </head>
 <body>
@@ -80,13 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
             <img src="images/Iconprofil.png" alt="Profil" class="icon">
             <div class="profil-bulle">
-                <a href="inscription.php">Inscription</a>
-                <a href="connexion.php">Connexion</a>
+                <a href="fichiers_php/inscription.php">Inscription</a>
+                <a href="fichiers_php/connexion.php">Connexion</a>
             </div>
         </div>
         <a href=""><img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier"></a>
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php endif; ?>
 
 <main>
-    <form action="connexion.php" method="POST" onsubmit="return verificationConnexion()">
+    <form action="fichiers_php/connexion.php" method="POST" onsubmit="return verificationConnexion()">
         <fieldset>
             <legend>Connexion</legend>
             <div class="champ">
