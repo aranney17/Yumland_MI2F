@@ -8,15 +8,15 @@ if (isset($_SESSION['id'])) {
         if ($u['id'] == $_SESSION['id']) {
             if ($u['bloque'] ?? false) {
                 session_destroy();
-                die("Votre compte a été bloqué. <a href='connexion.php'>Retour</a>");
+                die("Votre compte a été bloqué. <a href='fichiers_php/connexion.php'>Retour</a>");
             }
             if ($u['role'] !== 'client') {
                 $redir = [
-                    'cuisinier'      => 'commandes.php',
-                    'livreur'        => 'livraison.php',
-                    'administrateur' => 'administrateur.php'
+                    'cuisinier'      => 'fichiers_php/commandes.php',
+                    'livreur'        => 'fichiers_php/livraison.php',
+                    'administrateur' => 'fichiers_php/administrateur.php'
                 ];
-                header("Location: " . ($redir[$u['role']] ?? 'accueil.php'));
+                header("Location: " . ($redir[$u['role']] ?? 'fichiers_php/accueil.php'));
                 exit();
             }
             break;
@@ -155,10 +155,10 @@ if (isset($_POST['ajouter_panier'])) {
     <title>Pâtisserie</title>
 
     <link rel="icon" type="images/png" href="images/logosite.png">
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="cssaccueil.css">
-    <link rel="stylesheet" href="darkmode.css">
+    <link rel="stylesheet" href="fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="fichiers_css/structg.css">
+    <link rel="stylesheet" href="fichiers_css/cssaccueil.css">
+    <link rel="stylesheet" href="fichiers_css/darkmode.css">
 
 </head>
 
@@ -178,7 +178,7 @@ if (isset($_POST['ajouter_panier'])) {
         <span></span>
     </div>
 
-    <h1> <a href="panier.php?id=<?= urlencode($userId) ?>" class="logo">La Cour des Délices</a></h1>
+    <h1> <a href="fichiers_php/panier.php?id=<?= urlencode($userId) ?>" class="logo">La Cour des Délices</a></h1>
 
 <div class="top-icons">
 
@@ -187,16 +187,16 @@ if (isset($_POST['ajouter_panier'])) {
 
         <div class="profil-bulle">
     <?php if (isset($_SESSION["connecte"]) && $_SESSION["connecte"]): ?>
-        <a href="profil.php">Mon profil</a>
-        <a href="logout.php">Se déconnecter</a>
+        <a href="fichiers_php/profil.php">Mon profil</a>
+        <a href="fichiers_php/logout.php">Se déconnecter</a>
     <?php else : ?>
-        <a href="inscription.php">S'Inscrire</a>
-        <a href="connexion.php">Connexion</a>
+        <a href="fichiers_php/inscription.php">S'Inscrire</a>
+        <a href="fichiers_php/connexion.php">Connexion</a>
     <?php endif; ?>
 </div>
     </div>
 
-    <a href="panier.php">
+    <a href="fichiers_php/panier.php">
         <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
     </a>
 
@@ -209,32 +209,32 @@ if (isset($_POST['ajouter_panier'])) {
     
 <div class="categories">
 
-    <a href="presentation.php#viennoiseries" class="categorie">
+    <a href="fichiers_php/presentation.php#viennoiseries" class="categorie">
         <img src="images/Croissantaubeurre.jpg" alt="viennoiserie">
         <p>Viennoiseries</p>
     </a>
 
-    <a href="presentation.php#boissons" class="categorie">
+    <a href="fichiers_php/presentation.php#boissons" class="categorie">
         <img src="images/Cafélatte.jpg" alt="Boissons">
         <p>Boissons</p>
     </a>
 
-    <a href="presentation.php#gourmandises" class="categorie">
+    <a href="fichiers_php/presentation.php#gourmandises" class="categorie">
         <img src="images/Cookiegourmand.jpg" alt="Gourmandises">
         <p>Gourmandises</p>
     </a>
     
-    <a href="presentation.php#patisseries" class="categorie">
+    <a href="fichiers_php/presentation.php#patisseries" class="categorie">
         <img src="images/Eclairchocolat.jpg" alt="Patisseries">
         <p>Patisseries</p>
     </a>
     
-    <a href="presentation.php#gateaux" class="categorie">
+    <a href="fichiers_php/presentation.php#gateaux" class="categorie">
         <img src="images/Gateauauxfraises.jpg" alt="Gateaux">
         <p>Gateaux</p>
     </a>
     
-    <a href="presentation.php#tartes" class="categorie">
+    <a href="fichiers_php/presentation.php#tartes" class="categorie">
         <img src="images/Tarteàlanoisette.jpg" alt="Tartes">
         <p>Tartes</p>
     </a>
@@ -283,7 +283,7 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Opérapistacheyuzu">
+            <a href="fichiers_php/pageproduit/produits.php?nom=Opérapistacheyuzu">
             <img src="images/Opérapistacheyuzu.jpg" alt="Opera pistache yuzu">
             </a>
             
