@@ -211,7 +211,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT));
 
         
-        header("Location: connexion.php?inscription=ok");
+        header("Location: fichiers_php/connexion.php?inscription=ok");
         exit();
     }
 }
@@ -219,13 +219,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
             <img src="images/Iconprofil.png" alt="Profil" class="icon">
             <div class="profil-bulle">
-                <a href="inscription.php">Inscription</a>
-                <a href="connexion.php">Connexion</a>
+                <a href="fichiers_php/inscription.php">Inscription</a>
+                <a href="fichiers_php/connexion.php">Connexion</a>
             </div>
         </div>
         <a href=""><img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier"></a>
@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <main>
     <h2>Créer un nouveau compte</h2>
-    <form action="inscription.php" method="POST" onsubmit="return verificationInscription()">
+    <form action="fichiers_php/inscription.php" method="POST" onsubmit="return verificationInscription()">
         <fieldset>
 
             <div class="civilite">
