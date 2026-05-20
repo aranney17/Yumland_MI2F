@@ -6,7 +6,7 @@ session_start();
 
 /*  SECURITE : reserve aux livreurs + check si bloque */
 if (!isset($_SESSION['id'])) {
-    header("Location: connexion.php");
+    header("Location: fichiers_php/connexion.php");
     exit();
 }
 
@@ -23,7 +23,7 @@ foreach ($clients as $c) {
 
 if ($userBloque) {
     session_destroy();
-    die("Votre compte a été bloqué. <a href='connexion.php'>Retour à la connexion</a>");
+    die("Votre compte a été bloqué. <a href='fichiers_php/connexion.php'>Retour à la connexion</a>");
 }
 
 if ($roleUser !== 'livreur') {
@@ -42,7 +42,7 @@ if (isset($_POST['start_id'])) {
     }
     unset($cmd);
     file_put_contents('data/commande.json', json_encode($commandes, JSON_PRETTY_PRINT));
-    header('Location: livraison.php');
+    header('Location: fichiers_php/livraison.php');
     exit;
 }
 
@@ -55,7 +55,7 @@ if (isset($_POST['finish_id'])) {
     }
     unset($cmd);
     file_put_contents('data/commande.json', json_encode($commandes, JSON_PRETTY_PRINT));
-    header('Location: livraison.php');
+    header('Location: fichiers_php/livraison.php');
     exit;
 }
 
@@ -75,23 +75,23 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Livraison</title>
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="livraison.css">
-    <link rel="stylesheet" href="darkmode.css">
+    <link rel="stylesheet" href="fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="fichiers_css/structg.css">
+    <link rel="stylesheet" href="fichiers_css/livraison.css">
+    <link rel="stylesheet" href="fichiers_css/darkmode.css">
 </head>
 <body>
 
 <div class="barres"><span></span><span></span><span></span></div>
 
-<h1><a href="livraison.php" class="logo">La Cour des Délices</a></h1>
+<h1><a href="fichiers_php/livraison.php" class="logo">La Cour des Délices</a></h1>
 
 <div class="top-icons">
     <div class="profil-menu">
         <img src="images/Iconprofil.png" class="icon">
         <div class="profil-bulle">
-            <a href="profil.php">Profil</a>
-            <a href="logout.php">Déconnexion</a>
+            <a href="fichiers_php/profil.php">Profil</a>
+            <a href="fichiers_php/logout.php">Déconnexion</a>
         </div>
     </div>
 </div>
