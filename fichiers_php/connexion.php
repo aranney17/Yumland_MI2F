@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         Vous n'êtes toujours pas client chez nous ?<br />
         Créez un compte en quelques clics.
     </p>
-    <a class="bouton" href="inscription.php">CRÉER UN COMPTE</a>
+    <a class="bouton" href="fichiers_php/inscription.php">CRÉER UN COMPTE</a>
 </main>
 
 <footer>
