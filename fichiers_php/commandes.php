@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: connexion.php");
+    header("Location: fichiers_php/connexion.php");
     exit();
 }
 
@@ -19,7 +19,7 @@ foreach ($clients as $c) {
 }
 if ($bloque) {
     session_destroy();
-    die("Votre compte a été bloqué. <a href='connexion.php'>Retour</a>");
+    die("Votre compte a été bloqué. <a href='fichiers_php/connexion.php'>Retour</a>");
 }
 if ($role !== 'cuisinier') {
     http_response_code(403);
@@ -55,7 +55,7 @@ if (isset($_GET['terminer'])) {
 }
 if ($modifie) {
     file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
-    header("Location: commandes.php");
+    header("Location: fichiers_php/commandes.php");
     exit();
 }
 
@@ -67,10 +67,10 @@ $ajd = date("Y-m-d");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="commandes.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="darkmode.css">
+    <link rel="stylesheet" href="fichiers_css/commandes.css">
+    <link rel="stylesheet" href="fichiers_css/structg.css">
+    <link rel="stylesheet" href="fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="fichiers_css/darkmode.css">
     <title>Commandes</title>
     <style>
         .commande-case.a-preparer     { border-left: 6px solid #f0a040; }
@@ -88,13 +88,13 @@ $ajd = date("Y-m-d");
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
     <!-- LOGO : confine au cuisinier -->
-    <h1><a href="commandes.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="fichiers_php/commandes.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
             <img src="images/Iconprofil.png" class="icon">
             <div class="profil-bulle">
-                <a href="profil.php">Profil</a>
-                <a href="logout.php">Déconnexion</a>
+                <a href="fichiers_php/profil.php">Profil</a>
+                <a href="fichiers_php/logout.php">Déconnexion</a>
             </div>
         </div>
     </div>
@@ -139,9 +139,9 @@ $ajd = date("Y-m-d");
                 <?php endforeach; ?>
             </div>
             <?php if ($estAPreparer): ?>
-                <a href="commandes.php?commencer=<?= $cmd['reference'] ?>" class="btn">Commencer la préparation</a>
+                <a href="fichiers_php/commandes.php?commencer=<?= $cmd['reference'] ?>" class="btn">Commencer la préparation</a>
             <?php else: ?>
-                <a href="commandes.php?terminer=<?= $cmd['reference'] ?>" class="btn">Terminer</a>
+                <a href="fichiers_php/commandes.php?terminer=<?= $cmd['reference'] ?>" class="btn">Terminer</a>
             <?php endif; ?>
         </div>
     <?php endif; endforeach; ?>
