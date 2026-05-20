@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: connexion.php");
+    header("Location: fichiers_php/connexion.php");
     exit();
 }
 
@@ -23,7 +23,7 @@ foreach ($utilisateurs as $u) {
 }
 if ($bloqueConnecte) {
     session_destroy();
-    die("Votre compte a été bloqué. <a href='connexion.php'>Retour</a>");
+    die("Votre compte a été bloqué. <a href='fichiers_php/connexion.php'>Retour</a>");
 }
 if ($roleConnecte !== 'administrateur') {
     http_response_code(403);
@@ -119,20 +119,20 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrateur</title>
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="administrateur.css">
-    <link rel="stylesheet" href="darkmode.css">
-    <link rel="stylesheet" href="darkmode_admin.css"> 
+    <link rel="stylesheet" href="fichiers_css/structg.css">
+    <link rel="stylesheet" href="fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="fichiers_css/administrateur.css">
+    <link rel="stylesheet" href="fichiers_css/darkmode.css">
+    <link rel="stylesheet" href="fichiers_css/darkmode_admin.css"> 
 </head>
 <body>
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="administrateur.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="fichiers_php/administrateur.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
-        <a href="profil.php"><img src="images/Iconprofil.png" alt="Profil" class="icon"></a>
-        <a href="logout.php"><p class="deconnexion">déconnexion</p></a>
+        <a href="fichiers_php/profil.php"><img src="images/Iconprofil.png" alt="Profil" class="icon"></a>
+        <a href="fichiers_php/logout.php"><p class="deconnexion">déconnexion</p></a>
     </div>
 </header>
 
@@ -143,8 +143,8 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
 
 <nav class="menu-horizontal">
     <ul>
-        <li><a href="administrateur.php" class="active">Utilisateurs</a></li>
-        <li><a href="administrateur2.php">Commandes</a></li>
+        <li><a href="fichiers_php/administrateur.php" class="active">Utilisateurs</a></li>
+        <li><a href="fichiers_php/administrateur2.php">Commandes</a></li>
     </ul>
 </nav>
 
@@ -161,7 +161,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
                 $estMoi = ($user['id'] == $_SESSION['id']);
             ?>
             <tr class="ligne <?= ($user['bloque'] ?? false) ? 'ligne-bloque' : '' ?>" id="ligne-<?= $user['id'] ?>">
-                <td><a href="profil_admin.php?id=<?= $user['id'] ?>"><?= htmlspecialchars($user['nom']) ?></a></td>
+                <td><a href="fichiers_php/profil_admin.php?id=<?= $user['id'] ?>"><?= htmlspecialchars($user['nom']) ?></a></td>
                 <td><?= htmlspecialchars($user['prenom']) ?></td>
                 <td><?= htmlspecialchars($user['mail']) ?></td>
 
@@ -261,7 +261,7 @@ function changerRole(select) {
 
     const feedback = document.getElementById('feedback-' + userId);
 
-    fetch('administrateur.php', { method: 'POST', body: formData })
+    fetch('fichiers_php/administrateur.php', { method: 'POST', body: formData })
         .then(r => r.json())
         .then(data => {
             if (data.success) {
@@ -286,6 +286,6 @@ function changerRole(select) {
 </script>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="fichiers_js/darkmode.js"></script>
 </body>
 </html>
