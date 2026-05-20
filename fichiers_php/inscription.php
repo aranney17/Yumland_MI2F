@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="connexion.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="darkmode.css">
-    <script src="connexion.js" defer></script>
+    <link rel="stylesheet" href="fichiers_css/connexion.css">
+    <link rel="stylesheet" href="fichiers_css/structg.css">
+    <link rel="stylesheet" href="fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="fichiers_css/darkmode.css">
+    <script src="fichiers_js/connexion.js" defer></script>
     <title>Inscription</title>
 </head>
     
