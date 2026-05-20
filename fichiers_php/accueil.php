@@ -283,7 +283,7 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="fichiers_php/pageproduit/produits.php?nom=Opérapistacheyuzu">
+            <a href="fichiers_php/produits.php?nom=Opérapistacheyuzu">
             <img src="images/Opérapistacheyuzu.jpg" alt="Opera pistache yuzu">
             </a>
             
@@ -327,7 +327,7 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Lattefraisematcha">
+            <a href="fichiers_php/produits.php?nom=Lattefraisematcha">
             <img src="images/Lattefraisematcha.jpg" alt="latte matcha fraise">
             </a>
             
@@ -375,7 +375,7 @@ if (isset($_POST['ajouter_panier'])) {
 </section>
     
 <section class="produit-highlight">
-    <a href="pageproduit/produits.php?nom=Brownieube">
+    <a href="fichiers_php/produits.php?nom=Brownieube">
     <img src="images/Brownieube.jpg" alt="brownie Ube">
     </a>
     
@@ -426,7 +426,7 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Matchalatte">
+            <a href="fichiers_php/produits.php?nom=Matchalatte">
             <img src="images/Matchalatte.jpg" alt="matchalatte">
             </a>
             
@@ -468,7 +468,7 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Cookiegourmand">
+            <a href="fichiers_php/produits.php?nom=Cookiegourmand">
             <img src="images/Cookiegourmand.jpg" alt="cookie gourmand">
             </a>
             <div class="produit-info">
@@ -515,7 +515,7 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Gateauaucitron">
+            <a href="fichiers_php/produits.php?nom=Gateauaucitron">
             <img src="images/Gateauaucitron.jpg" alt="Gateau citron">
             </a>
             <div class="produit-info">
@@ -557,7 +557,7 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Tiramisu">
+            <a href="fichiers_php/produits.php?nom=Tiramisu">
             <img src="images/Tiramisu.jpg" alt="tiramisu">
             </a>
             
@@ -609,7 +609,7 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Tarteauxpommes">
+            <a href="fichiers_php/produits.php?nom=Tarteauxpommes">
             <img src="images/Tarteauxpommes.jpg" alt="Tarte pomme">
             </a>
             
@@ -653,7 +653,7 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Cappuccino">
+            <a href="fichiers_php/produits.php?nom=Cappuccino">
             <img src="images/Cappuccino.jpg" alt="Cappuccino">
             </a>
             
@@ -698,7 +698,7 @@ if (isset($_POST['ajouter_panier'])) {
 
     </div>    
 <section class="produit-highlight">
-    <a href="pageproduit/produits.php?nom=Tarteàlaframboise">
+    <a href="fichiers_php/produits.php?nom=Tarteàlaframboise">
     <img src="images/Tarteàlaframboise.jpg" alt="Tarte framboise">
     </a>
     <div class="produit-info">
@@ -743,7 +743,7 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Macaron">
+            <a href="fichiers_php/produits.php?nom=Macaron">
             <img src="images/Macaron.jpg" alt="Macaron">
             </a>
             
@@ -787,7 +787,7 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="pageproduit/produits.php?nom=Parisbrest">
+            <a href="fichiers_php/produits.php?nom=Parisbrest">
             <img src="images/Parisbrest.jpg" alt="Paris brest">
             </a>
             
