@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: fichiers_php/connexion.php");
+    header("Location: ../fichiers_php/connexion.php");
     exit();
 }
 
-$utilisateurs = json_decode(file_get_contents("data/infoclient.json"), true) ?? [];
+$utilisateurs = json_decode(file_get_contents("../data/infoclient.json"), true) ?? [];
 
 /* SECURITE admin + check bloque */
 $role = null;
@@ -20,16 +20,16 @@ foreach ($utilisateurs as $u) {
 }
 if ($bloque) {
     session_destroy();
-    die("Votre compte a été bloqué. <a href='fichiers_php/connexion.php'>Retour</a>");
+    die("Votre compte a été bloqué. <a href='../fichiers_php/connexion.php'>Retour</a>");
 }
 if ($role !== 'administrateur') {
     http_response_code(403);
     die("Accès refusé. Cette page est réservée aux administrateurs.");
 }
 
-$commandes = json_decode(file_get_contents("data/commande.json"), true) ?? [];
-$notations = file_exists("data/notation.json")
-    ? (json_decode(file_get_contents("data/notation.json"), true) ?? [])
+$commandes = json_decode(file_get_contents("../data/commande.json"), true) ?? [];
+$notations = file_exists("../data/notations.json")
+    ? (json_decode(file_get_contents("../data/notations.json"), true) ?? [])
     : [];
 
 
@@ -61,32 +61,32 @@ $debugMode = isset($_GET['debug']);
 <head>
     <meta charset="UTF-8">
     <title>Administrateur - Commandes</title>
-    <link rel="stylesheet" href="fichiers_css/structg.css">
-    <link rel="stylesheet" href="fichiers_css/couleurs.css">
-    <link rel="stylesheet" href="fichiers_css/administrateur2.css">
-    <link rel="stylesheet" href="fichiers_css/darkmode.css">
-    <link rel="stylesheet" href="fichiers_css/darkmode_admin.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/administrateur2.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode_admin.css">
 </head>
 <body>
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="fichiers_php/administrateur.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="../fichiers_php/administrateur.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
-        <a href="fichiers_php/profil.php"><img src="images/Iconprofil.png" alt="Profil" class="icon"></a>
-        <a href="fichiers_php/logout.php"><p class="deconnexion">déconnexion</p></a>
+        <a href="../fichiers_php/profil.php"><img src="../images/Iconprofil.png" alt="Profil" class="icon"></a>
+        <a href="../fichiers_php/logout.php"><p class="deconnexion">déconnexion</p></a>
     </div>
 </header>
 
-<div class="search-bar">
-    <input type="search" placeholder="Chercher une commande">
-    <button><img src="images/Iconloupe.png" alt="loupe"></button>
-</div>
+<form class="search-bar" action="../fichiers_php/recherche.php" method="get" autocomplete="off">
+    <input type="search" name="q" placeholder=" qu'est-ce qui vous ferait plaisir?">
+    <button type="submit"><img src="../images/Iconloupe.png" alt="loupe"></button>
+</form>
 
 <nav class="menu-horizontal">
     <ul>
-        <li><a href="fichiers_php/administrateur.php">Utilisateurs</a></li>
-        <li><a href="fichiers_php/administrateur2.php" class="active">Commandes</a></li>
+        <li><a href="../fichiers_php/administrateur.php">Utilisateurs</a></li>
+        <li><a href="../fichiers_php/administrateur2.php" class="active">Commandes</a></li>
     </ul>
 </nav>
 
@@ -101,7 +101,7 @@ $debugMode = isset($_GET['debug']);
     }
     ?></pre>
 
-    <p><strong>Références dans <code>notation.json</code> :</strong></p>
+    <p><strong>Références dans <code>notations.json</code> :</strong></p>
     <pre><?php
     foreach ($notations as $n) {
         echo "  " . var_export($n['reference'] ?? '?', true) . "  (normalisée : " . normaliserRef($n['reference'] ?? '') . ")\n";
@@ -114,7 +114,7 @@ $debugMode = isset($_GET['debug']);
 <?php endif; ?>
 
 <main>
-    <button class="filtre">Filtrer <img src="images/filter.png"></button>
+    <button class="filtre">Filtrer <img src="../images/filter.png"></button>
     <section>
         <table>
             <tr>
@@ -141,7 +141,7 @@ $debugMode = isset($_GET['debug']);
                 </td>
                 <td>
                     <button class="bouton-details" data-cible="details-<?= $commande['id'] ?>">
-                        <img src="images/iconfleche.jpg" alt="Détails" class="fleche">
+                        <img src="../images/iconfleche.jpg" alt="Détails" class="fleche">
                     </button>
                 </td>
             </tr>
@@ -204,13 +204,13 @@ $debugMode = isset($_GET['debug']);
 
 <footer>
     <p>suivez nous sur nos réseaux!<br>
-        <img src="images/Iconinstagram.jpg" class="icon">
-        <img src="images/Icontiktok.jpg" class="icon">
-        <img src="images/Icontwitter.png" class="icon">
+        <img src="../images/Iconinstagram.jpg" class="icon">
+        <img src="../images/Icontiktok.jpg" class="icon">
+        <img src="../images/Icontwitter.png" class="icon">
     </p>
     <div class="infos-footer">
-        <div class="info"><img src="images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75300 Paris</span></div>
-        <div class="info"><img src="images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 22h</span></div>
+        <div class="info"><img src="../images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75300 Paris</span></div>
+        <div class="info"><img src="../images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 22h</span></div>
     </div>
     <h5>© 2026 Pâtisserie</h5>
 </footer>
@@ -225,6 +225,7 @@ document.querySelectorAll('.bouton-details').forEach(btn => {
 </script>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
+<script src="../fichiers_js/recherche.js"></script>
 </body>
 </html>
