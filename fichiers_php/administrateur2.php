@@ -70,7 +70,7 @@ $debugMode = isset($_GET['debug']);
 <body>
 
 <header>
-    <div class="barres"><span></span><span></span><span></span></div>
+   
     <h1><a href="../fichiers_php/administrateur.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <a href="../fichiers_php/profil.php"><img src="../images/Iconprofil.png" alt="Profil" class="icon"></a>
@@ -92,7 +92,7 @@ $debugMode = isset($_GET['debug']);
 
 <?php if ($debugMode): ?>
 <div class="debug-box">
-    <h3>🔍 Mode debug (ajoute <code>?debug=1</code> dans l'URL pour activer)</h3>
+    <h3> Mode debug (ajoute <code>?debug=1</code> dans l'URL pour activer)</h3>
 
     <p><strong>Références dans <code>commande.json</code> :</strong></p>
     <pre><?php
@@ -108,8 +108,7 @@ $debugMode = isset($_GET['debug']);
     }
     ?></pre>
 
-    <p>Si les références "normalisées" sont identiques mais pas affichées,
-       il y a un problème ailleurs. Si elles diffèrent, c'est là qu'il faut chercher.</p>
+    
 </div>
 <?php endif; ?>
 
