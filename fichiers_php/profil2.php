@@ -16,7 +16,7 @@ foreach ($users as $u) {
 }
 if (!$userTrouve) { die("Utilisateur introuvable."); }
 
-/* Charger commandes (commande.json sans s) et produits */
+/* Charger commandes et produits */
 $fichierCommandes = "../data/commande.json";
 $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
 $produits  = json_decode(file_get_contents("../data/produits.json"), true) ?? [];
@@ -54,9 +54,7 @@ function compterAccompagnements($cmd) {
 $messageInfo = null;
 $NB_ACCOMP_MAX = 6;
 
-/* =============================================================
-   RETOUR DU PAIEMENT DE SUPPLEMENT (cybank renvoie en GET)
-============================================================= */
+/* retour du paiement de supplément  */
 if (isset($_GET['status']) && isset($_SESSION['supplement_profil'])) {
 
     $transaction  = $_GET['transaction'] ?? '';
@@ -88,15 +86,13 @@ if (isset($_GET['status']) && isset($_SESSION['supplement_profil'])) {
     unset($_SESSION['supplement_profil']);
 }
 
-/* =============================================================
-   ACTIONS (POST)
-============================================================= */
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $ref    = $_POST['ref']    ?? '';
     $action = $_POST['action'] ?? '';
 
-    /* ---- Lancer le paiement du supplement ---- */
+    /*  Lancer le paiement du supplement  */
     if ($action === 'payer_supplement') {
         $cmdCible = null;
         foreach ($commandes as $c) {
@@ -141,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    /* ---- Modifications de la commande ---- */
+    /*  Modifications de la commande */
     foreach ($commandes as &$cmd) {
         if ($cmd['reference'] !== $ref) continue;
         if (!commandeAppartient($cmd, $userTrouve) || $cmd['statut'] !== "a preparer") {
@@ -217,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
 
-    // Pour les actions qui ne montrent pas de message, on redirige (anti-resoumission)
+    // Pour les actions qui ne montrent pas de message, on redirige 
     if (!in_array($action, ['revalider', 'ajouter_produit'], true)) {
         header("Location: ../fichiers_php/profil2.php");
         exit();
