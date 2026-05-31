@@ -148,53 +148,6 @@ foreach ($notations as $notation) {
     <link rel="stylesheet" href="../fichiers_css/structg.css">
     <link rel="stylesheet" href="../fichiers_css/profil.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
-    <style>
-        .table-commandes { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .table-commandes th, .table-commandes td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-        .table-details { width: 100%; margin: 10px 0; background: #fafafa; }
-        body.dark .table-details { background: #2d231c; }
-
-        .ligne-details { display: none; }
-        .ligne-details.ouverte { display: table-row; }
-
-        .statut {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            color: white;
-            font-size: 12px;
-        }
-        .statut-a-preparer  { background: #f0a040; }
-        .statut-en-prep     { background: #4080f0; }
-        .statut-prepare     { background: #8040f0; }
-        .statut-livraison   { background: #f04040; }
-        .statut-terminee    { background: #40b040; }
-
-        .zone-modif { padding: 15px; background: #fff8e1; border: 1px dashed #f0a040; margin-top: 10px; }
-        body.dark .zone-modif { background: #2d231c; border-color: #d4a574; }
-
-        .produit-modif { display: flex; align-items: center; gap: 10px; padding: 5px 0; }
-        .produit-modif .nom-prod { flex: 1; }
-        .produit-modif input[type=number] { width: 60px; }
-        .form-inline { display: inline; }
-
-        .btn-revalider {
-            background: #40b040;
-            color: white;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .message-info {
-            background: #fff8e1;
-            border: 1px solid #cc9;
-            padding: 10px;
-            margin: 15px 0;
-        }
-    </style>
 </head>
 <body>
 
