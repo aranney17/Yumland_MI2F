@@ -28,11 +28,7 @@ $produits = json_decode(file_get_contents('../data/produits.json'), true) ?? [];
 
 $q = trim($_GET['q'] ?? '');
 
-/* -------------------------------------------------------------
-   Normalisation SANS mbstring (corrige l'erreur 500).
-   strtolower gere l'ASCII (A-Z). La table strtr gere les accents,
-   minuscules ET majuscules, pour une recherche tolerante.
-------------------------------------------------------------- */
+
 function normaliser($s) {
     $s = strtolower($s);
     $s = strtr($s, [
@@ -64,7 +60,7 @@ if ($q !== '') {
     }
 }
 
-/* MODE AJAX (autocompletion) : JSON, max 8 suggestions */
+
 if (isset($_GET['ajax'])) {
     header('Content-Type: application/json');
     $sortie = [];
