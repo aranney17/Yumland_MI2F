@@ -1,47 +1,50 @@
+/* ============================================================
+   MODE SOMBRE - page NOTATION
+   Aucune valeur hex : uniquement les variables de couleurs.css
+============================================================ */
+
 /* Carte du formulaire de notation */
 body.dark .review {
-    background: #2d231c !important;
-    color: #f0e4d2;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: var(--surface);
+    color: var(--texte);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
-
 body.dark .review h2,
 body.dark .review h3 {
-    color: #fcf9f4;
+    color: var(--titre);
 }
 
-/* Etoiles non selectionnees : un peu plus claires pour rester visibles */
+/* Etoiles non selectionnees */
 body.dark .rating label {
-    color: #555;
+    color: var(--texte-doux);
 }
-
-/* Etoiles selectionnees ou survolees : dore caramel */
+/* Etoiles selectionnees / survolees */
 body.dark .rating label:hover,
 body.dark .rating label:hover ~ label,
 body.dark .rating input:checked ~ label {
-    color: #d4a574;
+    color: var(--accent);
 }
 
-/* Textarea : fond sombre, bordure visible */
+/* Textarea */
 body.dark textarea {
-    background: #3d2d1f;
-    color: #f5e6d3;
-    border: 1px solid #5a4435;
+    background: var(--surface-2);
+    color: var(--texte);
+    border: 1px solid var(--bordure);
 }
 body.dark textarea:focus {
-    border-color: #d4a574;
+    border-color: var(--accent);
     outline: none;
 }
 body.dark textarea::placeholder {
-    color: #b8a288;
+    color: var(--texte-doux);
 }
 
-/* Bouton envoyer : on garde le bouton dore mais texte fonce */
+/* Bouton envoyer */
 body.dark .review button {
-    background: #d4a574;
-    color: #1f1814;
+    background: var(--accent);
+    color: var(--main-background);
 }
 body.dark .review button:hover {
-    background: #fcf9f4;
-    color: #1f1814;
+    background: var(--titre);
+    color: var(--main-background);
 }
