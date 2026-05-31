@@ -1,35 +1,27 @@
-body.dark {
-    /* Surcharge des variables d'origine */
-    --main-background:   #1f1814;   /* brun chocolat tres fonce */
-    --article-background:#3d2d1f;   /* brun moyen pour les cartes */
-    --main-title:        #f5e6d3;   /* beige clair pour le texte */
-    --article-price:     #d4a574;   /* dore caramel pour les prix */
-
-    /* Appliquer le fond et la couleur de texte au body */
-    background-color: var(--main-background);
-    color: var(--main-title);
-}
-
+/* ============================================================
+   MODE SOMBRE - regles generales
+   Aucune valeur hex ici : tout vient des variables de couleurs.css
+   (les variables sombres sont definies dans body.dark de couleurs.css)
+============================================================ */
 
 /* Titres */
 body.dark h1, body.dark h2, body.dark h3,
 body.dark h4, body.dark h5, body.dark h6 {
-    color: #fcf9f4;
+    color: var(--titre);
 }
-
 body.dark .titre-section {
-    color: #d4a574; /* dore pour les titres de section */
+    color: var(--accent);
 }
 
 /* Liens */
 body.dark a {
-    color: #e6c79c;
+    color: var(--accent);
 }
 body.dark a.logo {
-    color: #fcf9f4;
+    color: var(--titre);
 }
 
-/* Cartes / blocs : tons brun chocolat */
+/* Cartes / blocs */
 body.dark .produit,
 body.dark .commande-case,
 body.dark .commande-card,
@@ -42,27 +34,27 @@ body.dark .ma-commande,
 body.dark .ajout-produit,
 body.dark .hero,
 body.dark .custom-cake {
-    background-color: #2d231c !important;
-    color: #f0e4d2;
-    border-color: #5a4435;
+    background-color: var(--surface) !important;
+    color: var(--texte);
+    border-color: var(--bordure);
 }
 
-/* Prix - mise en valeur doree */
+/* Prix */
 body.dark .prix,
 body.dark .prix-produit,
 body.dark .prix-ligne {
-    color: #d4a574;
+    color: var(--accent);
 }
 
 /* Formulaires */
 body.dark input,
 body.dark select,
 body.dark textarea {
-    background-color: #3d2d1f;
-    color: #f5e6d3;
-    border: 1px solid #5a4435;
+    background-color: var(--surface-2);
+    color: var(--texte);
+    border: 1px solid var(--bordure);
 }
-body.dark input::placeholder { color: #b8a288; }
+body.dark input::placeholder { color: var(--texte-doux); }
 
 /* Boutons */
 body.dark button,
@@ -70,117 +62,175 @@ body.dark .btn,
 body.dark .panier,
 body.dark .btn-commande,
 body.dark .finish-btn {
-    background-color: #5c3a2e;  /* repris de ton --article-price original */
-    color: #fcf9f4;
+    background-color: var(--btn-fond);
+    color: var(--btn-texte);
     border: none;
 }
 body.dark button:hover,
 body.dark .btn:hover,
 body.dark .panier:hover,
 body.dark .btn-commande:hover {
-    background-color: #7a4e3d;
+    background-color: var(--btn-fond-hover);
 }
 
-/* Categories en haut (cartes cliquables) */
+/* Categories (page presentation) */
 body.dark .categorie {
-    background-color: #2d231c;
-    color: #f0e4d2;
+    background-color: var(--surface);
+    color: var(--texte);
 }
 
 /* Search bar */
 body.dark .search-bar input {
-    background-color: #3d2d1f;
-    color: #f5e6d3;
+    background-color: var(--surface-2);
+    color: var(--texte);
 }
 
 /* Menu horizontal */
 body.dark .menu-horizontal {
-    background-color: #261d11;
+    background-color: var(--surface);
 }
 body.dark .menu-horizontal a {
-    color: #cca97c;
+    color: var(--texte-doux);
 }
 body.dark .menu-horizontal .active {
-    color: #a1784c;
+    color: var(--accent);
 }
 
 /* Filtres (page presentation) */
 body.dark .barre-filtres {
-    background-color: #2d231c;
-    color: #f0e4d2;
+    background-color: var(--surface);
+    color: var(--texte);
 }
 
 /* Total panier */
 body.dark .total {
-    color: #1f150b;
+    color: var(--accent);
 }
 
 /* Footer */
 body.dark footer {
-    background-color: #14100c;
-    color: #b8a288;
+    background-color: var(--main-background);
+    color: var(--texte-doux);
 }
 body.dark footer .info span {
-    color: #b8a288;
+    color: var(--texte-doux);
 }
 
 /* Bandeau notification livraison */
 body.dark .notif-livraison {
-    background-color: #4a6b2a; /* vert plus sombre */
+    background-color: var(--vert-fond);
+    color: var(--vert-texte);
 }
 
-/* Badges statut (page commandes) */
-body.dark .badge-a-preparer    { background: #c88a30; }
-body.dark .badge-en-preparation { background: #3060c0; }
+/* Badges statut (page commandes cuisinier) */
+body.dark .badge-a-preparer    { background: var(--orange-texte); }
+body.dark .badge-en-preparation { background: var(--bleu-texte); }
 
-/* Statuts mes commandes */
-body.dark .statut-a-preparer  { background: #c88a30; }
-body.dark .statut-en-prep     { background: #3060c0; }
-body.dark .statut-prepare     { background: #6030b0; }
-body.dark .statut-livraison   { background: #c03030; }
-body.dark .statut-terminee    { background: #308030; }
+/* Statuts (mes commandes / profil2) */
+body.dark .statut-a-preparer  { background: var(--orange-texte); }
+body.dark .statut-en-prep     { background: var(--bleu-texte); }
+body.dark .statut-prepare     { background: var(--violet-texte); }
+body.dark .statut-livraison   { background: var(--rouge-texte); }
+body.dark .statut-terminee    { background: var(--vert-texte); }
 
 /* Bordures separatrices */
 body.dark hr {
-    border-color: #5a4435;
+    border-color: var(--bordure);
 }
 body.dark .produit-ligne {
-    border-bottom-color: #5a4435;
+    border-bottom-color: var(--bordure);
 }
 
 /* Message info */
 body.dark .info-msg {
-    background-color: #3d2d1f;
-    border-color: #d4a574;
-    color: #f0e4d2;
+    background-color: var(--surface-2);
+    border-color: var(--accent);
+    color: var(--texte);
 }
 
-/* 
+/* ============================================================
    BOUTON FLOTTANT TOGGLE MODE SOMBRE
-*/
+   En clair : fond fonce + texte clair. En dark : fond dore.
+   On utilise les variables, donc l'inversion est automatique.
+============================================================ */
 .btn-darkmode {
     position: fixed;
     bottom: 20px;
     right: 20px;
     z-index: 9999;
-    background: #322119;     /* brun fonce, style patisserie */
-    color: #fcf9f4;
+    background: var(--main-title);
+    color: var(--main-background);
     border: none;
     border-radius: 50%;
     width: 50px;
     height: 50px;
     font-size: 24px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(50, 33, 25, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
     transition: transform 0.2s, background 0.2s;
 }
-
 .btn-darkmode:hover {
     transform: scale(1.1);
 }
-
 body.dark .btn-darkmode {
-    background: #d4a574;   
-    color: #1f1814;
-    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
+    background: var(--accent);
+    color: var(--main-background);
+}
+
+/* ============================================================
+   PAGE MENUS (menu.php)
+   .menu-card a un fond blanc code en dur dans menu.css :
+   on le passe en surface sombre pour rendre le texte lisible.
+============================================================ */
+body.dark .menu-card {
+    background-color: var(--surface);
+    border-color: var(--bordure);
+}
+body.dark .menu-title {
+    color: var(--titre);
+}
+body.dark .menu-description {
+    color: var(--texte);
+}
+body.dark .menu-price {
+    color: var(--accent);
+}
+body.dark .menu-badge,
+body.dark #first-menu .menu-badge {
+    background-color: var(--accent);
+    color: var(--main-background);
+}
+body.dark .arrow {
+    background: var(--surface-2);
+    color: var(--texte);
+}
+body.dark .arrow:hover {
+    background: var(--btn-fond);
+}
+body.dark .menu-button {
+    background-color: var(--btn-fond);
+    color: var(--btn-texte);
+    border-color: var(--btn-fond);
+}
+body.dark .menu-button:hover {
+    background-color: var(--btn-fond-hover);
+    color: var(--btn-texte);
+}
+
+/* Boutons d'edition du profil */
+body.dark .btn-edit,
+body.dark .btn-save,
+body.dark .btn-cancel {
+    background: var(--surface-2);
+    color: var(--texte);
+    border-color: var(--bordure);
+}
+
+/* commandes.php */
+body.dark .alerte-modif {
+    background: var(--rouge-fond);
+}
+body.dark .menu-item {
+    background: var(--surface-2);
+    border-color: var(--accent);
 }
