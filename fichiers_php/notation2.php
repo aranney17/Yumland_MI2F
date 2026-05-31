@@ -365,7 +365,7 @@ foreach ($notations as $notation) {
  
                                 <?php if ($cmd['statut'] === 'terminee') : ?>
                                     <?php if ($dejaNoted) : ?>
-                                        <!-- Affiche la note de satisfaction + lien pour voir le détail -->
+                                        <!-- Affiche la note de satisfaction et lien pour voir le détail -->
                                         <div style="margin-top: 8px;">
                                             <?php
                                                 $noteSat = $notationsParRef[$ref]['satisfaction']['note'];
@@ -404,7 +404,7 @@ foreach ($notations as $notation) {
     <h5>© 2026 Pâtisserie</h5>
 </footer>
 
-<!-- JS pour ouvrir/fermer les details -->
+<!-- ouvrir/fermer les details -->
 <script>
 document.querySelectorAll('.bouton-details').forEach(function(btn) {
     btn.addEventListener('click', function() {
