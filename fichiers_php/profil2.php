@@ -254,16 +254,6 @@ foreach ($notations as $notation) {
     <link rel="stylesheet" href="../fichiers_css/structg.css">
     <link rel="stylesheet" href="../fichiers_css/profil.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
-    <style>
-        .message-info { max-width:900px; margin:15px auto; padding:12px 16px; border-radius:8px;
-                        background:var(--succes-fond); color:var(--succes-texte); }
-        .solde-du { background:var(--rouge-fond); color:var(--rouge-texte); padding:8px 12px;
-                    border-radius:6px; margin:8px 0; font-weight:bold; }
-        .btn-payer-supp { background:var(--accent); color:#fff; border:none; padding:10px 16px;
-                          border-radius:8px; cursor:pointer; font-size:1em; }
-        .btn-payer-supp:hover { background:var(--accent-fonce); }
-        .piece-montee-fixe { font-style:italic; color:var(--texte-doux); padding:6px 0; }
-    </style>
 </head>
 <body>
 
