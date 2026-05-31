@@ -6,7 +6,7 @@
 }
 
 body{
-	background: url(images/fond.png) center / cover no-repeat;
+	background: url(../images/fond.png) center / cover no-repeat;
 	font-family:"DM Serif Display";
 	font-size: 20px;
 	color: var(--main-title);
@@ -21,7 +21,7 @@ body::before{
 	content: "";
 	position: fixed;
 	inset: 0;
-	background: url(images/fond.png) center / cover no-repeat;
+	background: url(../images/fond.png) center / cover no-repeat;
 	backdrop-filter: blur(8px);
 	z-index: -1;
 }
@@ -202,7 +202,7 @@ body::before{
 
 /* -- Image de fond : on garde le flou mais on l'assombrit -- */
 body.dark::before {
-    background: url(images/fond.png) center / cover no-repeat;
+    background: url(../images/fond.png) center / cover no-repeat;
     /* brightness(0.35) assombrit l'image, blur(8px) preserve le flou */
     backdrop-filter: blur(8px) brightness(0.35);
 }
