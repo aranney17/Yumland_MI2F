@@ -6,10 +6,10 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-$panierFile = 'data/panier.json';
+$panierFile = '../data/panier.json';
 $panier = file_exists($panierFile) ? json_decode(file_get_contents($panierFile), true) : [];
 
-$clientFile = 'data/infoclient.json';
+$clientFile = '../data/infoclient.json';
 $clients = file_exists($clientFile) ? json_decode(file_get_contents($clientFile), true) : [];
 
 $id = $_SESSION['id'];
@@ -19,7 +19,7 @@ foreach ($clients as $c) {
 }
 $client = $client ?? [];
 
-
+/* Sauvegarde silencieuse des quantites (AJAX) */
 if (isset($_POST['action_sauvegarde']) && isset($_POST['quantites']) && is_array($_POST['quantites'])) {
     foreach ($_POST['quantites'] as $idx => $qte) {
         $qte = max(1, (int)$qte);
@@ -28,11 +28,11 @@ if (isset($_POST['action_sauvegarde']) && isset($_POST['quantites']) && is_array
         }
     }
     file_put_contents($panierFile, json_encode($panier, JSON_PRETTY_PRINT));
-    http_response_code(204); // No Content
+    http_response_code(204);
     exit();
 }
 
-// Suppression produit
+/* Suppression produit */
 if (isset($_POST['supprimer_index'])) {
     $index = (int) $_POST['supprimer_index'];
     array_splice($panier, $index, 1);
@@ -41,13 +41,13 @@ if (isset($_POST['supprimer_index'])) {
     exit();
 }
 
-// Calcul total
+/* Calcul total (un menu a aussi prix * quantite) */
 $total = 0;
 foreach ($panier as $item) {
     $total += $item['prix'] * $item['quantite'];
 }
 
-// Type commande
+/* Type commande */
 if (isset($_POST['type_commande'])) {
     $_SESSION['type_commande'] = $_POST['type_commande'];
     $type_commande = $_POST['type_commande'];
@@ -66,15 +66,22 @@ $_SESSION['commande_temp'] = [
     "date_livraison" => $dateLivraisonFinale
 ];
 
-// Paiement
+/* Paiement */
 require('getapikey.php');
 if (isset($_POST['payer'])) {
     $transaction = uniqid();
     $montant = number_format($total, 2, '.', '');
     $vendeur = "MI-2_F";
-    $retour = "http://localhost:8000/retour_paiement.php?session=s";
-    $api_key = getAPIKey($vendeur);
 
+    /* URL de retour DYNAMIQUE.
+       panier.php et retour_paiement.php sont dans le MEME dossier
+       (fichiers_php/). dirname() donne deja "/fichiers_php", il suffit
+       d'ajouter "/retour_paiement.php". PAS de "../fichiers_php/". */
+    $protocole = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+    $dossier   = rtrim(dirname($_SERVER['PHP_SELF']), '/');
+    $retour    = $protocole . "://" . $_SERVER['HTTP_HOST'] . $dossier . "/retour_paiement.php";
+
+    $api_key = getAPIKey($vendeur);
     $control = md5(
         $api_key . "#" . $transaction . "#" . $montant . "#" .
         $vendeur . "#" . $retour . "#"
@@ -88,12 +95,27 @@ if (isset($_POST['payer'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panier</title>
-    <link rel="icon" type="images/png" href="images/logosite.png">
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="../pageproduit/pageproduit.css">
-    <link rel="stylesheet" href="panier.css">
-    <link rel="stylesheet" href="darkmode.css">
+    <link rel="icon" type="../images/png" href="../images/logosite.png">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/pageproduit.css">
+    <link rel="stylesheet" href="../fichiers_css/panier.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
+    <style>
+        .badge-menu {
+            display:flex; align-items:center; justify-content:center;
+            width:90px; height:90px; border-radius:10px;
+            background: var(--article-background); color:#fff;
+            font-weight:bold; font-size:14px; text-align:center;
+        }
+        .composition-menu { font-size:14px; margin-top:4px; }
+        .composition-menu span { display:block; }
+        .etiquette-menu {
+            display:inline-block; font-size:11px; background:var(--article-background);
+            color:#fff; padding:1px 8px; border-radius:10px; margin-left:6px;
+            vertical-align:middle;
+        }
+    </style>
 </head>
 <body>
 
@@ -103,24 +125,24 @@ if (isset($_POST['payer'])) {
 
 <div class="top-icons">
     <div class="profil-menu">
-        <img src="images/Iconprofil.png" class="icon">
+        <img src="../images/Iconprofil.png" class="icon">
         <div class="profil-bulle">
             <a href="profil.php">Profil</a>
             <a href="logout.php">Déconnexion</a>
         </div>
     </div>
-    <a href="panier.php"><img src="images/Iconpanier.png" class="icon" id="panier"></a>
+    <a href="panier.php"><img src="../images/Iconpanier.png" class="icon" id="panier"></a>
 </div>
 
-<div class="search-bar">
-    <input type="search" placeholder=" qu'est-ce qui vous ferait plaisir?">
-    <button><img src="images/Iconloupe.png" alt="loupe"></button>
-</div>
+<form class="search-bar" action="../fichiers_php/recherche.php" method="get" autocomplete="off">
+    <input type="search" name="q" placeholder=" qu'est-ce qui vous ferait plaisir?">
+    <button type="submit"><img src="../images/Iconloupe.png" alt="loupe"></button>
+</form>
 <br>
 
 <nav class="menu-horizontal">
     <ul>
-        <li><a href="menu.html">Nos Menus</a></li>
+        <li><a href="menu.php">Nos Menus</a></li>
         <li><a href="presentation.php" class="active">Tous nos produits</a></li>
     </ul>
 </nav>
@@ -128,26 +150,47 @@ if (isset($_POST['payer'])) {
 <h1 style="text-align:center; font-size: 40px;">Panier</h1>
 
 <div class="panier-produit-container">
-    <?php foreach ($panier as $index => $item): ?>
+    <?php foreach ($panier as $index => $item):
+        $estMenu = (isset($item['type']) && $item['type'] === 'menu');
+    ?>
     <div class="ligne-produit" data-prix="<?= $item['prix'] ?>" data-index="<?= $index ?>">
-        <a href="pageproduit/produits.php?nom=<?= str_replace(' ', '', $item['produit']) ?>">
-            <img src="images/<?= str_replace(' ', '', $item['produit']) ?>.jpg" alt="<?= $item['produit'] ?>" class="img-produit">
-        </a>
 
-        <div class="info-produit">
-            <p><?= $item['produit'] ?></p>
+        <?php if ($estMenu): ?>
+            <!-- ===== AFFICHAGE D'UN MENU ===== -->
+            <div class="badge-menu">MENU</div>
 
-            <!-- Plus de bouton refresh : JS gere tout -->
-            <div class="quantite" id="nocolumn">
-                <input type="number"
-                       class="input-quantite"
-                       data-index="<?= $index ?>"
-                       value="<?= $item['quantite'] ?>"
-                       min="1" max="50">
+            <div class="info-produit">
+                <p>
+                    <strong><?= htmlspecialchars($item['nom_menu']) ?></strong>
+                    <span class="etiquette-menu">Menu</span>
+                </p>
+                <div class="composition-menu">
+                    <?php foreach ($item['composition'] as $label => $choix): ?>
+                        <span><?= htmlspecialchars($label) ?> : <strong><?= htmlspecialchars($choix) ?></strong></span>
+                    <?php endforeach; ?>
+                </div>
+                <div class="quantite" id="nocolumn">
+                    <input type="number" class="input-quantite" data-index="<?= $index ?>"
+                           value="<?= $item['quantite'] ?>" min="1" max="50">
+                </div>
             </div>
 
-            <p>Saveur: <?= $item['saveur'] ?></p>
-        </div>
+        <?php else: ?>
+            <!-- ===== AFFICHAGE D'UN PRODUIT SIMPLE ===== -->
+            <a href="../pageproduit/produits.php?nom=<?= str_replace(' ', '', $item['produit']) ?>">
+                <img src="../images/<?= str_replace(' ', '', $item['produit']) ?>.jpg"
+                     alt="<?= htmlspecialchars($item['produit']) ?>" class="img-produit">
+            </a>
+
+            <div class="info-produit">
+                <p><?= htmlspecialchars($item['produit']) ?></p>
+                <div class="quantite" id="nocolumn">
+                    <input type="number" class="input-quantite" data-index="<?= $index ?>"
+                           value="<?= $item['quantite'] ?>" min="1" max="50">
+                </div>
+                <p>Saveur: <?= htmlspecialchars($item['saveur'] ?? '') ?></p>
+            </div>
+        <?php endif; ?>
 
         <p class="prix-produit">
             <span class="prix-ligne"><?= number_format($item['prix'] * $item['quantite'], 2, '.', '') ?></span> €
@@ -160,6 +203,10 @@ if (isset($_POST['payer'])) {
     </div>
     <hr>
     <?php endforeach; ?>
+
+    <?php if (count($panier) === 0): ?>
+        <p style="text-align:center;">Votre panier est vide.</p>
+    <?php endif; ?>
 </div>
 
 <div class="total">
@@ -176,13 +223,13 @@ if (isset($_POST['payer'])) {
                 <input type="radio" name="type_commande" value="sur_place"
                        <?= ($type_commande === 'sur_place') ? 'checked' : '' ?>
                        onchange="soumettreFormType()">
-                <img src="images/surplace.png" class="choix-img"/>
+                <img src="../images/surplace.png" class="choix-img"/>
             </label>
             <label>
                 <input type="radio" name="type_commande" value="livraison"
                        <?= ($type_commande === 'livraison') ? 'checked' : '' ?>
                        onchange="soumettreFormType()">
-                <img src="images/livraison.png" class="choix-img">
+                <img src="../images/livraison.png" class="choix-img">
             </label>
         </div>
 
@@ -214,9 +261,7 @@ if (isset($_POST['payer'])) {
 </form>
 
 <form method="POST" id="form-paiement">
-    <button type="submit" name="payer" class="panier btn-commande">
-        Valider et payer
-    </button>
+    <button type="submit" name="payer" class="panier btn-commande">Valider et payer</button>
 </form>
 
 <?php if (isset($_POST['payer'])): ?>
@@ -230,15 +275,13 @@ if (isset($_POST['payer'])) {
 <script>document.getElementById('cybankForm').submit();</script>
 <?php endif; ?>
 
-
-
 <script>
-// Recalcul de l'affichage
 function recalculerTout() {
     let totalGeneral = 0;
     document.querySelectorAll('.ligne-produit').forEach(function(ligne) {
         const prixUnitaire = parseFloat(ligne.dataset.prix);
         const input = ligne.querySelector('.input-quantite');
+        if (!input) return;
         let qte = parseInt(input.value);
         if (isNaN(qte) || qte < 1) qte = 1;
         const sousTotal = prixUnitaire * qte;
@@ -248,7 +291,6 @@ function recalculerTout() {
     document.getElementById('total-panier').textContent = totalGeneral.toFixed(2);
 }
 
-// Sauvegarde silencieuse cote serveur (AJAX)
 function sauvegarderQuantites() {
     const formData = new FormData();
     formData.append('action_sauvegarde', '1');
@@ -258,7 +300,6 @@ function sauvegarderQuantites() {
     return fetch('panier.php', { method: 'POST', body: formData });
 }
 
-// Sur chaque changement de quantite
 document.querySelectorAll('.input-quantite').forEach(function(input) {
     input.addEventListener('input', function() {
         recalculerTout();
@@ -266,17 +307,12 @@ document.querySelectorAll('.input-quantite').forEach(function(input) {
     });
 });
 
-// Quand on change le type de commande : on s'assure que les
-// quantites sont sauvegardees AVANT de submit le form, sinon
-// PHP relit l'ancien panier.json et perd les modifs.
 function soumettreFormType() {
     sauvegarderQuantites().then(function() {
         document.getElementById('form-type-commande').submit();
     });
 }
 
-// Avant le submit du form paiement, on injecte les qtes (au cas
-// ou l'AJAX n'aurait pas eu le temps)
 document.getElementById('form-paiement').addEventListener('submit', function() {
     const form = this;
     form.querySelectorAll('input.qte-hidden').forEach(e => e.remove());
@@ -291,21 +327,21 @@ document.getElementById('form-paiement').addEventListener('submit', function() {
 });
 </script>
 
-
 <footer>
 <p>suivez nous sur nos réseaux!<br>
-    <img src="images/Iconinstagram.jpg" class="icon">
-    <img src="images/Icontiktok.jpg" class="icon">
-    <img src="images/Icontwitter.png" class="icon">
+    <img src="../images/Iconinstagram.jpg" class="icon">
+    <img src="../images/Icontiktok.jpg" class="icon">
+    <img src="../images/Icontwitter.png" class="icon">
 </p>
 <div class="infos-footer">
-    <div class="info"><img src="images/Iconlocalisation.png" class="icon"><span>5 avenue de la république, 75015 Paris</span></div>
-    <div class="info"><img src="images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 20h</span></div>
+    <div class="info"><img src="../images/Iconlocalisation.png" class="icon"><span>5 avenue de la république, 75015 Paris</span></div>
+    <div class="info"><img src="../images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 20h</span></div>
 </div>
 <h5>© 2026 Pâtisserie</h5>
 </footer>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
+<script src="../fichiers_js/recherche.js"></script>
 </body>
 </html>
