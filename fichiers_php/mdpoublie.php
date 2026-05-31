@@ -3,9 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="connexion.css">
-    <link rel="stylesheet" href="structg.css">
- 	<link rel="stylesheet" href="couleurs.css">
+	<link rel="stylesheet" href="../fichiers_css/connexion.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+ 	<link rel="stylesheet" href="../fichiers_css/couleurs.css">
 	<title>Mot de passe oublié</title>
 </head>
 
@@ -23,7 +23,7 @@
             if (empty($erreur)) {
 
                 $mail = htmlspecialchars($_POST["mail"]);
-                $fichier = "data/infoclient.json";
+                $fichier = "../data/infoclient.json";
                 $trouve = false;
 
                 if (file_exists($fichier)) {
@@ -42,7 +42,7 @@
 
                 if ($trouve) {
                     // Redirection vers la page de connexion
-                    header("Location: connexion.php");
+                    header("Location: ../fichiers_php/connexion.php");
                     exit();
                 } else {
                     $erreur["mail"] = "Email non connu";
@@ -59,29 +59,29 @@
                 <span></span>
             </div>
 
-            <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+            <h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
     
             <div class="top-icons">
                 <!-- PROFIL -->
                 <div class="profil-menu">
-                    <img src="images/Iconprofil.png" alt="Profil" class="icon">
+                    <img src="../images/Iconprofil.png" alt="Profil" class="icon">
 
                     <div class="profil-bulle">
-                        <a href="inscription.php">Inscription</a>
-                        <a href="connexion.php">Connexion</a>
+                        <a href="../fichiers_php/inscription.php">Inscription</a>
+                        <a href="../fichiers_php/connexion.php">Connexion</a>
                     </div>
                 </div>
 
                 <!-- PANIER -->
                 <a href="">
-                <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
+                <img src="../images/Iconpanier.png" alt="Panier" class="icon" id="panier">
                 </a>
             </div>
         </header>
 
     <main>
         <h2>Mot de passe oublié ?</h2>
-        <form action="mdpoublie.php" method="POST">
+        <form action="../fichiers_php/mdpoublie.php" method="POST">
             <fieldset>
                 <div class="champ">
                     E-mail 
@@ -98,19 +98,19 @@
     <footer>
         <p>suivez nous sur nos réseaux!
             </br>
-                <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
-                <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
-                <img src="images/Icontwitter.png" alt="twitter" class="icon">
+                <img src="../images/Iconinstagram.jpg" alt="instagram" class="icon">
+                <img src="../images/Icontiktok.jpg" alt="tiktok" class="icon">
+                <img src="../images/Icontwitter.png" alt="twitter" class="icon">
         </p>
         <div class="infos-footer">
 
             <div class="info">
-                <img src="images/Iconlocalisation.png" alt="maps" class="icon">
+                <img src="../images/Iconlocalisation.png" alt="maps" class="icon">
                 <span>5 avenue de la république, 75015 Paris</span>
             </div>
 
             <div class="info">
-                <img src="images/Iconhorloge.png" alt="horloge" class="icon">
+                <img src="../images/Iconhorloge.png" alt="horloge" class="icon">
                 <span>Tous les jours 9h - 20h</span>
             </div>
         </div>
