@@ -163,6 +163,18 @@ if (isset($_POST['ajouter_panier'])) {
 </head>
 
 <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <a href="#nouveautes">Nouveautés</a>
+        <a href="../fichiers_php/presentation.php#viennoiseries">Viennoiseries</a>
+        <a href="../fichiers_php/presentation.php#boissons">Boissons</a>
+        <a href="../fichiers_php/presentation.php#gourmandises">Gourmandises</a>
+        <a href="../fichiers_php/presentation.php#patisseries">Pâtisseries</a>
+        <a href="../fichiers_php/presentation.php#gateaux">Gâteaux</a>
+        <a href="../fichiers_php/presentation.php#tartes">Tartes</a>
+        <a href="../fichiers_php/traiteur.php">Commande traiteur</a>
+    </nav>
 
 <?php if ($notifMessage): ?>
     <div class="notif-livraison" id="notif-livraison">
@@ -276,7 +288,7 @@ if (isset($_POST['ajouter_panier'])) {
 </section>
 
 
-<section class="nouveautes">
+<section class="nouveautes" id="nouveautes">
 
     <h2 class="titre-section">Nouveautés</h2>
 
