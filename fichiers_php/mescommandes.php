@@ -136,6 +136,7 @@ foreach ($commandes as $cmd) {
     <title>Mes commandes</title>
     <link rel="stylesheet" href="../fichiers_css/couleurs.css">
     <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/mescommandes.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
     
 </head>
