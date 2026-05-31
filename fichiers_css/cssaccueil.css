@@ -31,7 +31,7 @@ h2 {
     object-position:center;
 }
 
-// enlève espace autour de la page 
+
 .categories::-webkit-scrollbar {
     display: none;
 }
@@ -59,7 +59,7 @@ h2 {
     width: 100%;
     aspect-ratio: 4/3;
     min-height: 400px;
-    background-image: url("images/Menufond.png");
+    background-image: url("../images/Menufond.png");
     background-size: cover;      
     background-position: center; 
     display: flex;
@@ -133,17 +133,17 @@ h2 {
 }
 
 .background-slider span:nth-child(1) {
-    background-image: url("images/Buffetfond1.png");
+    background-image: url("../images/Buffetfond1.png");
     animation-delay: 0s;
 }
 
 .background-slider span:nth-child(2) {
-    background-image: url("images/piecemontee.png");
+    background-image: url("../images/piecemontee.png");
     animation-delay: 5s;
 }
 
 .background-slider span:nth-child(3) {
-    background-image: url("images/Buffetfond2.png");
+    background-image: url("../images/Buffetfond2.png");
     animation-delay: 10s;
 }
 
@@ -249,7 +249,7 @@ h2 {
     color: var(--article-price);
 }
 
-// icône panier
+
 .icon-panier {
     width: 25px;
     height: 25px;
@@ -393,4 +393,5 @@ h2 {
 }
 .barre-filtres label { font-weight: bold; margin-right: 8px; }
 .barre-filtres select { padding: 6px 10px; }
-body.dark .barre-filtres { background: #2a2a2a; }
+
+
