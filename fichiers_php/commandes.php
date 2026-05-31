@@ -60,6 +60,24 @@ if ($modifie) {
 }
 
 $ajd = date("Y-m-d");
+
+/* -------------------------------------------------------------
+   Decide si une commande doit s'afficher chez le cuisinier.
+   - Commande TRAITEUR : visible seulement quand l'evenement est
+     dans 5 jours ou moins (et pas encore passe).
+   - Commande normale  : visible le jour de la livraison.
+------------------------------------------------------------- */
+function aAfficher($cmd, $ajd) {
+    $enCours = in_array($cmd['statut'], ["a preparer", "en preparation"], true);
+    if (!$enCours) return false;
+
+    if (($cmd['type_commande'] ?? '') === 'traiteur') {
+        $joursRestants = (strtotime($cmd['datelivraison']) - strtotime($ajd)) / 86400;
+        return ($joursRestants >= 0 && $joursRestants <= 5);
+    }
+    // commande normale
+    return ($cmd['datelivraison'] === $ajd);
+}
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +90,18 @@ $ajd = date("Y-m-d");
     <link rel="stylesheet" href="../fichiers_css/couleurs.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
     <title>Commandes</title>
+    <style>
+        .bloc-traiteur {
+            background: var(--orange-fond);
+            color: var(--orange-texte);
+            border-left: 4px solid var(--orange-texte);
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin: 8px 0;
+            font-size: 0.92em;
+        }
+        .bloc-traiteur ul { margin: 6px 0 0 16px; }
+    </style>
 </head>
 <body>
 
@@ -90,14 +120,16 @@ $ajd = date("Y-m-d");
 </header>
 
 <main>
-    <h2>Commandes du jour</h2>
+    <h2>Commandes à préparer</h2>
     <div class="commandes">
     <?php foreach ($commandes as $cmd):
+        if (!aAfficher($cmd, $ajd)) continue;
+
         $estAPreparer     = ($cmd['statut'] === "a preparer");
         $estEnPreparation = ($cmd['statut'] === "en preparation");
         $estModifiee      = !empty($cmd['modifie_par_client']);
-        if (($estAPreparer || $estEnPreparation) && $cmd['datelivraison'] === $ajd):
-            $classeCase = $estAPreparer ? "a-preparer" : "en-preparation";
+        $estTraiteur      = (($cmd['type_commande'] ?? '') === 'traiteur');
+        $classeCase       = $estAPreparer ? "a-preparer" : "en-preparation";
     ?>
         <div class="commande-case <?= $classeCase ?>">
             <div class="commande-header">
@@ -110,10 +142,14 @@ $ajd = date("Y-m-d");
                 <?php else: ?>
                     <span class="badge-statut badge-en-preparation">En préparation</span>
                 <?php endif; ?>
+                <?php if ($estTraiteur): ?>
+                    <span class="badge-statut badge-modifiee">🎂 Traiteur</span>
+                <?php endif; ?>
                 <?php if ($estModifiee && $estAPreparer): ?>
                     <span class="badge-statut badge-modifiee">⚠ Modifiée</span>
                 <?php endif; ?>
             </p>
+
             <?php if ($estModifiee && $estAPreparer): ?>
                 <div class="alerte-modif">
                     Commande modifiée par le client
@@ -123,12 +159,32 @@ $ajd = date("Y-m-d");
                 </div>
             <?php endif; ?>
 
+            <?php if ($estTraiteur): ?>
+                <div class="bloc-traiteur">
+                    <strong>Événement le <?= htmlspecialchars($cmd['evenement']['date'] ?? $cmd['datelivraison']) ?></strong>
+                    à <?= htmlspecialchars($cmd['evenement']['lieu'] ?? $cmd['adresse']) ?><br>
+                    <?php if (!empty($cmd['piece_montee'])): ?>
+                        Pièce montée : <?= htmlspecialchars($cmd['piece_montee']['etages']) ?> étage(s)
+                        <ul>
+                            <li>Glaçage : <?= htmlspecialchars($cmd['piece_montee']['glacage']) ?></li>
+                            <li>Génoise : <?= htmlspecialchars($cmd['piece_montee']['genoise']) ?></li>
+                            <li>Garniture : <?= htmlspecialchars($cmd['piece_montee']['garniture']) ?></li>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
             <div class="commande-details">
-                <?php foreach ($cmd['produits'] as $produit):
-                    $estMenu = (isset($produit['type']) && $produit['type'] === 'menu');
+                <?php
+                if ($estTraiteur) echo "<strong>Accompagnements :</strong><br>";
+                foreach ($cmd['produits'] as $produit):
+                    $estMenu        = (($produit['type'] ?? '') === 'menu');
+                    $estPieceMontee = (($produit['type'] ?? '') === 'piece_montee');
+
+                    // La piece montee est deja affichee dans le bloc traiteur ci-dessus
+                    if ($estPieceMontee) continue;
                 ?>
                     <?php if ($estMenu): ?>
-                        <!-- MENU : on montre le detail au cuisinier -->
                         <div class="menu-item">
                             <span class="titre-menu">🍽 <?= htmlspecialchars($produit['nom_menu']) ?></span>
                             x<?= htmlspecialchars($produit['quantite']) ?>
@@ -150,7 +206,7 @@ $ajd = date("Y-m-d");
                 <a href="../fichiers_php/commandes.php?terminer=<?= urlencode($cmd['reference']) ?>" class="btn">Terminer</a>
             <?php endif; ?>
         </div>
-    <?php endif; endforeach; ?>
+    <?php endforeach; ?>
     </div>
 </main>
 
