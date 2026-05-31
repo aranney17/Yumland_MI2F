@@ -2,12 +2,12 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: fichiers_php/connexion.php");
+    header("Location: ../fichiers_php/connexion.php");
     exit();
 }
 
-$fichierClients   = "data/infoclient.json";
-$fichierCommandes = "data/commande.json";
+$fichierClients   = "../data/infoclient.json";
+$fichierCommandes = "../data/commande.json";
 
 $utilisateurs = json_decode(file_get_contents($fichierClients), true) ?? [];
 
@@ -23,7 +23,7 @@ foreach ($utilisateurs as $u) {
 }
 if ($bloqueConnecte) {
     session_destroy();
-    die("Votre compte a été bloqué. <a href='fichiers_php/connexion.php'>Retour</a>");
+    die("Votre compte a été bloqué. <a href='../fichiers_php/connexion.php'>Retour</a>");
 }
 if ($roleConnecte !== 'administrateur') {
     http_response_code(403);
@@ -119,37 +119,37 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrateur</title>
-    <link rel="stylesheet" href="fichiers_css/structg.css">
-    <link rel="stylesheet" href="fichiers_css/couleurs.css">
-    <link rel="stylesheet" href="fichiers_css/administrateur.css">
-    <link rel="stylesheet" href="fichiers_css/darkmode.css">
-    <link rel="stylesheet" href="fichiers_css/darkmode_admin.css"> 
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/administrateur.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode_admin.css"> 
 </head>
 <body>
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="fichiers_php/administrateur.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="../fichiers_php/administrateur.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
-        <a href="fichiers_php/profil.php"><img src="images/Iconprofil.png" alt="Profil" class="icon"></a>
-        <a href="fichiers_php/logout.php"><p class="deconnexion">déconnexion</p></a>
+        <a href="../fichiers_php/profil.php"><img src="../images/Iconprofil.png" alt="Profil" class="icon"></a>
+        <a href="../fichiers_php/logout.php"><p class="deconnexion">déconnexion</p></a>
     </div>
 </header>
 
-<div class="search-bar">
-    <input type="search" placeholder="Chercher un utilisateur">
-    <button><img src="images/Iconloupe.png" alt="loupe"></button>
-</div>
+<form class="search-bar" action="../fichiers_php/recherche.php" method="get" autocomplete="off">
+    <input type="search" name="q" placeholder=" qu'est-ce qui vous ferait plaisir?">
+    <button type="submit"><img src="../images/Iconloupe.png" alt="loupe"></button>
+</form>
 
 <nav class="menu-horizontal">
     <ul>
-        <li><a href="fichiers_php/administrateur.php" class="active">Utilisateurs</a></li>
-        <li><a href="fichiers_php/administrateur2.php">Commandes</a></li>
+        <li><a href="../fichiers_php/administrateur.php" class="active">Utilisateurs</a></li>
+        <li><a href="../fichiers_php/administrateur2.php">Commandes</a></li>
     </ul>
 </nav>
 
 <main>
-    <button class="filtre">Filtrer <img src="images/filter.png"></button>
+    <button class="filtre">Filtrer <img src="../images/filter.png"></button>
     <section>
         <table>
             <tr>
@@ -161,7 +161,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
                 $estMoi = ($user['id'] == $_SESSION['id']);
             ?>
             <tr class="ligne <?= ($user['bloque'] ?? false) ? 'ligne-bloque' : '' ?>" id="ligne-<?= $user['id'] ?>">
-                <td><a href="fichiers_php/profil_admin.php?id=<?= $user['id'] ?>"><?= htmlspecialchars($user['nom']) ?></a></td>
+                <td><a href="../fichiers_php/profil_admin.php?id=<?= $user['id'] ?>"><?= htmlspecialchars($user['nom']) ?></a></td>
                 <td><?= htmlspecialchars($user['prenom']) ?></td>
                 <td><?= htmlspecialchars($user['mail']) ?></td>
 
@@ -201,13 +201,13 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
 
 <footer>
     <p>suivez nous sur nos réseaux!<br>
-        <img src="images/Iconinstagram.jpg" class="icon">
-        <img src="images/Icontiktok.jpg" class="icon">
-        <img src="images/Icontwitter.png" class="icon">
+        <img src="../images/Iconinstagram.jpg" class="icon">
+        <img src="../images/Icontiktok.jpg" class="icon">
+        <img src="../images/Icontwitter.png" class="icon">
     </p>
     <div class="infos-footer">
-        <div class="info"><img src="images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75300 Paris</span></div>
-        <div class="info"><img src="images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 22h</span></div>
+        <div class="info"><img src="../images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75300 Paris</span></div>
+        <div class="info"><img src="../images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 22h</span></div>
     </div>
     <h5>© 2026 Pâtisserie</h5>
 </footer>
@@ -224,7 +224,7 @@ function toggleBloque(btn) {
     formData.append('action', 'toggle_bloque');
     formData.append('user_id', userId);
 
-    fetch('administrateur.php', { method: 'POST', body: formData })
+    fetch('../fichiers_php/administrateur.php', { method: 'POST', body: formData })
         .then(r => r.json())
         .then(data => {
             if (data.success) {
@@ -261,7 +261,7 @@ function changerRole(select) {
 
     const feedback = document.getElementById('feedback-' + userId);
 
-    fetch('fichiers_php/administrateur.php', { method: 'POST', body: formData })
+    fetch('../fichiers_php/administrateur.php', { method: 'POST', body: formData })
         .then(r => r.json())
         .then(data => {
             if (data.success) {
@@ -286,6 +286,7 @@ function changerRole(select) {
 </script>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="fichiers_js/darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
+<script src="../fichiers_js/recherche.js"></script>
 </body>
 </html>
