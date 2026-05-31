@@ -1,7 +1,4 @@
-
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 session_start();
 
 /*  SECURITE : reserve aux livreurs + check si bloque */
@@ -31,7 +28,7 @@ if ($roleUser !== 'livreur') {
     die("Accès refusé. Cette page est réservée aux livreurs.");
 }
 
-/* Logique livraison*/
+/* Logique livraison */
 $commandes = json_decode(file_get_contents('../data/commande.json'), true) ?? [];
 
 if (isset($_POST['start_id'])) {
@@ -64,8 +61,10 @@ foreach ($commandes as $cmd) {
     if ($cmd['statut'] === 'en_livraison') { $commande_en_cours = $cmd; break; }
 }
 
+/* Commandes pretes a livrer : livraison classique ET traiteur */
 $commandes_filtrees = array_filter($commandes, function($cmd) {
-    return $cmd['type_commande'] === 'livraison' && $cmd['statut'] === 'commande préparée';
+    return in_array($cmd['type_commande'] ?? '', ['livraison', 'traiteur'], true)
+        && $cmd['statut'] === 'commande préparée';
 });
 ?>
 
@@ -79,6 +78,12 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
     <link rel="stylesheet" href="../fichiers_css/structg.css">
     <link rel="stylesheet" href="../fichiers_css/livraison.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
+    <style>
+        .badge-traiteur {
+            display:inline-block; background:var(--orange-fond); color:var(--orange-texte);
+            padding:3px 10px; border-radius:12px; font-size:0.85em; font-weight:bold; margin-bottom:6px;
+        }
+    </style>
 </head>
 <body>
 
@@ -99,19 +104,22 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
 <?php if ($commande_en_cours): ?>
 <div class="container">
     <div class="commande-card">
-        <h2>Client : <?= $commande_en_cours['prenom'] . " " . $commande_en_cours['nom'] ?></h2>
-        <p class="ref">Commande #<?= $commande_en_cours['reference'] ?></p>
+        <?php if (($commande_en_cours['type_commande'] ?? '') === 'traiteur'): ?>
+            <span class="badge-traiteur">🎂 Traiteur — événement le <?= htmlspecialchars($commande_en_cours['evenement']['date'] ?? $commande_en_cours['datelivraison']) ?></span>
+        <?php endif; ?>
+        <h2>Client : <?= htmlspecialchars($commande_en_cours['prenom'] . " " . $commande_en_cours['nom']) ?></h2>
+        <p class="ref">Commande #<?= htmlspecialchars($commande_en_cours['reference']) ?></p>
         <a class="adresse"
            href="https://www.google.com/maps/search/?api=1&query=<?= urlencode($commande_en_cours['adresse']) ?>"
            target="_blank">
             <img src="../images/Iconlocalisation.png" class="map-icon">
-            <span><?= $commande_en_cours['adresse'] ?></span>
+            <span><?= htmlspecialchars($commande_en_cours['adresse']) ?></span>
         </a>
         <div class="infos">
-            <p><strong>Téléphone :</strong> <?= $commande_en_cours['telephone'] ?></p>
+            <p><strong>Téléphone :</strong> <?= htmlspecialchars($commande_en_cours['telephone']) ?></p>
         </div>
         <form method="POST">
-            <input type="hidden" name="finish_id" value="<?= $commande_en_cours['id'] ?>">
+            <input type="hidden" name="finish_id" value="<?= htmlspecialchars($commande_en_cours['id']) ?>">
             <button class="finish-btn">Terminer la livraison</button>
         </form>
     </div>
@@ -120,19 +128,22 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
 <div class="container">
 <?php foreach ($commandes_filtrees as $cmd): ?>
     <div class="commande-card">
-        <h2>Client : <?= $cmd['prenom'] . " " . $cmd['nom'] ?></h2>
-        <p class="ref">Commande #<?= $cmd['reference'] ?></p>
+        <?php if (($cmd['type_commande'] ?? '') === 'traiteur'): ?>
+            <span class="badge-traiteur">🎂 Traiteur — événement le <?= htmlspecialchars($cmd['evenement']['date'] ?? $cmd['datelivraison']) ?></span>
+        <?php endif; ?>
+        <h2>Client : <?= htmlspecialchars($cmd['prenom'] . " " . $cmd['nom']) ?></h2>
+        <p class="ref">Commande #<?= htmlspecialchars($cmd['reference']) ?></p>
         <a class="adresse"
            href="https://www.google.com/maps/search/?api=1&query=<?= urlencode($cmd['adresse']) ?>"
            target="_blank">
             <img src="../images/Iconlocalisation.png" class="map-icon">
-            <span><?= $cmd['adresse'] ?></span>
+            <span><?= htmlspecialchars($cmd['adresse']) ?></span>
         </a>
         <div class="infos">
-            <p><strong>Téléphone :</strong> <?= $cmd['telephone'] ?></p>
+            <p><strong>Téléphone :</strong> <?= htmlspecialchars($cmd['telephone']) ?></p>
         </div>
         <form method="POST">
-            <input type="hidden" name="start_id" value="<?= $cmd['id'] ?>">
+            <input type="hidden" name="start_id" value="<?= htmlspecialchars($cmd['id']) ?>">
             <button class="finish-btn">Démarrer la livraison</button>
         </form>
     </div>
@@ -155,12 +166,5 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
 <script src="../fichiers_js/darkmode.js"></script>
-</body>
-</html>
-
-
-<h5>© 2026 Pâtisserie</h5>
-</footer>
-
 </body>
 </html>
