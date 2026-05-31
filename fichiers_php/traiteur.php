@@ -50,11 +50,16 @@ foreach ($produits as $p) {
 
 /* Images d'exemple pour le carrousel (gateaux existants) */
 $exemples = [
-    'Gateauauxfraises.jpg',
-    'Gateaudecrepeaumatcha.jpg',
-    'Gateauaucitron.jpg',
-    'Gateauauxfruits.jpg',
-    'Brownieube.jpg'
+    'exempletraiteur1.jpg',
+    'exempletraiteur2.jpg',
+    'exempletraiteur3.jpg',
+    'exempletraiteur4.jpg',
+    'exempletraiteur5.jpg',
+    'exempletraiteur6.jpg',
+    'exempletraiteur7.jpg',
+    'exempletraiteur8.jpg',
+    'exempletraiteur9.jpg',
+    'exempletraiteur10.jpg'
 ];
 
 /* Recalcul du total cote SERVEUR (ne jamais se fier au JS) */
@@ -100,7 +105,6 @@ if (isset($_GET['status']) && isset($_SESSION['commande_traiteur'])) {
         // Lignes "produits" : la piece montee + les accompagnements
         $lignesProduits = [];
         $lignesProduits[] = [
-            "type"     => "piece_montee",
             "produit"  => "Pièce montée " . $cmdTraiteur['etages'] . " étage(s)",
             "prix"     => (string) ($cmdTraiteur['etages'] * $GLOBALS['PRIX_ETAGE']),
             "saveur"   => $cmdTraiteur['glacage'],
@@ -265,8 +269,23 @@ if (isset($_POST['payer'])) {
         .piece-carrousel { flex:1; min-width:280px; }
 
         .carrousel { position:relative; display:flex; align-items:center; gap:8px; }
-        .carrousel-images { display:flex; gap:12px; overflow:hidden; scroll-behavior:smooth; border-radius:12px; }
-        .carrousel-images img { width:100%; max-width:300px; height:220px; object-fit:cover; border-radius:12px; flex-shrink:0; }
+        .carrousel-images {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    border-radius: 12px;
+    padding-bottom: 10px;
+}
+        
+.carrousel-images img {
+     width:100%; 
+     max-width:300px; 
+    height:220px; 
+    object-fit:cover; 
+     border-radius:12px; 
+     flex-shrink:0; 
+            }
         .carrousel .fleche { background:var(--accent); color:#fff; border:none; width:38px; height:38px; border-radius:50%; cursor:pointer; flex-shrink:0; font-size:16px; }
 
         .acc-ligne { display:flex; align-items:center; gap:12px; margin:10px 0; flex-wrap:wrap; }
