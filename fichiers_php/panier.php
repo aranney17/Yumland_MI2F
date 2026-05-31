@@ -73,10 +73,7 @@ if (isset($_POST['payer'])) {
     $montant = number_format($total, 2, '.', '');
     $vendeur = "MI-2_F";
 
-    /* URL de retour DYNAMIQUE.
-       panier.php et retour_paiement.php sont dans le MEME dossier
-       (fichiers_php/). dirname() donne deja "/fichiers_php", il suffit
-       d'ajouter "/retour_paiement.php". PAS de "../fichiers_php/". */
+    
     $protocole = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
     $dossier   = rtrim(dirname($_SERVER['PHP_SELF']), '/');
     $retour    = $protocole . "://" . $_SERVER['HTTP_HOST'] . $dossier . "/retour_paiement.php";
@@ -101,21 +98,7 @@ if (isset($_POST['payer'])) {
     <link rel="stylesheet" href="../fichiers_css/pageproduit.css">
     <link rel="stylesheet" href="../fichiers_css/panier.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
-    <style>
-        .badge-menu {
-            display:flex; align-items:center; justify-content:center;
-            width:90px; height:90px; border-radius:10px;
-            background: var(--article-background); color:#fff;
-            font-weight:bold; font-size:14px; text-align:center;
-        }
-        .composition-menu { font-size:14px; margin-top:4px; }
-        .composition-menu span { display:block; }
-        .etiquette-menu {
-            display:inline-block; font-size:11px; background:var(--article-background);
-            color:#fff; padding:1px 8px; border-radius:10px; margin-left:6px;
-            vertical-align:middle;
-        }
-    </style>
+    
 </head>
 <body>
 
@@ -170,7 +153,7 @@ if (isset($_POST['payer'])) {
     <div class="ligne-produit" data-prix="<?= $item['prix'] ?>" data-index="<?= $index ?>">
 
         <?php if ($estMenu): ?>
-            <!-- ===== AFFICHAGE D'UN MENU ===== -->
+            <!-- AFFICHAGE D'UN MENU -->
             <div class="badge-menu">MENU</div>
 
             <div class="info-produit">
@@ -190,7 +173,7 @@ if (isset($_POST['payer'])) {
             </div>
 
         <?php else: ?>
-            <!-- ===== AFFICHAGE D'UN PRODUIT SIMPLE ===== -->
+            <!-- AFFICHAGE D'UN PRODUIT SIMPLE -->
             <a href="../pageproduit/produits.php?nom=<?= str_replace(' ', '', $item['produit']) ?>">
                 <img src="../images/<?= str_replace(' ', '', $item['produit']) ?>.jpg"
                      alt="<?= htmlspecialchars($item['produit']) ?>" class="img-produit">
