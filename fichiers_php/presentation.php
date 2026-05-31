@@ -4,20 +4,20 @@ session_start();
 /* si on est connecte, on verifie qu'on n'est pas bloque
    et que le role est bien client */
 if (isset($_SESSION['id'])) {
-    $usersCheck = json_decode(file_get_contents("data/infoclient.json"), true) ?? [];
+    $usersCheck = json_decode(file_get_contents("../data/infoclient.json"), true) ?? [];
     foreach ($usersCheck as $u) {
         if ($u['id'] == $_SESSION['id']) {
             if ($u['bloque'] ?? false) {
                 session_destroy();
-                die("Votre compte a été bloqué. <a href='connexion.php'>Retour</a>");
+                die("Votre compte a été bloqué. <a href='../fichiers_php/connexion.php'>Retour</a>");
             }
             if ($u['role'] !== 'client') {
                 $redir = [
-                    'cuisinier'      => 'commandes.php',
-                    'livreur'        => 'livraison.php',
-                    'administrateur' => 'administrateur.php'
+                    'cuisinier'      => '../fichiers_php/commandes.php',
+                    'livreur'        => '../fichiers_php/livraison.php',
+                    'administrateur' => '../fichiers_php/administrateur.php'
                 ];
-                header("Location: " . ($redir[$u['role']] ?? 'accueil.php'));
+                header("Location: " . ($redir[$u['role']] ?? '../fichiers_php/accueil.php'));
                 exit();
             }
             break;
@@ -26,7 +26,7 @@ if (isset($_SESSION['id'])) {
 }
 
 /* Lecture produits */
-$fichierProduits = 'data/produits.json';
+$fichierProduits = '../data/produits.json';
 $produits = json_decode(file_get_contents($fichierProduits), true);
 
 /* Ajout au panier */
@@ -37,7 +37,7 @@ if (isset($_POST['ajouter_panier'])) {
     $saveur   = $_POST['saveur'];
     $quantite = $_POST['quantite'];
 
-    $fichier = 'data/panier.json';
+    $fichier = '../data/panier.json';
     $panier = file_exists($fichier) ? json_decode(file_get_contents($fichier), true) : [];
     $panier[] = [
         "nom" => $nom, "produit" => $produit, "prix" => $prix,
@@ -64,53 +64,44 @@ $listeCategories = array_keys($produitsParCategorie);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tous nos produits</title>
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="cssaccueil.css">
-    <link rel="stylesheet" href="darkmode.css">
-    <style>
-        .barre-filtres {
-            max-width: 900px; margin: 20px auto; padding: 15px;
-            background: #f5f5f5; border-radius: 8px;
-            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
-        }
-        .barre-filtres label { font-weight: bold; margin-right: 8px; }
-        .barre-filtres select { padding: 6px 10px; }
-        body.dark .barre-filtres { background: #2a2a2a; }
-    </style>
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/cssaccueil.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
+   
 </head>
 <body>
 
 <div class="barres"><span></span><span></span><span></span></div>
-<h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+<h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
 
 <div class="top-icons">
     <div class="profil-menu">
-        <img src="images/Iconprofil.png" alt="Profil" class="icon">
+        <img src="../images/Iconprofil.png" alt="Profil" class="icon">
         <div class="profil-bulle">
         <?php if (isset($_SESSION["connecte"]) && $_SESSION["connecte"]): ?>
-            <a href="profil.php">Mon profil</a>
-            <a href="profil2.php">Mes commandes</a>
-            <a href="logout.php">Se déconnecter</a>
+            <a href="../fichiers_php/profil.php">Mon profil</a>
+            <a href="../fichiers_php/profil2.php">Mes commandes</a>
+            <a href="../fichiers_php/logout.php">Se déconnecter</a>
         <?php else: ?>
-            <a href="inscription.php">S'inscrire</a>
-            <a href="connexion.php">Connexion</a>
+            <a href="../fichiers_php/inscription.php">S'inscrire</a>
+            <a href="../fichiers_php/connexion.php">Connexion</a>
         <?php endif; ?>
         </div>
     </div>
-    <a href="panier.php"><img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier"></a>
+    <a href="../fichiers_php/panier.php"><img src="../images/Iconpanier.png" alt="Panier" class="icon" id="panier"></a>
 </div>
 
-<div class="search-bar">
-    <input type="search" placeholder=" qu'est-ce qui vous ferait plaisir?">
-    <button><img src="images/Iconloupe.png" alt="loupe"></button>
-</div>
+<form class="search-bar" action="../fichiers_php/recherche.php" method="get" autocomplete="off">
+    <input type="search" name="q" placeholder=" qu'est-ce qui vous ferait plaisir?">
+    <button type="submit"><img src="../images/Iconloupe.png" alt="loupe"></button>
+</form>
 <br>
 
 <nav class="menu-horizontal">
     <ul>
-        <li><a href="menu.html">Menus</a></li>
-        <li><a href="presentation.php" class="active">Tous nos produits</a></li>
+        <li><a href="../fichiers_php/menu.php">Menus</a></li>
+        <li><a href="../fichiers_php/presentation.php" class="active">Tous nos produits</a></li>
     </ul>
 </nav>
 
@@ -135,23 +126,23 @@ $listeCategories = array_keys($produitsParCategorie);
 </div>
 
 <div class="categories">
-    <a href="presentation.php#viennoiseries" class="categorie">
-        <img src="images/Croissantaubeurre.jpg" alt="viennoiserie"><p>Viennoiseries</p>
+    <a href="../fichiers_php/presentation.php#viennoiseries" class="categorie">
+        <img src="../images/Croissantaubeurre.jpg" alt="viennoiserie"><p>Viennoiseries</p>
     </a>
-    <a href="presentation.php#boissons" class="categorie">
-        <img src="images/Cafélatte.jpg" alt="Boissons"><p>Boissons</p>
+    <a href="../fichiers_php/presentation.php#boissons" class="categorie">
+        <img src="../images/Cafélatte.jpg" alt="Boissons"><p>Boissons</p>
     </a>
-    <a href="presentation.php#gourmandises" class="categorie">
-        <img src="images/Cookiegourmand.jpg" alt="Gourmandises"><p>Gourmandises</p>
+    <a href="../fichiers_php/presentation.php#gourmandises" class="categorie">
+        <img src="../images/Cookiegourmand.jpg" alt="Gourmandises"><p>Gourmandises</p>
     </a>
-    <a href="presentation.php#patisseries" class="categorie">
-        <img src="images/Eclairchocolat.jpg" alt="Patisseries"><p>Patisseries</p>
+    <a href="../fichiers_php/presentation.php#patisseries" class="categorie">
+        <img src="../images/Eclairchocolat.jpg" alt="Patisseries"><p>Patisseries</p>
     </a>
-    <a href="presentation.php#gateaux" class="categorie">
-        <img src="images/Gateauauxfraises.jpg" alt="Gateaux"><p>Gateaux</p>
+    <a href="../fichiers_php/presentation.php#gateaux" class="categorie">
+        <img src="../images/Gateauauxfraises.jpg" alt="Gateaux"><p>Gateaux</p>
     </a>
-    <a href="presentation.php#tartes" class="categorie">
-        <img src="images/Tarteàlanoisette.jpg" alt="Tartes"><p>Tartes</p>
+    <a href="../fichiers_php/presentation.php#tartes" class="categorie">
+        <img src="../images/Tarteàlanoisette.jpg" alt="Tartes"><p>Tartes</p>
     </a>
 </div>
 
@@ -165,12 +156,12 @@ $listeCategories = array_keys($produitsParCategorie);
         <div class="produits">
             <?php foreach ($produitsCat as $p): ?>
                 <div class="produit" data-prix="<?= $p['prix'] ?>">
-                    <a href="pageproduit/produits.php?nom=<?= $p['nom'] ?>">
-                        <img src="images/<?= $p['image'] ?>" alt="<?= $p['titre'] ?>">
+                    <a href="../fichiers_php/produits.php?nom=<?= $p['nom'] ?>">
+                        <img src="../images/<?= $p['image'] ?>" alt="<?= $p['titre'] ?>">
                     </a>
                     <div class="produit-info">
                         <div class="panier-menu">
-                            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+                            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
                             <div class="panier-bulle">
                                 <form method="POST">
                                     <input type="hidden" name="nom"     value="<?= $p['nom'] ?>">
@@ -243,18 +234,19 @@ selectCategorie.addEventListener('change', appliquerFiltres);
 
 <footer>
     <p>suivez nous sur nos réseaux!<br>
-        <img src="images/Iconinstagram.jpg" class="icon">
-        <img src="images/Icontiktok.jpg" class="icon">
-        <img src="images/Icontwitter.png" class="icon">
+        <img src="../images/Iconinstagram.jpg" class="icon">
+        <img src="../images/Icontiktok.jpg" class="icon">
+        <img src="../images/Icontwitter.png" class="icon">
     </p>
     <div class="infos-footer">
-        <div class="info"><img src="images/Iconlocalisation.png" class="icon"><span>5 avenue de la république, 75015 Paris</span></div>
-        <div class="info"><img src="images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 20h</span></div>
+        <div class="info"><img src="../images/Iconlocalisation.png" class="icon"><span>5 avenue de la république, 75015 Paris</span></div>
+        <div class="info"><img src="../images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 20h</span></div>
     </div>
     <h5>© 2026 Pâtisserie</h5>
 </footer>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
+<script src="../fichiers_js/recherche.js"></script>
 </body>
 </html>
