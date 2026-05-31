@@ -86,12 +86,7 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
     <link rel="stylesheet" href="../fichiers_css/structg.css">
     <link rel="stylesheet" href="../fichiers_css/livraison.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
-    <style>
-        .badge-traiteur {
-            display:inline-block; background:var(--orange-fond); color:var(--orange-texte);
-            padding:3px 10px; border-radius:12px; font-size:0.85em; font-weight:bold; margin-bottom:6px;
-        }
-    </style>
+    
 </head>
 <body>
 
