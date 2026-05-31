@@ -17,7 +17,7 @@
         "bloque": false,
         "remise": 0,
         "dateinscription": "2026-05-17",
-        "dateconnexion": "2026-05-17"
+        "dateconnexion": "2026-06-01"
     },
     {
         "id": 6,
@@ -37,7 +37,7 @@
         "bloque": false,
         "remise": 0,
         "dateinscription": "2026-05-17",
-        "dateconnexion": "2026-05-17"
+        "dateconnexion": "2026-06-01"
     },
     {
         "id": 7,
@@ -77,7 +77,7 @@
         "bloque": false,
         "remise": 0,
         "dateinscription": "2026-05-17",
-        "dateconnexion": "2026-05-17"
+        "dateconnexion": "2026-06-01"
     },
     {
         "id": 9,
@@ -97,7 +97,7 @@
         "bloque": false,
         "remise": 0,
         "dateinscription": "2026-05-31",
-        "dateconnexion": null
+        "dateconnexion": "2026-06-01"
     },
     {
         "id": 10,
@@ -137,6 +137,6 @@
         "bloque": false,
         "remise": 0,
         "dateinscription": "2026-05-31",
-        "dateconnexion": null
+        "dateconnexion": "2026-06-01"
     }
 ]
