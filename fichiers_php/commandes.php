@@ -102,18 +102,7 @@ function aAfficher($cmd, $ajd, $monId) {
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
     
     <title>Commandes</title>
-    <style>
-        .bloc-traiteur {
-            background: var(--orange-fond);
-            color: var(--orange-texte);
-            border-left: 4px solid var(--orange-texte);
-            border-radius: 6px;
-            padding: 10px 12px;
-            margin: 8px 0;
-            font-size: 0.92em;
-        }
-        .bloc-traiteur ul { margin: 6px 0 0 16px; }
-    </style>
+    
 </head>
 <body>
 
