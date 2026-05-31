@@ -38,3 +38,21 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.textContent = estActif ? '☀' : '☾';
     });
 });
+
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebarOverlay');
+
+document.querySelector('.barres').addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+});
+overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+});
+sidebar.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+    })
+);
