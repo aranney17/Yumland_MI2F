@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="fichiers_css/connexion.css">
-    <link rel="stylesheet" href="fichiers_css/structg.css">
-    <link rel="stylesheet" href="fichiers_css/couleurs.css">
-    <link rel="stylesheet" href="fichiers_css/darkmode.css">
-    <script src="fichiers_js/connexion.js" defer></script>
+    <link rel="stylesheet" href="../fichiers_css/connexion.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
+    <script src="../fichiers_js/connexion.js" defer></script>
     <title>Inscription</title>
 </head>
     
@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else {
         $mailSaisi = trim(strtolower($_POST["mail"]));
         // Verifier que l'email n'est pas deja utilise
-        $fichier = "data/infoclient.json";
+        $fichier = "../data/infoclient.json";
         if (file_exists($fichier)) {
             $existants = json_decode(file_get_contents($fichier), true) ?? [];
             foreach ($existants as $u) {
@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             return str_replace(",", " ", $valeur);
         }
 
-        $fichier = "data/infoclient.json";
+        $fichier = "../data/infoclient.json";
         $utilisateurs = file_exists($fichier)
             ? (json_decode(file_get_contents($fichier), true) ?? [])
             : [];
@@ -211,7 +211,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         file_put_contents($fichier, json_encode($utilisateurs, JSON_PRETTY_PRINT));
 
         
-        header("Location: fichiers_php/connexion.php?inscription=ok");
+        header("Location: ../fichiers_php/connexion.php?inscription=ok");
         exit();
     }
 }
@@ -219,22 +219,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
-            <img src="images/Iconprofil.png" alt="Profil" class="icon">
+            <img src="../images/Iconprofil.png" alt="Profil" class="icon">
             <div class="profil-bulle">
-                <a href="fichiers_php/inscription.php">Inscription</a>
-                <a href="fichiers_php/connexion.php">Connexion</a>
+                <a href="../fichiers_php/inscription.php">Inscription</a>
+                <a href="../fichiers_php/connexion.php">Connexion</a>
             </div>
         </div>
-        <a href=""><img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier"></a>
+        <a href=""><img src="../images/Iconpanier.png" alt="Panier" class="icon" id="panier"></a>
     </div>
 </header>
 
 <main>
     <h2>Créer un nouveau compte</h2>
-    <form action="fichiers_php/inscription.php" method="POST" onsubmit="return verificationInscription()">
+    <form action="../fichiers_php/inscription.php" method="POST" onsubmit="return verificationInscription()">
         <fieldset>
 
             <div class="civilite">
@@ -298,7 +298,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="champ">
                 Créez votre mot de passe *
                 <input type="password" id="mdp" name="mdp" minlength=8 maxlength="20" oninput="compteur('mdp','compteurmdp',20)" class="<?= isset($erreur['mdp']) ? 'erreur' : '' ?>" />
-                <img src="images/oeil.png" alt="Afficher mot de passe"  onclick="visibilitemdp('mdp', this)">
+                <img src="../images/oeil.png" alt="Afficher mot de passe"  onclick="visibilitemdp('mdp', this)">
                 <small class="erreur" id="erreurmdp"><?= $erreur['mdp'] ?? '' ?></small>
                 <small class="compteur" id="compteurmdp">0 / 20 caractères</small>
             </div>
@@ -306,7 +306,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="champ">
                 Confirmer le mot de passe *
                 <input type="password" id="mdpconfirme" name="mdpconfirme" minlength=8 maxlength="20" oninput="compteur('mdpconfirme','compteurmdpconfirme',20)" class="<?= isset($erreur['mdpconfirme']) ? 'erreur' : '' ?>" />
-                <img src="images/oeil.png" alt="Afficher mot de passe" onclick="visibilitemdp('mdpconfirme', this)">
+                <img src="../images/oeil.png" alt="Afficher mot de passe" onclick="visibilitemdp('mdpconfirme', this)">
                 <small class="erreur" id="erreurmdpconfirme"><?= $erreur['mdpconfirme'] ?? '' ?></small>
                 <small class="compteur" id="compteurmdpconfirme">0 / 20 caractères</small>
             </div>
@@ -318,25 +318,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <input class="bouton" type="submit" value="CRÉER UN COMPTE"/>
-            <p class="inscription">Vous avez déjà un compte ? <a class="lien" href="connexion.php">Se connecter</a></p>
+            <p class="inscription">Vous avez déjà un compte ? <a class="lien" href="../fichiers_php/connexion.php">Se connecter</a></p>
         </fieldset>
     </form>
 </main>
 
 <footer>
     <p>suivez nous sur nos réseaux!<br>
-        <img src="images/Iconinstagram.jpg" class="icon">
-        <img src="images/Icontiktok.jpg" class="icon">
-        <img src="images/Icontwitter.png" class="icon">
+        <img src="../images/Iconinstagram.jpg" class="icon">
+        <img src="../images/Icontiktok.jpg" class="icon">
+        <img src="../images/Icontwitter.png" class="icon">
     </p>
     <div class="infos-footer">
-        <div class="info"><img src="images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75015 Paris</span></div>
-        <div class="info"><img src="images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 20h</span></div>
+        <div class="info"><img src="../images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75015 Paris</span></div>
+        <div class="info"><img src="../images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 20h</span></div>
     </div>
     <h5>© 2026 Pâtisserie</h5>
 </footer>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
 </body>
 </html>
