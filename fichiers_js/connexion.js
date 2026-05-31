@@ -3,15 +3,15 @@ function visibilitemdp(id, icon){
     let password = document.getElementById(id);
     if(password.type == "password"){
         password.setAttribute("type", "text"); //affiche le mdp
-        icon.src = "images/oeilbarre.png"; //œil barré
+        icon.src = "../images/oeilbarre.png"; //œil barré
         setTimeout(function(){
             password.setAttribute("type", "password"); //masque le mdp au bout de 30s
-            icon.src = "images/oeil.png"; //œil normal
+            icon.src = "../images/oeil.png"; //œil normal
         }, 60000);
     }
     else{
         password.setAttribute("type", "password"); //masque le mdp
-        icon.src = "images/oeil.png"; //œil normal
+        icon.src = "../images/oeil.png"; //œil normal
     }
 }
 
