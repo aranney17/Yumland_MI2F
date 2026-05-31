@@ -14,7 +14,7 @@ $status       = $_GET['status']      ?? '';
 $control_recu = $_GET['control']     ?? '';
 
 /* Recalcul du controle */
-require('getapikey.php');
+require('../fichiers_php/getapikey.php');
 $api_key = getAPIKey($vendeur);
 $control_calcule = md5(
     $api_key . "#" . $transaction . "#" . $montant . "#" .
@@ -27,9 +27,9 @@ $paiementAccepte = ($controleOK && $status === "accepted");
 
 $estPaiementSupplement = isset($_SESSION['paiement_supplement']);
 
-$fichierPanier    = 'data/panier.json';
-$fichierClients   = 'data/infoclient.json';
-$fichierCommandes = 'data/commande.json';
+$fichierPanier    = '../data/panier.json';
+$fichierClients   = '../data/infoclient.json';
+$fichierCommandes = '../data/commande.json';
 
 
 if ($estPaiementSupplement) {
@@ -130,27 +130,27 @@ if ($estPaiementSupplement) {
 <head>
     <meta charset="UTF-8">
     <title>Retour paiement</title>
-    <link rel="stylesheet" href="panier.css">
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="../pageproduit/pageproduit.css">
-    <link rel="stylesheet" href="darkmode.css">
+    <link rel="stylesheet" href="../fichiers_css/panier.css">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/pageproduit.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
 </head>
 <body>
 
 <div class="barres"><span></span><span></span><span></span></div>
 
-<h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+<h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
 
 <div class="top-icons">
     <div class="profil-menu">
-        <img src="images/Iconprofil.png" class="icon">
+        <img src="../images/Iconprofil.png" class="icon">
         <div class="profil-bulle">
-            <a href="profil.php">Profil</a>
-            <a href="logout.php">Déconnexion</a>
+            <a href="../fichiers_php/profil.php">Profil</a>
+            <a href="../fichiers_php/logout.php">Déconnexion</a>
         </div>
     </div>
-    <a href="panier.php"><img src="images/Iconpanier.png" class="icon" id="panier"></a>
+    <a href="../fichiers_php/panier.php"><img src="../images/Iconpanier.png" class="icon" id="panier"></a>
 </div>
 
 <div class="confirmation">
@@ -183,7 +183,7 @@ if ($estPaiementSupplement) {
         <?php endif; ?>
     <?php endif; ?>
 
-    <a href="<?= $estPaiementSupplement ? 'profil2.php' : 'accueil.php' ?>" class="panier btn-commande">
+    <a href="<?= $estPaiementSupplement ? '../fichiers_php/profil2.php' : '../fichiers_php/accueil.php' ?>" class="panier btn-commande">
         <?= $estPaiementSupplement ? "Retour à mes commandes" : "Revenir à la boutique" ?>
     </a>
 
@@ -191,18 +191,18 @@ if ($estPaiementSupplement) {
 
 <footer>
     <p>suivez nous sur nos réseaux!<br>
-        <img src="images/Iconinstagram.jpg" class="icon">
-        <img src="images/Icontiktok.jpg" class="icon">
-        <img src="images/Icontwitter.png" class="icon">
+        <img src="../images/Iconinstagram.jpg" class="icon">
+        <img src="../images/Icontiktok.jpg" class="icon">
+        <img src="../images/Icontwitter.png" class="icon">
     </p>
     <div class="infos-footer">
-        <div class="info"><img src="images/Iconlocalisation.png" class="icon"><span>5 avenue de la république, 75015 Paris</span></div>
-        <div class="info"><img src="images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 20h</span></div>
+        <div class="info"><img src="../images/Iconlocalisation.png" class="icon"><span>5 avenue de la république, 75015 Paris</span></div>
+        <div class="info"><img src="../images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 20h</span></div>
     </div>
     <h5>© 2026 Pâtisserie</h5>
 </footer>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
 </body>
 </html>
