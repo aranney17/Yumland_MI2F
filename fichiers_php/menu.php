@@ -2,7 +2,7 @@
 session_start();
 
 /* 
-  SECURITE : reste connecte (session_start) + check bloque/role.
+  SECURITE : reste connecte et check bloque/role.
 */
 if (isset($_SESSION['id'])) {
     $usersCheck = json_decode(file_get_contents("../data/infoclient.json"), true) ?? [];
@@ -29,13 +29,7 @@ if (isset($_SESSION['id'])) {
 /* Lecture des produits */
 $produits = json_decode(file_get_contents('../data/produits.json'), true) ?? [];
 
-/* -------------------------------------------------------------
-   DEFINITION DES MENUS (carte blanche, version simple)
-
-   Chaque menu a 2 "slots". Chaque slot dit dans quelles
-   categories piocher, et si on exige le mot "matcha".
-   Les listes deroulantes sont ainsi cohérentes automatiquement.
-------------------------------------------------------------- */
+/* definition des menus */
 $MENUS = [
     [
         'id' => 'matcha', 'titre' => 'Menu Matcha Addict', 'prix' => 9.50,
@@ -86,9 +80,7 @@ function produitsEligibles($produits, $slot) {
     return $res;
 }
 
-/* -------------------------------------------------------------
-   AJOUT D'UN MENU AU PANIER
-------------------------------------------------------------- */
+/* ajout d'un menu au panier */
 if (isset($_POST['ajouter_menu'])) {
     $menuId = $_POST['menu_id'] ?? '';
 
@@ -228,9 +220,7 @@ unset($_SESSION['flash_menu']);
 </section>
 
 
-<!-- ============================================================
-     MODALS (une par menu) : choix boisson + accompagnement
-============================================================ -->
+<!--  choix boisson + accompagnement -->
 <?php foreach ($MENUS as $menu): ?>
     <div class="menu-modal" id="modal-<?= $menu['id'] ?>">
         <div class="menu-modal-contenu">
@@ -283,7 +273,7 @@ unset($_SESSION['flash_menu']);
 </footer>
 
 <script>
-/* Carrousel : les fleches font defiler le conteneur */
+/* Carrousel  */
 const slider = document.getElementById('slider');
 document.querySelector('.arrow.left').addEventListener('click', function() {
     slider.scrollBy({ left: -320, behavior: 'smooth' });
