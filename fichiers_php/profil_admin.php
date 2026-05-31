@@ -48,8 +48,7 @@ if ($id !== null) {
 <body>
 
 <header>
-    <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="../fichiers_php/administrateur.php" class="logo">La Cour des Délices</a></h1>
+        <h1><a href="../fichiers_php/administrateur.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
             <img src="../images/Iconprofil.png" class="icon">
@@ -63,7 +62,7 @@ if ($id !== null) {
 
 <main class="container">
 
-<aside class="sidebar">
+<aside class="sidebar-profil">
     <ul class="menu">
         <li><a href="../fichiers_php/administrateur.php">← Retour à la liste</a></li>
         <li><a href="../fichiers_php/profil_admin.php?id=<?= htmlspecialchars($id) ?>"><strong>Informations</strong></a></li>
