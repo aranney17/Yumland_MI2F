@@ -309,7 +309,21 @@ if (isset($_POST['payer'])) {
 </head>
 <body>
 
-<div class="barres"><span></span><span></span><span></span></div>
+<?php include 'sidebar.php'; ?>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <a href="#nouveautes">Nouveautés</a>
+        <a href="../fichiers_php/presentation.php#viennoiseries">Viennoiseries</a>
+        <a href="../fichiers_php/presentation.php#boissons">Boissons</a>
+        <a href="../fichiers_php/presentation.php#gourmandises">Gourmandises</a>
+        <a href="../fichiers_php/presentation.php#patisseries">Pâtisseries</a>
+        <a href="../fichiers_php/presentation.php#gateaux">Gâteaux</a>
+        <a href="../fichiers_php/presentation.php#tartes">Tartes</a>
+        <a href="../fichiers_php/traiteur.php">Commande traiteur</a>
+    </nav>
+    <div class="barres"><span></span><span></span><span></span></div>
 <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
 
 <div class="top-icons">
