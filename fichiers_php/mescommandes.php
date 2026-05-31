@@ -2,28 +2,28 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: connexion.php");
+    header("Location: ../fichiers_php/connexion.php");
     exit();
 }
 
 $userId = $_SESSION['id'];
 
 /* Charger client et toutes les commandes */
-$fichierClients   = 'data/infoclient.json';
+$fichierClients   = '../data/infoclient.json';
 $fichierCo<?php
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: connexion.php");
+    header("Location: ../fichiers_php/connexion.php");
     exit();
 }
 
 $userId = $_SESSION['id'];
 
 /*  Charger client et toutes les commandes */
-$fichierClients   = 'data/infoclient.json';
-$fichierCommandes = 'data/commande.json';
-$fichierProduits  = 'data/produits.json';
+$fichierClients   = '../data/infoclient.json';
+$fichierCommandes = '../data/commande.json';
+$fichierProduits  = '../data/produits.json';
 
 $clients   = json_decode(file_get_contents($fichierClients), true) ?? [];
 $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
 
     // Redirection pour eviter le re-submit au refresh
-    header("Location: mescommandes.php");
+    header("Location: ../fichiers_php/mescommandes.php");
     exit();
 }
 
@@ -135,9 +135,9 @@ foreach ($commandes as $cmd) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes commandes</title>
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="darkmode.css">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
     <style>
         .mes-commandes  { max-width: 900px; margin: 30px auto; padding: 0 20px; }
         .ma-commande    {
@@ -191,18 +191,18 @@ foreach ($commandes as $cmd) {
 <body>
 
 <div class="barres"><span></span><span></span><span></span></div>
-<h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+<h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
 
 <div class="top-icons">
     <div class="profil-menu">
-        <img src="images/Iconprofil.png" alt="Profil" class="icon">
+        <img src="../images/Iconprofil.png" alt="Profil" class="icon">
         <div class="profil-bulle">
-            <a href="profil.php">Profil</a>
-            <a href="logout.php">Déconnexion</a>
+            <a href="../fichiers_php/profil.php">Profil</a>
+            <a href="../fichiers_php/logout.php">Déconnexion</a>
         </div>
     </div>
-    <a href="panier.php">
-        <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
+    <a href="../fichiers_php/panier.php">
+        <img src="../images/Iconpanier.png" alt="Panier" class="icon" id="panier">
     </a>
 </div>
 
@@ -307,17 +307,17 @@ foreach ($commandes as $cmd) {
 
 <footer>
     <p>suivez nous sur nos réseaux!<br>
-        <img src="images/Iconinstagram.jpg" class="icon">
-        <img src="images/Icontiktok.jpg" class="icon">
-        <img src="images/Icontwitter.png" class="icon">
+        <img src="../images/Iconinstagram.jpg" class="icon">
+        <img src="../images/Icontiktok.jpg" class="icon">
+        <img src="../images/Icontwitter.png" class="icon">
     </p>
     <div class="infos-footer">
         <div class="info">
-            <img src="images/Iconlocalisation.png" class="icon">
+            <img src="../images/Iconlocalisation.png" class="icon">
             <span>5 avenue de la république, 75015 Paris</span>
         </div>
         <div class="info">
-            <img src="images/Iconhorloge.png" class="icon">
+            <img src="../images/Iconhorloge.png" class="icon">
             <span>Tous les jours 9h - 20h</span>
         </div>
     </div>
@@ -326,7 +326,7 @@ foreach ($commandes as $cmd) {
 
 <!-- Bouton mode sombre -->
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
 
 </body>
 </html>
