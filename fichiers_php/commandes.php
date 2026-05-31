@@ -32,14 +32,13 @@ $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
 
 $modifie = false;
 
-/* COMMENCER : on reserve la commande a CE cuisinier.
-   Possible seulement si elle est encore "a preparer" (personne ne l'a prise). */
+/* COMMENCER : on reserve la commande si elle est encore "a preparer". */
 if (isset($_GET['commencer'])) {
     $ref = $_GET['commencer'];
     foreach ($commandes as &$cmd) {
         if ($cmd['reference'] === $ref && $cmd['statut'] === "a preparer") {
             $cmd['statut'] = "en preparation";
-            $cmd['cuisinier_id'] = $monId;          // qui l'a prise
+            $cmd['cuisinier_id'] = $monId;          // cuisinier qui l'a prise
             $cmd['modifie_par_client'] = false;
             $modifie = true;
             break;
@@ -71,14 +70,7 @@ if ($modifie) {
 
 $ajd = date("Y-m-d");
 
-/* -------------------------------------------------------------
-   Qui voit quoi :
-   - "a preparer"    : visible par TOUS les cuisiniers, selon le
-     filtre de date (jour meme, ou <= 5 jours pour un traiteur).
-   - "en preparation": visible UNIQUEMENT par le cuisinier qui l'a
-     prise (cuisinier_id), sans filtre de date (il la garde jusqu'a
-     l'avoir terminee).
-------------------------------------------------------------- */
+
 function aAfficher($cmd, $ajd, $monId) {
     $statut = $cmd['statut'];
 
