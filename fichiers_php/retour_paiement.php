@@ -138,7 +138,6 @@ if ($estPaiementSupplement) {
 </head>
 <body>
 
-<div class="barres"><span></span><span></span><span></span></div>
 
 <h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
 
