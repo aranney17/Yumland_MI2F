@@ -199,7 +199,6 @@ foreach ($notations as $notation) {
 <body>
 
 <header>
-    <div class="barres"><span></span><span></span><span></span></div>
     <h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
@@ -214,7 +213,7 @@ foreach ($notations as $notation) {
 </header>
 
 <main class="container">
-    <aside class="sidebar">
+    <aside class="sidebar-profil">
         <ul class="menu">
             <li><a href="../fichiers_php/profil.php">Informations</a></li>
             <li><a href="../fichiers_php/profil2.php"><strong>Historique de commandes</strong></a></li>
