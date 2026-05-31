@@ -3,20 +3,20 @@ session_start();
 $userId = $_SESSION['id'] ?? null; //id de l'utilisateur connecté
 // Check bloque + check role
 if (isset($_SESSION['id'])) {
-    $usersCheck = json_decode(file_get_contents("data/infoclient.json"), true) ?? [];
+    $usersCheck = json_decode(file_get_contents("../data/infoclient.json"), true) ?? [];
     foreach ($usersCheck as $u) {
         if ($u['id'] == $_SESSION['id']) {
             if ($u['bloque'] ?? false) {
                 session_destroy();
-                die("Votre compte a été bloqué. <a href='fichiers_php/connexion.php'>Retour</a>");
+                die("Votre compte a été bloqué. <a href='../fichiers_php/connexion.php'>Retour</a>");
             }
             if ($u['role'] !== 'client') {
                 $redir = [
-                    'cuisinier'      => 'fichiers_php/commandes.php',
-                    'livreur'        => 'fichiers_php/livraison.php',
-                    'administrateur' => 'fichiers_php/administrateur.php'
+                    'cuisinier'      => '../fichiers_php/commandes.php',
+                    'livreur'        => '../fichiers_php/livraison.php',
+                    'administrateur' => '../fichiers_php/administrateur.php'
                 ];
-                header("Location: " . ($redir[$u['role']] ?? 'fichiers_php/accueil.php'));
+                header("Location: " . ($redir[$u['role']] ?? '../fichiers_php/accueil.php'));
                 exit();
             }
             break;
@@ -27,7 +27,7 @@ if (isset($_SESSION['id'])) {
 
 <?php
  // Lire tous les produits
-$fichierProduits = 'data/produits.json';
+$fichierProduits = '../data/produits.json';
 $produits = json_decode(file_get_contents($fichierProduits), true);
 ?>
 
@@ -71,7 +71,7 @@ $notifMessage = null;
 
 if ($userId) {
     // Trouver les infos du client connecte
-    $fichierClients = 'data/infoclient.json';
+    $fichierClients = '../data/infoclient.json';
     $listeClients = json_decode(file_get_contents($fichierClients), true) ?? [];
     $clientConnecte = null;
     foreach ($listeClients as $c) {
@@ -82,7 +82,7 @@ if ($userId) {
     }
 
     if ($clientConnecte) {
-        $fichierCommandes = 'data/commande.json';
+        $fichierCommandes = '../data/commande.json';
         $listeCommandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
         $aModifier = false;
 
@@ -120,7 +120,7 @@ if (isset($_POST['ajouter_panier'])) {
     $quantite = $_POST['quantite'];
 
     // Lire le panier
-    $fichier = 'data/panier.json';
+    $fichier = '../data/panier.json';
 
     if (file_exists($fichier)) {
         $panier = json_decode(file_get_contents($fichier), true);
@@ -154,11 +154,11 @@ if (isset($_POST['ajouter_panier'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pâtisserie</title>
 
-    <link rel="icon" type="images/png" href="images/logosite.png">
-    <link rel="stylesheet" href="fichiers_css/couleurs.css">
-    <link rel="stylesheet" href="fichiers_css/structg.css">
-    <link rel="stylesheet" href="fichiers_css/cssaccueil.css">
-    <link rel="stylesheet" href="fichiers_css/darkmode.css">
+    <link rel="icon" type="../images/png" href="../images/logosite.png">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/cssaccueil.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
 
 </head>
 
@@ -178,64 +178,64 @@ if (isset($_POST['ajouter_panier'])) {
         <span></span>
     </div>
 
-    <h1> <a href="fichiers_php/panier.php?id=<?= urlencode($userId) ?>" class="logo">La Cour des Délices</a></h1>
+    <h1> <a href="../fichiers_php/panier.php?id=<?= urlencode($userId) ?>" class="logo">La Cour des Délices</a></h1>
 
 <div class="top-icons">
 
     <div class="profil-menu">
-        <img src="images/Iconprofil.png" alt="Profil" class="icon">
+        <img src="../images/Iconprofil.png" alt="Profil" class="icon">
 
         <div class="profil-bulle">
     <?php if (isset($_SESSION["connecte"]) && $_SESSION["connecte"]): ?>
-        <a href="fichiers_php/profil.php">Mon profil</a>
-        <a href="fichiers_php/logout.php">Se déconnecter</a>
+        <a href="../fichiers_php/profil.php">Mon profil</a>
+        <a href="../fichiers_php/logout.php">Se déconnecter</a>
     <?php else : ?>
-        <a href="fichiers_php/inscription.php">S'Inscrire</a>
-        <a href="fichiers_php/connexion.php">Connexion</a>
+        <a href="../fichiers_php/inscription.php">S'Inscrire</a>
+        <a href="../fichiers_php/connexion.php">Connexion</a>
     <?php endif; ?>
 </div>
     </div>
 
-    <a href="fichiers_php/panier.php">
-        <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
+    <a href="../fichiers_php/panier.php">
+        <img src="../images/Iconpanier.png" alt="Panier" class="icon" id="panier">
     </a>
 
 </div>
 
-<div class="search-bar">
-    <input type="search" placeholder=" qu'est-ce qui vous ferait plaisir?">
-    <button><img src="images/Iconloupe.png" alt="loupe"></button>
-</div>
+<form class="search-bar" action="../fichiers_php/recherche.php" method="get" autocomplete="off">
+    <input type="search" name="q" placeholder=" qu'est-ce qui vous ferait plaisir?">
+    <button type="submit"><img src="../images/Iconloupe.png" alt="loupe"></button>
+</form>
     
 <div class="categories">
 
-    <a href="fichiers_php/presentation.php#viennoiseries" class="categorie">
-        <img src="images/Croissantaubeurre.jpg" alt="viennoiserie">
+    <a href="../fichiers_php/presentation.php#viennoiseries" class="categorie">
+        <img src="../images/Croissantaubeurre.jpg" alt="viennoiserie">
         <p>Viennoiseries</p>
     </a>
 
-    <a href="fichiers_php/presentation.php#boissons" class="categorie">
-        <img src="images/Cafélatte.jpg" alt="Boissons">
+    <a href="../fichiers_php/presentation.php#boissons" class="categorie">
+        <img src="../images/Cafélatte.jpg" alt="Boissons">
         <p>Boissons</p>
     </a>
 
-    <a href="fichiers_php/presentation.php#gourmandises" class="categorie">
-        <img src="images/Cookiegourmand.jpg" alt="Gourmandises">
+    <a href="../fichiers_php/presentation.php#gourmandises" class="categorie">
+        <img src="../images/Cookiegourmand.jpg" alt="Gourmandises">
         <p>Gourmandises</p>
     </a>
     
-    <a href="fichiers_php/presentation.php#patisseries" class="categorie">
-        <img src="images/Eclairchocolat.jpg" alt="Patisseries">
+    <a href="../fichiers_php/presentation.php#patisseries" class="categorie">
+        <img src="../images/Eclairchocolat.jpg" alt="Patisseries">
         <p>Patisseries</p>
     </a>
     
-    <a href="fichiers_php/presentation.php#gateaux" class="categorie">
-        <img src="images/Gateauauxfraises.jpg" alt="Gateaux">
+    <a href="../fichiers_php/presentation.php#gateaux" class="categorie">
+        <img src="../images/Gateauauxfraises.jpg" alt="Gateaux">
         <p>Gateaux</p>
     </a>
     
-    <a href="fichiers_php/presentation.php#tartes" class="categorie">
-        <img src="images/Tarteàlanoisette.jpg" alt="Tartes">
+    <a href="../fichiers_php/presentation.php#tartes" class="categorie">
+        <img src="../images/Tarteàlanoisette.jpg" alt="Tartes">
         <p>Tartes</p>
     </a>
 
@@ -245,7 +245,7 @@ if (isset($_POST['ajouter_panier'])) {
 
     <div class="hero-content">
         <h2>Découvrez nos menus</h2>
-        <a href="menu.html" class="btn-commande">Je commande</a>
+        <a href="../fichiers_php/menu.php" class="btn-commande">Je commande</a>
     </div>
 
 </section>
@@ -268,7 +268,7 @@ if (isset($_POST['ajouter_panier'])) {
             et cree des souvenirs uniques.
         </p>
 
-        <a href="commande-sur-mesure.html" class="btn-commande">
+        <a href="../fichiers_php/traiteur.php" class="btn-commande">
             Je commande
         </a>
     </div>
@@ -283,8 +283,8 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Opérapistacheyuzu">
-            <img src="images/Opérapistacheyuzu.jpg" alt="Opera pistache yuzu">
+            <a href="../fichiers_php/produits.php?nom=Opérapistacheyuzu">
+            <img src="../images/Opérapistacheyuzu.jpg" alt="Opera pistache yuzu">
             </a>
             
             <div class="produit-info">
@@ -292,7 +292,7 @@ if (isset($_POST['ajouter_panier'])) {
                        <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -327,8 +327,8 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Lattefraisematcha">
-            <img src="images/Lattefraisematcha.jpg" alt="latte matcha fraise">
+            <a href="../fichiers_php/produits.php?nom=Lattefraisematcha">
+            <img src="../images/Lattefraisematcha.jpg" alt="latte matcha fraise">
             </a>
             
             <div class="produit-info">
@@ -336,7 +336,7 @@ if (isset($_POST['ajouter_panier'])) {
                  <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -375,15 +375,15 @@ if (isset($_POST['ajouter_panier'])) {
 </section>
     
 <section class="produit-highlight">
-    <a href="fichiers_php/produits.php?nom=Brownieube">
-    <img src="images/Brownieube.jpg" alt="brownie Ube">
+    <a href="../fichiers_php/produits.php?nom=Brownieube">
+    <img src="../images/Brownieube.jpg" alt="brownie Ube">
     </a>
     
     <div class="produit-info">
                <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -426,15 +426,15 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Matchalatte">
-            <img src="images/Matchalatte.jpg" alt="matchalatte">
+            <a href="../fichiers_php/produits.php?nom=Matchalatte">
+            <img src="../images/Matchalatte.jpg" alt="matchalatte">
             </a>
             
             <div class="produit-info">
                        <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -468,14 +468,14 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Cookiegourmand">
-            <img src="images/Cookiegourmand.jpg" alt="cookie gourmand">
+            <a href="../fichiers_php/produits.php?nom=Cookiegourmand">
+            <img src="../images/Cookiegourmand.jpg" alt="cookie gourmand">
             </a>
             <div class="produit-info">
                        <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -515,14 +515,14 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Gateauaucitron">
-            <img src="images/Gateauaucitron.jpg" alt="Gateau citron">
+            <a href="../fichiers_php/produits.php?nom=Gateauaucitron">
+            <img src="../images/Gateauaucitron.jpg" alt="Gateau citron">
             </a>
             <div class="produit-info">
                       <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -557,15 +557,15 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Tiramisu">
-            <img src="images/Tiramisu.jpg" alt="tiramisu">
+            <a href="../fichiers_php/produits.php?nom=Tiramisu">
+            <img src="../images/Tiramisu.jpg" alt="tiramisu">
             </a>
             
             <div class="produit-info">
                       <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -609,15 +609,15 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Tarteauxpommes">
-            <img src="images/Tarteauxpommes.jpg" alt="Tarte pomme">
+            <a href="../fichiers_php/produits.php?nom=Tarteauxpommes">
+            <img src="../images/Tarteauxpommes.jpg" alt="Tarte pomme">
             </a>
             
             <div class="produit-info">
                        <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -653,15 +653,15 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Cappuccino">
-            <img src="images/Cappuccino.jpg" alt="Cappuccino">
+            <a href="../fichiers_php/produits.php?nom=Cappuccino">
+            <img src="../images/Cappuccino.jpg" alt="Cappuccino">
             </a>
             
             <div class="produit-info">
                        <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -698,14 +698,14 @@ if (isset($_POST['ajouter_panier'])) {
 
     </div>    
 <section class="produit-highlight">
-    <a href="fichiers_php/produits.php?nom=Tarteàlaframboise">
-    <img src="images/Tarteàlaframboise.jpg" alt="Tarte framboise">
+    <a href="../fichiers_php/produits.php?nom=Tarteàlaframboise">
+    <img src="../images/Tarteàlaframboise.jpg" alt="Tarte framboise">
     </a>
     <div class="produit-info">
                <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -743,15 +743,15 @@ if (isset($_POST['ajouter_panier'])) {
     <div class="produits">
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Macaron">
-            <img src="images/Macaron.jpg" alt="Macaron">
+            <a href="../fichiers_php/produits.php?nom=Macaron">
+            <img src="../images/Macaron.jpg" alt="Macaron">
             </a>
             
             <div class="produit-info">
                        <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -787,15 +787,15 @@ if (isset($_POST['ajouter_panier'])) {
         </div>
 
         <div class="produit">
-            <a href="fichiers_php/produits.php?nom=Parisbrest">
-            <img src="images/Parisbrest.jpg" alt="Paris brest">
+            <a href="../fichiers_php/produits.php?nom=Parisbrest">
+            <img src="../images/Parisbrest.jpg" alt="Paris brest">
             </a>
             
             <div class="produit-info">                
                        <!-- MENU PANIER -->
         <div class="panier-menu">
 
-            <img src="images/Iconpanier.png" class="icon-panier" alt="Ajouter">
+            <img src="../images/Iconpanier.png" class="icon-panier" alt="Ajouter">
 
             <!-- BULLE -->
             <div class="panier-bulle">
@@ -836,26 +836,27 @@ if (isset($_POST['ajouter_panier'])) {
 <footer>
 <p>suivez nous sur nos réseaux!
     </br>
-        <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
-        <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
-        <img src="images/Icontwitter.png" alt="twitter" class="icon">
+        <img src="../images/Iconinstagram.jpg" alt="instagram" class="icon">
+        <img src="../images/Icontiktok.jpg" alt="tiktok" class="icon">
+        <img src="../images/Icontwitter.png" alt="twitter" class="icon">
 </p>
 
 <div class="infos-footer">
 
     <div class="info">
-        <img src="images/Iconlocalisation.png" alt="maps" class="icon">
+        <img src="../images/Iconlocalisation.png" alt="maps" class="icon">
         <span>5 avenue de la république, 75015 Paris</span>
     </div>
 
     <div class="info">
-        <img src="images/Iconhorloge.png" alt="horloge" class="icon">
+        <img src="../images/Iconhorloge.png" alt="horloge" class="icon">
         <span>Tous les jours 9h - 20h</span>
     </div>
 </div>
        <h5>© 2026 Pâtisserie</h5>
 </footer>
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
+<script src="../fichiers_js/recherche.js"></script>
 </body>
 </html>
