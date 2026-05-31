@@ -137,11 +137,7 @@ function afficherEtoiles($note) {
 </head>
 <body>
     <header>
-        <div class="barres">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+    
 
         <h1><a href="accueil.html" class="logo">La Cour des Délices</a></h1>
     
