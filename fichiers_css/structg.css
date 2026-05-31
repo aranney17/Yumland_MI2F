@@ -22,6 +22,40 @@ header{
     border-radius: 2px;
 }
 
+.sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 250px;
+    height: 100%;
+    background: var(--main-background);
+    border-right: 2px solid var(--article-background);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 500;
+    padding: 30px 20px;
+}
+.sidebar.open { transform: translateX(0); }
+
+.sidebar a {
+    display: block;
+    padding: 12px 0;
+    text-decoration: none;
+    color: var(--main-title);
+    font-family: "DM Serif Display", serif;
+    font-size: 16px;
+    border-bottom: 1px solid #e7e7e7;
+}
+.sidebar a:hover { color: var(--article-background); }
+
+.sidebar-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.3);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s;
+    z-index: 499;
+}
+.sidebar-overlay.open { opacity: 1; visibility: visible; }
+
 h1{
 	font-family: "Dancing Script", cursive;
 	margin-top: 20px;
