@@ -12,11 +12,11 @@ if (isset($_SESSION['id'])) {
             }
             if ($u['role'] !== 'client') {
                 $redir = [
-                    'cuisinier'      => '../commandes.php',
-                    'livreur'        => '../livraison.php',
-                    'administrateur' => '../administrateur.php'
+                    'cuisinier'      => '../fichiers_php/commandes.php',
+                    'livreur'        => '../fichiers_php/livraison.php',
+                    'administrateur' => '../fichiers_php/administrateur.php'
                 ];
-                header("Location: " . ($redir[$u['role']] ?? '../accueil.php'));
+                header("Location: " . ($redir[$u['role']] ?? '../fichiers_php/accueil.php'));
                 exit();
             }
             break;
@@ -54,7 +54,7 @@ if (isset($_POST['ajouter_panier'])) {
         "quantite" => $quantite
     ];
     file_put_contents($fichier, json_encode($panier, JSON_PRETTY_PRINT));
-    header("Location: produits.php?nom=" . $produitActuel['nom']);
+    header("Location: ../fichiers_php/produits.php?nom=" . $produitActuel['nom']);
     exit();
 }
 ?>
@@ -65,46 +65,46 @@ if (isset($_POST['ajouter_panier'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($produitActuel['titre']) ?></title>
-    <link rel="icon" type="images/png" href="../images/logosite.png">
-    <link rel="stylesheet" href="../couleurs.css">
-    <link rel="stylesheet" href="../structg.css">
-    <link rel="stylesheet" href="pageproduit.css">
-    <link rel="stylesheet" href="../darkmode.css">
+    <link rel="icon" type="../images/png" href="../images/logosite.png">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/pageproduit.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
 </head>
 <body>
 
 <div class="barres"><span></span><span></span><span></span></div>
 
-<h1><a href="../accueil.php" class="logo">La Cour des Délices</a></h1>
+<h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
 
 <div class="top-icons">
     <div class="profil-menu">
         <img src="../images/Iconprofil.png" alt="Profil" class="icon">
         <div class="profil-bulle">
         <?php if (isset($_SESSION["connecte"]) && $_SESSION["connecte"]): ?>
-            <a href="../profil.php">Mon profil</a>
-            <a href="../profil2.php">Mes commandes</a>
-            <a href="../logout.php">Se déconnecter</a>
+            <a href="../fichiers_php/profil.php">Mon profil</a>
+            <a href="../fichiers_php/profil2.php">Mes commandes</a>
+            <a href="../fichiers_php/logout.php">Se déconnecter</a>
         <?php else: ?>
-            <a href="../inscription.php">S'inscrire</a>
-            <a href="../connexion.php">Connexion</a>
+            <a href="../fichiers_php/inscription.php">S'inscrire</a>
+            <a href="../fichiers_php/connexion.php">Connexion</a>
         <?php endif; ?>
         </div>
     </div>
-    <a href="../panier.php"><img src="../images/Iconpanier.png" alt="Panier" class="icon" id="panier"></a>
+    <a href="../fichiers_php/panier.php"><img src="../images/Iconpanier.png" alt="Panier" class="icon" id="panier"></a>
 </div>
 
-<div class="search-bar">
-    <input type="search" placeholder=" qu'est-ce qui vous ferait plaisir?">
-    <button><img src="../images/Iconloupe.png" alt="loupe"></button>
-</div>
+<form class="search-bar" action="../fichiers_php/recherche.php" method="get" autocomplete="off">
+    <input type="search" name="q" placeholder=" qu'est-ce qui vous ferait plaisir?">
+    <button type="submit"><img src="../images/Iconloupe.png" alt="loupe"></button>
+</form>
 
 <nav class="breadcrumb">
-    <a href="../accueil.php">Accueil</a>
+    <a href="../fichiers_php/accueil.php">Accueil</a>
     <span>></span>
-    <a href="../presentation.php">Tous nos produits</a>
+    <a href="../fichiers_php/presentation.php">Tous nos produits</a>
     <span>></span>
-    <a href="../presentation.php#<?= strtolower($produitActuel['categorie']) ?>">
+    <a href="../fichiers_php/presentation.php#<?= strtolower($produitActuel['categorie']) ?>">
         <?= $produitActuel['categorie'] ?>
     </a>
     <span>></span>
@@ -155,6 +155,7 @@ if (isset($_POST['ajouter_panier'])) {
 </footer>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="../darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
+<script src="../fichiers_js/recherche.js"></script>
 </body>
 </html>
