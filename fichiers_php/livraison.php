@@ -32,14 +32,12 @@ if ($roleUser !== 'livreur') {
 /* Logique livraison */
 $commandes = json_decode(file_get_contents('../data/commande.json'), true) ?? [];
 
-/* DEMARRER : on reserve la livraison a CE livreur.
-   Possible seulement si la commande est encore "commande préparée"
-   (donc pas deja prise par un autre livreur). */
+/* DEMARRER : on reserve la livraison a ce si la commande est encore "commande préparée" */
 if (isset($_POST['start_id'])) {
     foreach ($commandes as &$cmd) {
         if ($cmd['id'] == $_POST['start_id'] && $cmd['statut'] === 'commande préparée') {
             $cmd['statut'] = 'en_livraison';
-            $cmd['livreur_id'] = $monId;          // qui l'a prise
+            $cmd['livreur_id'] = $monId;          // livreur qui l'a prise
         }
     }
     unset($cmd);
@@ -62,7 +60,7 @@ if (isset($_POST['finish_id'])) {
     exit;
 }
 
-/* MA livraison en cours (uniquement celle que CE livreur a prise) */
+/* livraison en cours */
 $commande_en_cours = null;
 foreach ($commandes as $cmd) {
     if ($cmd['statut'] === 'en_livraison' && ($cmd['livreur_id'] ?? null) == $monId) {
@@ -71,8 +69,7 @@ foreach ($commandes as $cmd) {
     }
 }
 
-/* Commandes pretes a livrer : livraison classique ET traiteur.
-   Les commandes deja "en_livraison" (prises par quelqu'un) n'y sont pas. */
+/* Commandes pretes a livrer : livraison classique et traiteur.*/
 $commandes_filtrees = array_filter($commandes, function($cmd) {
     return in_array($cmd['type_commande'] ?? '', ['livraison', 'traiteur'], true)
         && $cmd['statut'] === 'commande préparée';
