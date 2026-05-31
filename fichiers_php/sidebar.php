@@ -1,11 +1,4 @@
-<?php /* ============================================================
-   Barre laterale depliante (categories) — composant reutilisable.
-   A inclure sur une page avec :  <?php include 'sidebar.php'; ?>
-   Le declencheur est le bouton ".barres" deja present sur les pages.
-   Utilise une classe dediee (.nav-laterale) pour ne PAS entrer en
-   conflit avec le .sidebar du profil. Couleurs via variables =>
-   compatible mode sombre automatiquement.
-============================================================ */ ?>
+
 <div class="nav-laterale-overlay" id="navLateraleOverlay"></div>
 <nav class="nav-laterale" id="navLaterale" aria-label="Catégories">
     <button type="button" class="nav-laterale-fermer" id="navLateraleFermer" aria-label="Fermer le menu">&times;</button>
