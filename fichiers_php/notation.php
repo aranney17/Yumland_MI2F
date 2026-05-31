@@ -3,19 +3,19 @@ session_start();
 
 // Redirection si non connecté
 if (!isset($_SESSION['id'])) {
-    header("Location: connexion.php");
+    header("Location: ../fichiers_php/connexion.php");
     exit();
 }
 
 // Récupérer la référence depuis l'URL
 $reference = isset($_GET['ref']) ? htmlspecialchars($_GET['ref']) : '';
 if (!$reference) {
-    header("Location: profil2.php");
+    header("Location: ../fichiers_php/profil2.php");
     exit();
 }
 
 // Charger l'utilisateur connecté
-$users = json_decode(file_get_contents("data/infoclient.json"), true);
+$users = json_decode(file_get_contents("../data/infoclient.json"), true);
 $userTrouve = null;
 foreach ($users as $user) {
     if ($user['id'] == $_SESSION['id']) {
@@ -25,7 +25,7 @@ foreach ($users as $user) {
 }
 
 // Vérifier que la commande appartient bien à cet utilisateur et qu'elle est livrée
-$commandes = json_decode(file_get_contents("data/commande.json"), true);
+$commandes = json_decode(file_get_contents("../data/commande.json"), true);
 $commandeTrouvee = null;
 foreach ($commandes as $commande) {
     if (
@@ -40,12 +40,12 @@ foreach ($commandes as $commande) {
 
 // Sécurité : si commande introuvable ou pas livrée, on redirige
 if (!$commandeTrouvee || $commandeTrouvee['statut'] !== 'terminee') {
-    header("Location: profil2.php");
+    header("Location: ../fichiers_php/profil2.php");
     exit();
 }
 
 // Charger les notations existantes
-$fichierNotations = "data/notations.json";
+$fichierNotations = "../data/notations.json";
 $notations = [];
 if (file_exists($fichierNotations)) {
     $notations = json_decode(file_get_contents($fichierNotations), true) ?? [];
@@ -116,11 +116,11 @@ function afficherEtoiles($note) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notations</title>
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="notation.css">
-    <link rel="stylesheet" href="darkmode.css">
-<link rel="stylesheet" href="darkmode_notation.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/notation.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
+<link rel="stylesheet" href="../fichiers_css/darkmode_notation.css">
 
     <style>
         /* Étoiles statiques pour affichage note existante */
@@ -148,7 +148,7 @@ function afficherEtoiles($note) {
         <div class="top-icons">
             <!-- PROFIL -->
             <div class="profil-menu">
-                <img src="images/Iconprofil.png" alt="Profil" class="icon">
+                <img src="../images/Iconprofil.png" alt="Profil" class="icon">
 
                 <div class="profil-bulle">
                     <a href="inscription.html">Inscription</a>
@@ -158,14 +158,14 @@ function afficherEtoiles($note) {
 
             <!-- PANIER -->
             <a href="">
-            <img src="images/Iconpanier.png" alt="Panier" class="icon" id="panier">
+            <img src="../images/Iconpanier.png" alt="Panier" class="icon" id="panier">
             </a>
         </div>
     </header>
 
     <section>
         <div class="review">
-            <a class="retour" href="profil2.php">← Retour à mes commandes</a>
+            <a class="retour" href="../fichiers_php/profil2.php">← Retour à mes commandes</a>
             <h2>Commande <?= $reference ?></h2>
             
             <?php if ($confirmation) : ?>
@@ -203,7 +203,7 @@ function afficherEtoiles($note) {
                     <p style="color: red;"><?= $erreurForm ?></p>
                 <?php endif; ?>
 
-                <form action="notation.php?ref=<?= $reference ?>" method="POST">
+                <form action="../fichiers_php/notation.php?ref=<?= $reference ?>" method="POST">
 
                     <div class="review-block">
                         <h3>Livraison</h3>
@@ -251,23 +251,23 @@ function afficherEtoiles($note) {
     <footer>
         <p>suivez nous sur nos réseaux!
             </br>
-            <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
-            <img src="images/Icontiktok.jpg" alt="tiktok" class="icon">
-            <img src="images/Iconinstagram.jpg" alt="instagram" class="icon">
+            <img src="../images/Iconinstagram.jpg" alt="instagram" class="icon">
+            <img src="../images/Icontiktok.jpg" alt="tiktok" class="icon">
+            <img src="../images/Iconinstagram.jpg" alt="instagram" class="icon">
         </p>
         <div class="infos-footer">
             <div class="info">
-                <img src="images/Iconlocalisation.png" alt="maps" class="icon">
+                <img src="../images/Iconlocalisation.png" alt="maps" class="icon">
                 <span>5 av de la république, 75300 Paris</span>
             </div>
             <div class="info">
-                <img src="images/Iconhorloge.png" alt="horloge" class="icon">
+                <img src="../images/Iconhorloge.png" alt="horloge" class="icon">
                 <span>Tous les jours 9h - 22h</span>
             </div>
         </div>
         <h5>© 2026 Pâtisserie</h5>    
     </footer>
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
 </body>
 </html>
