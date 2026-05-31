@@ -46,7 +46,7 @@ function figerMontantPaye(&$cmd) {
 function compterAccompagnements($cmd) {
     $n = 0;
     foreach ($cmd['produits'] as $p) {
-        if (($p['type'] ?? '') !== 'piece_montee') $n++;
+        if (stripos($p['produit'], 'pièce montée') === false) $n++;
     }
     return $n;
 }
@@ -271,7 +271,21 @@ foreach ($notations as $notation) {
 </head>
 <body>
 
+<?php include 'sidebar.php'; ?>
+
 <header>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <a href="#nouveautes">Nouveautés</a>
+        <a href="../fichiers_php/presentation.php#viennoiseries">Viennoiseries</a>
+        <a href="../fichiers_php/presentation.php#boissons">Boissons</a>
+        <a href="../fichiers_php/presentation.php#gourmandises">Gourmandises</a>
+        <a href="../fichiers_php/presentation.php#patisseries">Pâtisseries</a>
+        <a href="../fichiers_php/presentation.php#gateaux">Gâteaux</a>
+        <a href="../fichiers_php/presentation.php#tartes">Tartes</a>
+        <a href="../fichiers_php/traiteur.php">Commande traiteur</a>
+    </nav>
     <div class="barres"><span></span><span></span><span></span></div>
     <h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
@@ -287,6 +301,17 @@ foreach ($notations as $notation) {
 </header>
 
 <main class="container">
+    <aside class="sidebar-profil">
+    <ul class="menu">
+        <li><a href="../fichiers_php/profil.php"><strong>Informations</strong></a></li>
+        <?php if ($userTrouve['role'] === 'client'): ?>
+            <li><a href="../fichiers_php/profil2.php">Historique de commandes</a></li>
+        <?php endif; ?>
+    </ul>
+    <br>
+    <a href="../fichiers_php/logout.php"><p class="logout">Déconnexion</p></a>
+</aside>
+
     <section style="width:100%;">
         <h2 style="text-align:center;">Mes commandes</h2>
 
