@@ -2,12 +2,12 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: connexion.php");
+    header("Location: ../fichiers_php/connexion.php");
     exit();
 }
 
-$fichierClients   = "data/infoclient.json";
-$fichierCommandes = "data/commande.json";
+$fichierClients   = "../data/infoclient.json";
+$fichierCommandes = "../data/commande.json";
 
 $users = json_decode(file_get_contents($fichierClients), true) ?? [];
 
@@ -22,6 +22,9 @@ if ($userTrouve['bloque'] ?? false) {
     session_destroy();
     die("Votre compte a été bloqué.");
 }
+
+/* Les deux seules civilites autorisees */
+$CIVILITES = ['Mme', 'M.'];
 
 if (isset($_POST['action']) && $_POST['action'] === 'update_profil') {
     header('Content-Type: application/json');
@@ -42,6 +45,11 @@ if (isset($_POST['action']) && $_POST['action'] === 'update_profil') {
     // Validation basique cote serveur
     if ($valeur === '') {
         echo json_encode(['success' => false, 'erreur' => 'Le champ ne peut pas être vide']);
+        exit;
+    }
+    // CIVILITE : doit etre Mme ou M. (liste fermee)
+    if ($champ === 'civilite' && !in_array($valeur, $CIVILITES, true)) {
+        echo json_encode(['success' => false, 'erreur' => 'Civilité invalide (Mme ou M.)']);
         exit;
     }
     if ($champ === 'telephone' && !preg_match('/^\d{10}$/', str_replace(' ', '', $valeur))) {
@@ -77,7 +85,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'update_profil') {
     foreach ($users as &$u) {
         if ($u['id'] == $id) {
             $u[$champ] = $valeur;
-            // Si rue/cp/ville changent, on recompose adresse
             if (in_array($champ, ['rue', 'code_postal', 'ville'])) {
                 $u['adresse'] = ($u['rue'] ?? '') . ' '
                               . ($u['code_postal'] ?? '') . ' '
@@ -94,7 +101,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'update_profil') {
     $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
     $modifCmd = false;
     foreach ($commandes as &$cmd) {
-        // On retrouve les commandes via l'ancien nom/prenom/tel
         $estDuUser = strtolower($cmd['nom']) === strtolower($ancien['nom'])
                   && strtolower($cmd['prenom']) === strtolower($ancien['prenom'])
                   && $cmd['telephone'] === $ancien['telephone'];
@@ -120,10 +126,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'update_profil') {
     exit;
 }
 
-$logoTarget = 'accueil.php';
-if      ($userTrouve['role'] === 'cuisinier')      $logoTarget = 'commandes.php';
-elseif  ($userTrouve['role'] === 'livreur')        $logoTarget = 'livraison.php';
-elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur.php';
+$logoTarget = '../fichiers_php/accueil.php';
+if      ($userTrouve['role'] === 'cuisinier')      $logoTarget = '../fichiers_php/commandes.php';
+elseif  ($userTrouve['role'] === 'livreur')        $logoTarget = '../fichiers_php/livraison.php';
+elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = '../fichiers_php/administrateur.php';
 ?>
 
 <!DOCTYPE html>
@@ -131,36 +137,11 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
 <head>
     <meta charset="UTF-8">
     <title>Profil</title>
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="profil.css">
-    <link rel="stylesheet" href="darkmode.css">
-    <style>
-        .block, .inline {
-            display: flex; flex-direction: column;
-            margin-bottom: 15px; position: relative;
-        }
-        .label-champ { font-weight: bold; }
-        .value-champ { padding: 4px 0; }
-        .input-edit  { width: 250px; padding: 5px; }
-        .actions-edit { margin-top: 5px; }
-        .btn-edit, .btn-save, .btn-cancel {
-            cursor: pointer; padding: 4px 8px; margin-right: 5px;
-            border: 1px solid #aaa; background: #f5f5f5;
-        }
-        body.dark .btn-edit,
-        body.dark .btn-save,
-        body.dark .btn-cancel { background: #3d2d1f; color: #f0e4d2; border-color: #5a4435; }
-
-        .msg-confirm {
-            display: none; color: #40b040; font-size: 13px;
-            margin-left: 10px;
-        }
-        .msg-erreur {
-            display: none; color: #c03030; font-size: 13px;
-            margin-left: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/profil.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
+    
 </head>
 <body>
 
@@ -169,10 +150,10 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
     <h1><a href="<?= $logoTarget ?>" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
-            <img src="images/Iconprofil.png" class="icon">
+            <img src="../images/Iconprofil.png" class="icon">
             <div class="profil-bulle">
-                <a href="profil.php">Profil</a>
-                <a href="logout.php">Déconnexion</a>
+                <a href="../fichiers_php/profil.php">Profil</a>
+                <a href="../fichiers_php/logout.php">Déconnexion</a>
             </div>
         </div>
     </div>
@@ -182,13 +163,13 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
 
 <aside class="sidebar">
     <ul class="menu">
-        <li><a href="profil.php"><strong>Informations</strong></a></li>
+        <li><a href="../fichiers_php/profil.php"><strong>Informations</strong></a></li>
         <?php if ($userTrouve['role'] === 'client'): ?>
-            <li><a href="profil2.php">Historique de commandes</a></li>
+            <li><a href="../fichiers_php/profil2.php">Historique de commandes</a></li>
         <?php endif; ?>
     </ul>
     <br>
-    <a href="logout.php"><p class="logout">Déconnexion</p></a>
+    <a href="../fichiers_php/logout.php"><p class="logout">Déconnexion</p></a>
 </aside>
 
 <section class="informations">
@@ -196,6 +177,7 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
 
 
     <?php
+    /* Champ editable TEXTE / DATE / EMAIL */
     function champEditable($cle, $label, $valeur, $type = 'text') {
         $val = htmlspecialchars($valeur ?? '');
         echo <<<HTML
@@ -214,7 +196,34 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
         HTML;
     }
 
-    champEditable('civilite',        'Civilité',          $userTrouve['civilite']        ?? '');
+    /* Champ editable LISTE DEROULANTE (ex: civilite Mme/M.) */
+    function champEditableListe($cle, $label, $valeur, $options) {
+        $val = htmlspecialchars($valeur ?? '');
+        $optionsHtml = '';
+        foreach ($options as $opt) {
+            $optEsc = htmlspecialchars($opt);
+            $sel = ($opt === $valeur) ? 'selected' : '';
+            $optionsHtml .= "<option value=\"{$optEsc}\" {$sel}>{$optEsc}</option>";
+        }
+        echo <<<HTML
+        <div class="block" data-champ="{$cle}" data-type="select">
+            <span class="label-champ">{$label} :</span>
+            <span class="value-champ">{$val}</span>
+            <div class="actions-edit">
+                <button class="btn-edit" type="button">✎ Modifier</button>
+                <select class="input-edit" style="display:none">{$optionsHtml}</select>
+                <button class="btn-save"   type="button" style="display:none">✓ Valider</button>
+                <button class="btn-cancel" type="button" style="display:none">✗ Annuler</button>
+                <span class="msg-confirm">✓ enregistré</span>
+                <span class="msg-erreur"></span>
+            </div>
+        </div>
+        HTML;
+    }
+
+    // Civilite : liste deroulante (2 choix seulement)
+    champEditableListe('civilite', 'Civilité', $userTrouve['civilite'] ?? '', $CIVILITES);
+
     champEditable('prenom',          'Prénom',            $userTrouve['prenom']          ?? '');
     champEditable('nom',             'Nom',               $userTrouve['nom']             ?? '');
     champEditable('date_naissance',  'Date de naissance', $userTrouve['date_naissance']  ?? '', 'date');
@@ -234,20 +243,20 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
     <div class="block">
         <span class="label-champ">Mot de passe :</span>
         <span class="value-champ">*********</span>
-        <a href="modifier_profil.php">Changer mon mot de passe</a>
+        <a href="../fichiers_php/modifier_profil.php">Changer mon mot de passe</a>
     </div>
 </section>
 </main>
 
 <footer>
     <p>Suivez nous sur nos réseaux!<br>
-        <img src="images/Iconinstagram.jpg" class="icon">
-        <img src="images/Icontiktok.jpg" class="icon">
-        <img src="images/Icontwitter.png" class="icon">
+        <img src="../images/Iconinstagram.jpg" class="icon">
+        <img src="../images/Icontiktok.jpg" class="icon">
+        <img src="../images/Icontwitter.png" class="icon">
     </p>
     <div class="infos-footer">
-        <div class="info"><img src="images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75300 Paris</span></div>
-        <div class="info"><img src="images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 22h</span></div>
+        <div class="info"><img src="../images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75300 Paris</span></div>
+        <div class="info"><img src="../images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 22h</span></div>
     </div>
     <h5>© 2026 Pâtisserie</h5>
 </footer>
@@ -257,7 +266,7 @@ elseif  ($userTrouve['role'] === 'administrateur') $logoTarget = 'administrateur
 document.querySelectorAll('.block[data-champ]').forEach(function(bloc) {
 
     const valueSpan = bloc.querySelector('.value-champ');
-    const input     = bloc.querySelector('.input-edit');
+    const input     = bloc.querySelector('.input-edit'); // input OU select
     const btnEdit   = bloc.querySelector('.btn-edit');
     const btnSave   = bloc.querySelector('.btn-save');
     const btnCancel = bloc.querySelector('.btn-cancel');
@@ -265,6 +274,7 @@ document.querySelectorAll('.block[data-champ]').forEach(function(bloc) {
     const msgKo     = bloc.querySelector('.msg-erreur');
 
     function modeEdition() {
+        // Pour un select comme pour un input, .value fonctionne
         input.value = valueSpan.textContent.trim();
         valueSpan.style.display = 'none';
         btnEdit.style.display = 'none';
@@ -296,7 +306,7 @@ document.querySelectorAll('.block[data-champ]').forEach(function(bloc) {
         formData.append('champ',  champ);
         formData.append('valeur', valeur);
 
-        fetch('profil.php', { method: 'POST', body: formData })
+        fetch('../fichiers_php/profil.php', { method: 'POST', body: formData })
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
@@ -321,6 +331,6 @@ document.querySelectorAll('.block[data-champ]').forEach(function(bloc) {
 </script>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
 </body>
 </html>
