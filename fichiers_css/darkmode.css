@@ -104,7 +104,15 @@ body.dark .barre-filtres {
 
 /* Total panier */
 body.dark .total {
-    color: var(--accent);
+    background-color: var(--surface) !important;
+    color: var(--texte) !important;
+    border-color: var(--bordure);
+}
+body.dark .total p {
+    color: var(--texte) !important;
+}
+body.dark .total #total-panier {
+    color: var(--accent) !important;
 }
 
 /* Footer */
