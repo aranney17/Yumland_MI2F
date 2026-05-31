@@ -327,7 +327,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="conditions">
                 <input type="checkbox" id="cgu" name="cgu" <?= isset($_POST['cgu']) ? 'checked' : '' ?> />
-                J'accepte les <a href="conditions.html">CGU</a> *<br>
+                J'accepte les <a href="CGU_La_Cour_des_Delices.pdf">CGU</a> *<br>
                 <small class="erreur" id="erreurcgu"><?= $erreur['cgu'] ?? '' ?></small>
             </div>
 
