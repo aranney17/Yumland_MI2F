@@ -6,12 +6,13 @@ if (!isset($_SESSION['id'])) {
     header("Location: ../fichiers_php/connexion.php");
     exit();
 }
+$monId = $_SESSION['id'];
 
 $clients = json_decode(file_get_contents('../data/infoclient.json'), true) ?? [];
 $roleUser = null;
 $userBloque = false;
 foreach ($clients as $c) {
-    if ($c['id'] == $_SESSION['id']) {
+    if ($c['id'] == $monId) {
         $roleUser = $c['role'];
         $userBloque = $c['bloque'] ?? false;
         break;
@@ -31,10 +32,14 @@ if ($roleUser !== 'livreur') {
 /* Logique livraison */
 $commandes = json_decode(file_get_contents('../data/commande.json'), true) ?? [];
 
+/* DEMARRER : on reserve la livraison a CE livreur.
+   Possible seulement si la commande est encore "commande préparée"
+   (donc pas deja prise par un autre livreur). */
 if (isset($_POST['start_id'])) {
     foreach ($commandes as &$cmd) {
-        if ($cmd['id'] == $_POST['start_id']) {
+        if ($cmd['id'] == $_POST['start_id'] && $cmd['statut'] === 'commande préparée') {
             $cmd['statut'] = 'en_livraison';
+            $cmd['livreur_id'] = $monId;          // qui l'a prise
         }
     }
     unset($cmd);
@@ -43,9 +48,10 @@ if (isset($_POST['start_id'])) {
     exit;
 }
 
+/* TERMINER : seul le livreur qui a pris la livraison peut la terminer. */
 if (isset($_POST['finish_id'])) {
     foreach ($commandes as &$cmd) {
-        if ($cmd['id'] == $_POST['finish_id']) {
+        if ($cmd['id'] == $_POST['finish_id'] && ($cmd['livreur_id'] ?? null) == $monId) {
             $cmd['statut'] = 'terminee';
             $cmd['notif_vue'] = false;
         }
@@ -56,12 +62,17 @@ if (isset($_POST['finish_id'])) {
     exit;
 }
 
+/* MA livraison en cours (uniquement celle que CE livreur a prise) */
 $commande_en_cours = null;
 foreach ($commandes as $cmd) {
-    if ($cmd['statut'] === 'en_livraison') { $commande_en_cours = $cmd; break; }
+    if ($cmd['statut'] === 'en_livraison' && ($cmd['livreur_id'] ?? null) == $monId) {
+        $commande_en_cours = $cmd;
+        break;
+    }
 }
 
-/* Commandes pretes a livrer : livraison classique ET traiteur */
+/* Commandes pretes a livrer : livraison classique ET traiteur.
+   Les commandes deja "en_livraison" (prises par quelqu'un) n'y sont pas. */
 $commandes_filtrees = array_filter($commandes, function($cmd) {
     return in_array($cmd['type_commande'] ?? '', ['livraison', 'traiteur'], true)
         && $cmd['statut'] === 'commande préparée';
@@ -86,8 +97,6 @@ $commandes_filtrees = array_filter($commandes, function($cmd) {
     </style>
 </head>
 <body>
-
-<div class="barres"><span></span><span></span><span></span></div>
 
 <h1><a href="../fichiers_php/livraison.php" class="logo">La Cour des Délices</a></h1>
 
