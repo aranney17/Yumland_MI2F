@@ -35,8 +35,7 @@ foreach ($clients as $c) {
 }
 if (!$clientCo) { die("Client introuvable."); }
 
-/*  verifier qu'une commande appartient bien au client
-   connecte ET qu'elle est encore statut "a preparer" */
+/*  verifier qu'une commande appartient bien au client connecte et statut "a preparer" */
 function commandeModifiableParClient(&$commande, $clientCo) {
     return $commande['nom']       === $clientCo['nom']
         && $commande['prenom']    === $clientCo['prenom']
@@ -44,7 +43,7 @@ function commandeModifiableParClient(&$commande, $clientCo) {
         && $commande['statut']    === "a preparer";
 }
 
-// Helper : recalculer le montant d'une commande
+// recalculer le montant d'une commande
 function recalculerMontant(&$commande) {
     $total = 0;
     foreach ($commande['produits'] as $p) {
@@ -138,55 +137,7 @@ foreach ($commandes as $cmd) {
     <link rel="stylesheet" href="../fichiers_css/couleurs.css">
     <link rel="stylesheet" href="../fichiers_css/structg.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
-    <style>
-        .mes-commandes  { max-width: 900px; margin: 30px auto; padding: 0 20px; }
-        .ma-commande    {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: #fafafa;
-        }
-        .ma-commande h3 { margin-top: 0; }
-        .ma-commande .statut {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 10px;
-            color: white;
-            font-size: 13px;
-        }
-        .statut-a-preparer  { background: #f0a040; }
-        .statut-en-prep     { background: #4080f0; }
-        .statut-prepare     { background: #8040f0; }
-        .statut-livraison   { background: #f04040; }
-        .statut-terminee    { background: #40b040; }
-
-        .produit-ligne {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .produit-ligne .nom    { flex: 1; }
-        .produit-ligne input[type=number] { width: 60px; }
-
-        .form-inline { display: inline; }
-
-        .ajout-produit {
-            margin-top: 15px;
-            padding: 10px;
-            background: #fff;
-            border: 1px dashed #aaa;
-        }
-
-        .info-msg {
-            background: #ffe;
-            border: 1px solid #cc9;
-            padding: 10px;
-            margin: 15px 0;
-        }
-    </style>
+    
 </head>
 <body>
 
