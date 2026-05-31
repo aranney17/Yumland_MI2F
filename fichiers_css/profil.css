@@ -359,3 +359,25 @@ td {
             padding: 10px;
             margin: 15px 0;
         }
+
+         .block, .inline {
+            display: flex; flex-direction: column;
+            margin-bottom: 15px; position: relative;
+        }
+        .label-champ { font-weight: bold; }
+        .value-champ { padding: 4px 0; }
+        .input-edit  { width: 250px; padding: 5px; }
+        .actions-edit { margin-top: 5px; }
+        .btn-edit, .btn-save, .btn-cancel {
+            cursor: pointer; padding: 4px 8px; margin-right: 5px;
+            border: 1px solid #aaa; background: #f5f5f5;
+        }
+       
+        .msg-confirm {
+            display: none; color: #40b040; font-size: 13px;
+            margin-left: 10px;
+        }
+        .msg-erreur {
+            display: none; color: #c03030; font-size: 13px;
+            margin-left: 10px;
+        }
