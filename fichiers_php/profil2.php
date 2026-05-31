@@ -2,14 +2,14 @@
 session_start();
 
 if (!isset($_SESSION['id'])) {
-    header("Location: connexion.php");
+    header("Location: ../fichiers_php/connexion.php");
     exit();
 }
 
 $userId = $_SESSION['id'];
 
 /* Charger client */
-$users = json_decode(file_get_contents("data/infoclient.json"), true) ?? [];
+$users = json_decode(file_get_contents("../data/infoclient.json"), true) ?? [];
 $userTrouve = null;
 foreach ($users as $u) {
     if ($u['id'] == $userId) { $userTrouve = $u; break; }
@@ -18,10 +18,10 @@ if (!$userTrouve) { die("Utilisateur introuvable."); }
 
 /* Charger commandes et produits.
    CORRECTION : c'est commande.json (sans s), pas commandes.json */
-$fichierCommandes = "data/commande.json";
+$fichierCommandes = "../data/commande.json";
 $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
 
-$produits = json_decode(file_get_contents("data/produits.json"), true) ?? [];
+$produits = json_decode(file_get_contents("../data/produits.json"), true) ?? [];
 
 
 function commandeAppartient($cmd, $user) {
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Si ce n'est pas un revalider, on redirige (pour eviter resoumission au refresh)
     if ($action !== 'revalider') {
-        header("Location: profil2.php");
+        header("Location: ../fichiers_php/profil2.php");
         exit();
     }
 }
@@ -128,8 +128,8 @@ usort($mesCommandes, function($a, $b) {
 
 // Charger les notations pour savoir lesquelles ont déjà été notées
 $notations = [];
-if (file_exists("data/notations.json")) {
-    $notations = json_decode(file_get_contents("data/notations.json"), true) ?? [];
+if (file_exists("../data/notations.json")) {
+    $notations = json_decode(file_get_contents("../data/notations.json"), true) ?? [];
 }
  
 // Indexer par référence pour accès rapide
@@ -147,37 +147,37 @@ foreach ($notations as $notation) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historique de commandes</title>
-    <link rel="stylesheet" href="couleurs.css">
-    <link rel="stylesheet" href="structg.css">
-    <link rel="stylesheet" href="profil.css">
-    <link rel="stylesheet" href="darkmode.css">
+    <link rel="stylesheet" href="../fichiers_css/couleurs.css">
+    <link rel="stylesheet" href="../fichiers_css/structg.css">
+    <link rel="stylesheet" href="../fichiers_css/profil.css">
+    <link rel="stylesheet" href="../fichiers_css/darkmode.css">
 </head>
 <body>
 
 <header>
     <div class="barres"><span></span><span></span><span></span></div>
-    <h1><a href="accueil.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
-            <img src="images/Iconprofil.png" class="icon">
+            <img src="../images/Iconprofil.png" class="icon">
             <div class="profil-bulle">
-                <a href="profil.php">Profil</a>
-                <a href="logout.php">Déconnexion</a>
+                <a href="../fichiers_php/profil.php">Profil</a>
+                <a href="../fichiers_php/logout.php">Déconnexion</a>
             </div>
         </div>
-        <a href="panier.php"><img src="images/Iconpanier.png" class="icon" id="panier"></a>
+        <a href="../fichiers_php/panier.php"><img src="../images/Iconpanier.png" class="icon" id="panier"></a>
     </div>
 </header>
 
 <main class="container">
     <aside class="sidebar">
         <ul class="menu">
-            <li><a href="profil.php">Informations</a></li>
-            <li><a href="profil2.php"><strong>Historique de commandes</strong></a></li>
+            <li><a href="../fichiers_php/profil.php">Informations</a></li>
+            <li><a href="../fichiers_php/profil2.php"><strong>Historique de commandes</strong></a></li>
             <li>Données personnelles</li>
         </ul>
         <br>
-        <a href="logout.php"><p class="logout">Déconnexion</p></a>
+        <a href="../fichiers_php/logout.php"><p class="logout">Déconnexion</p></a>
     </aside>
 
     <section>
@@ -332,10 +332,10 @@ foreach ($notations as $notation) {
                                                     : '<span style="color:#ccc;font-size:1.2em;">★</span>';
                                                 }
                                             ?>
-                                            <a href="notation.php?ref=<?= $ref ?>" style="margin-left: 8px;">Voir mon avis</a>
+                                            <a href="../fichiers_php/notation.php?ref=<?= $ref ?>" style="margin-left: 8px;">Voir mon avis</a>
                                         </div>
                                     <?php else : ?>
-                                        <a href="notation.php?ref=<?= $ref ?>">Noter la commande</a>
+                                        <a href="../fichiers_php/notation.php?ref=<?= $ref ?>">Noter la commande</a>
                                     <?php endif; ?>
                                 <?php endif; ?>
                         </td>
@@ -350,13 +350,13 @@ foreach ($notations as $notation) {
 
 <footer>
     <p>suivez nous sur nos réseaux!<br>
-        <img src="images/Iconinstagram.jpg" class="icon">
-        <img src="images/Icontiktok.jpg" class="icon">
-        <img src="images/Icontwitter.png" class="icon">
+        <img src="../images/Iconinstagram.jpg" class="icon">
+        <img src="../images/Icontiktok.jpg" class="icon">
+        <img src="../images/Icontwitter.png" class="icon">
     </p>
     <div class="infos-footer">
-        <div class="info"><img src="images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75300 Paris</span></div>
-        <div class="info"><img src="images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 22h</span></div>
+        <div class="info"><img src="../images/Iconlocalisation.png" class="icon"><span>5 av de la république, 75300 Paris</span></div>
+        <div class="info"><img src="../images/Iconhorloge.png" class="icon"><span>Tous les jours 9h - 22h</span></div>
     </div>
     <h5>© 2026 Pâtisserie</h5>
 </footer>
@@ -372,6 +372,6 @@ document.querySelectorAll('.bouton-details').forEach(function(btn) {
 </script>
 
 <button id="btn-darkmode" class="btn-darkmode">☾</button>
-<script src="darkmode.js"></script>
+<script src="../fichiers_js/darkmode.js"></script>
 </body>
 </html>
