@@ -5,13 +5,14 @@ if (!isset($_SESSION['id'])) {
     header("Location: ../fichiers_php/connexion.php");
     exit();
 }
+$monId = $_SESSION['id'];
 
 /* SECURITE cuisinier + bloque */
 $clients = json_decode(file_get_contents('../data/infoclient.json'), true) ?? [];
 $role = null;
 $bloque = false;
 foreach ($clients as $c) {
-    if ($c['id'] == $_SESSION['id']) {
+    if ($c['id'] == $monId) {
         $role = $c['role'];
         $bloque = $c['bloque'] ?? false;
         break;
@@ -30,11 +31,15 @@ $fichierCommandes = "../data/commande.json";
 $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
 
 $modifie = false;
+
+/* COMMENCER : on reserve la commande a CE cuisinier.
+   Possible seulement si elle est encore "a preparer" (personne ne l'a prise). */
 if (isset($_GET['commencer'])) {
     $ref = $_GET['commencer'];
     foreach ($commandes as &$cmd) {
         if ($cmd['reference'] === $ref && $cmd['statut'] === "a preparer") {
             $cmd['statut'] = "en preparation";
+            $cmd['cuisinier_id'] = $monId;          // qui l'a prise
             $cmd['modifie_par_client'] = false;
             $modifie = true;
             break;
@@ -42,10 +47,14 @@ if (isset($_GET['commencer'])) {
     }
     unset($cmd);
 }
+
+/* TERMINER : seul le cuisinier qui a pris la commande peut la terminer. */
 if (isset($_GET['terminer'])) {
     $ref = $_GET['terminer'];
     foreach ($commandes as &$cmd) {
-        if ($cmd['reference'] === $ref && $cmd['statut'] === "en preparation") {
+        if ($cmd['reference'] === $ref
+            && $cmd['statut'] === "en preparation"
+            && ($cmd['cuisinier_id'] ?? null) == $monId) {
             $cmd['statut'] = "commande préparée";
             $modifie = true;
             break;
@@ -53,6 +62,7 @@ if (isset($_GET['terminer'])) {
     }
     unset($cmd);
 }
+
 if ($modifie) {
     file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
     header("Location: ../fichiers_php/commandes.php");
@@ -62,20 +72,29 @@ if ($modifie) {
 $ajd = date("Y-m-d");
 
 /* -------------------------------------------------------------
-   Decide si une commande doit s'afficher chez le cuisinier.
-   - Commande TRAITEUR : visible seulement quand l'evenement est
-     dans 5 jours ou moins (et pas encore passe).
-   - Commande normale  : visible le jour de la livraison.
+   Qui voit quoi :
+   - "a preparer"    : visible par TOUS les cuisiniers, selon le
+     filtre de date (jour meme, ou <= 5 jours pour un traiteur).
+   - "en preparation": visible UNIQUEMENT par le cuisinier qui l'a
+     prise (cuisinier_id), sans filtre de date (il la garde jusqu'a
+     l'avoir terminee).
 ------------------------------------------------------------- */
-function aAfficher($cmd, $ajd) {
-    $enCours = in_array($cmd['statut'], ["a preparer", "en preparation"], true);
-    if (!$enCours) return false;
+function aAfficher($cmd, $ajd, $monId) {
+    $statut = $cmd['statut'];
 
+    if ($statut === 'en preparation') {
+        $proprio = $cmd['cuisinier_id'] ?? null;
+        if ($proprio === null) return true;   // ancienne commande sans proprietaire (compat)
+        return ($proprio == $monId);
+    }
+
+    if ($statut !== 'a preparer') return false;
+
+    // statut "a preparer" -> filtre de date
     if (($cmd['type_commande'] ?? '') === 'traiteur') {
         $joursRestants = (strtotime($cmd['datelivraison']) - strtotime($ajd)) / 86400;
         return ($joursRestants >= 0 && $joursRestants <= 5);
     }
-    // commande normale
     return ($cmd['datelivraison'] === $ajd);
 }
 ?>
@@ -89,6 +108,7 @@ function aAfficher($cmd, $ajd) {
     <link rel="stylesheet" href="../fichiers_css/structg.css">
     <link rel="stylesheet" href="../fichiers_css/couleurs.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
+    
     <title>Commandes</title>
     <style>
         .bloc-traiteur {
@@ -106,7 +126,7 @@ function aAfficher($cmd, $ajd) {
 <body>
 
 <header>
-    <div class="barres"><span></span><span></span><span></span></div>
+    
     <h1><a href="../fichiers_php/commandes.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <div class="profil-menu">
@@ -123,7 +143,7 @@ function aAfficher($cmd, $ajd) {
     <h2>Commandes à préparer</h2>
     <div class="commandes">
     <?php foreach ($commandes as $cmd):
-        if (!aAfficher($cmd, $ajd)) continue;
+        if (!aAfficher($cmd, $ajd, $monId)) continue;
 
         $estAPreparer     = ($cmd['statut'] === "a preparer");
         $estEnPreparation = ($cmd['statut'] === "en preparation");
@@ -180,9 +200,7 @@ function aAfficher($cmd, $ajd) {
                 foreach ($cmd['produits'] as $produit):
                     $estMenu        = (($produit['type'] ?? '') === 'menu');
                     $estPieceMontee = (($produit['type'] ?? '') === 'piece_montee');
-
-                    // La piece montee est deja affichee dans le bloc traiteur ci-dessus
-                    if ($estPieceMontee) continue;
+                    if ($estPieceMontee) continue;   // deja affichee dans le bloc traiteur
                 ?>
                     <?php if ($estMenu): ?>
                         <div class="menu-item">
