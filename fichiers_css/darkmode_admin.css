@@ -1,123 +1,125 @@
+/* ============================================================
+   MODE SOMBRE - pages ADMINISTRATEUR
+   Aucune valeur hex : uniquement les variables de couleurs.css
+============================================================ */
 
-/* Carte principale qui contient le tableau */
+/* Carte principale contenant le tableau */
 body.dark section {
-    background: #2d231c !important;
-    color: #f0e4d2;
-    box-shadow: 0 0 20px #5a4435;
+    background: var(--surface) !important;
+    color: var(--texte);
+    box-shadow: 0 0 20px var(--bordure);
 }
 
-/* Tableau : bordures et alignement */
+/* Tableau */
 body.dark th {
-    color: #d4a574;
+    color: var(--accent);
 }
 body.dark td {
-    border-top: 2px solid #5a4435;
-    color: #f0e4d2;
+    border-top: 2px solid var(--bordure);
+    color: var(--texte);
 }
-
-/* Hover sur les lignes*/
 body.dark tr.ligne:hover {
-    background: #3d2d1f !important;
+    background: var(--hover-ligne) !important;
 }
 
 /* Boutons de filtre */
 body.dark .filtre {
-    background: #3d2d1f !important;
-    border: 1px solid #d4a574;
-    color: #f0e4d2;
+    background: var(--surface-2) !important;
+    border: 1px solid var(--accent);
+    color: var(--texte);
 }
 
 /* Barre de recherche */
 body.dark .search-bar input {
-    background: #3d2d1f;
-    color: #f5e6d3;
-    border-color: #d4a574;
+    background: var(--surface-2);
+    color: var(--texte);
+    border-color: var(--accent);
 }
 body.dark .search-bar input::placeholder {
-    color: #b8a288;
+    color: var(--texte-doux);
 }
 body.dark .search-bar button {
-    background: #d4a574;
-    border-color: #d4a574;
+    background: var(--accent);
+    border-color: var(--accent);
 }
 
 /* Menu horizontal (Utilisateurs / Commandes) */
 body.dark .menu-horizontal {
-    background-color: #2d231c !important;
-    border-bottom: 2px solid #5a4435;
+    background-color: var(--surface) !important;
+    border-bottom: 2px solid var(--bordure);
 }
 body.dark .menu-horizontal a {
-    color: #b8a288 !important;
+    color: var(--texte-doux) !important;
 }
 body.dark .menu-horizontal a:hover,
 body.dark .menu-horizontal a.active {
-    color: #d4a574 !important;
+    color: var(--accent) !important;
 }
 body.dark .menu-horizontal a::after,
 body.dark .menu-horizontal a:hover::after,
 body.dark .menu-horizontal a.active::after {
-    background-color: #d4a574;
+    background-color: var(--accent);
 }
 
 /* Texte "déconnexion" */
 body.dark .deconnexion {
-    color: #f0e4d2 !important;
+    color: var(--texte) !important;
 }
 
 /* Liens dans le tableau */
 body.dark .ligne a {
-    color: #d4a574;
+    color: var(--accent);
 }
 body.dark .ligne a:hover {
-    color: #fcf9f4;
+    color: var(--titre);
 }
 
-/* Select pour le changement de role */
+/* Select de changement de role */
 body.dark .select-role {
-    background: #3d2d1f;
-    color: #f5e6d3;
-    border: 1px solid #d4a574;
+    background: var(--surface-2);
+    color: var(--texte);
+    border: 1px solid var(--accent);
 }
 body.dark .select-role:disabled {
-    background: #1f1814;
-    color: #888;
+    background: var(--main-background);
+    color: var(--texte-doux);
 }
 
-/* Bouton bloquer/debloquer en mode bloque */
+/* Bouton bloquer (etat bloque) */
 body.dark .btn-bloquer.est-bloque {
-    background: #c03030;
-    color: white;
+    background: var(--rouge-texte);
+    color: #fff;
 }
 
-/* Bloc notation dans administrateur2  */
+/* Bloc notation */
 body.dark .bloc-notation {
-    background: #3d2d1f !important;
-    border-left-color: #d4a574;
+    background: var(--surface-2) !important;
+    border-left-color: var(--accent);
 }
 body.dark .bloc-notation .etoiles {
-    color: #d4a574;
+    color: var(--accent);
 }
 body.dark .bloc-notation .commentaire {
-    color: #b8a288;
+    color: var(--texte-doux);
 }
 
 /* Cases statut paiement / commande */
 body.dark .case.payee,
 body.dark .case.livraison {
-    background: #1e4a3a;
-    color: #6fd9a8;
+    background: var(--vert-fond);
+    color: var(--vert-texte);
 }
 body.dark .case.preparation {
-    background: #2a2360;
-    color: #a89fff;
+    background: var(--bleu-fond);
+    color: var(--bleu-texte);
 }
 
 /* Tableau details */
 body.dark .table-details {
-    background: #1f1814;
+    background: var(--main-background);
 }
 body.dark .table-details th,
 body.dark .table-details td {
-    border-color: #5a4435;
-    color: #f0e4d2;
+    border-color: var(--bordure);
+    color: var(--texte);
 }
