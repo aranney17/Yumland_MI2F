@@ -122,18 +122,6 @@ function afficherEtoiles($note) {
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
 <link rel="stylesheet" href="../fichiers_css/darkmode_notation.css">
 
-    <style>
-        /* Étoiles statiques pour affichage note existante */
-        .etoiles-affichage { font-size: 1.6em; }
-        .etoiles-affichage .pleine { color: var(--article-background); }
-        .etoiles-affichage .vide   { color: #ccc; }
-
-        .bouton-submit { padding: 10px 24px; cursor: pointer; }
-        .note-detail { background: var(--main-background); padding: 16px; border-radius: 8px; margin-bottom: 16px; }
-        .note-detail p { margin: 6px 0; color: #666; font-style: italic; }
-        .retour { display: inline-block; margin-bottom: 20px; color: #666; }
-        .confirmation { background: #d4edda; color: #155724; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; }
-    </style>
 </head>
 <body>
     <header>
