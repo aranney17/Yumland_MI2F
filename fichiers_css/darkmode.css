@@ -1,8 +1,3 @@
-/* ============================================================
-   MODE SOMBRE - regles generales
-   Aucune valeur hex ici : tout vient des variables de couleurs.css
-   (les variables sombres sont definies dans body.dark de couleurs.css)
-============================================================ */
 
 /* Titres */
 body.dark h1, body.dark h2, body.dark h3,
@@ -156,11 +151,7 @@ body.dark .info-msg {
     color: var(--texte);
 }
 
-/* ============================================================
-   BOUTON FLOTTANT TOGGLE MODE SOMBRE
-   En clair : fond fonce + texte clair. En dark : fond dore.
-   On utilise les variables, donc l'inversion est automatique.
-============================================================ */
+/* bouton mode sombre */
 .btn-darkmode {
     position: fixed;
     bottom: 20px;
@@ -185,11 +176,7 @@ body.dark .btn-darkmode {
     color: var(--main-background);
 }
 
-/* ============================================================
-   PAGE MENUS (menu.php)
-   .menu-card a un fond blanc code en dur dans menu.css :
-   on le passe en surface sombre pour rendre le texte lisible.
-============================================================ */
+/* fond blanc en surface sombre dans menu.php */
 body.dark .menu-card {
     background-color: var(--surface);
     border-color: var(--bordure);
