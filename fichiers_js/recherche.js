@@ -1,10 +1,4 @@
-/* ============================================================
-   AUTOCOMPLETION DE LA BARRE DE RECHERCHE
-   - Ecoute la frappe dans .search-bar input[type=search]
-   - Interroge recherche.php?ajax=1&q=...
-   - Affiche des suggestions cliquables -> produits.php?nom=...
-   Fonctionne sur toutes les pages qui ont une .search-bar.
-============================================================ */
+
 (function () {
     function debounce(fn, delai) {
         let t;
