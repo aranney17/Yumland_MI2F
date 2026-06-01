@@ -1,12 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 
-/* 
-   PALETTE CENTRALISEE
-
-   Toutes les couleurs du site sont definies ICI, une seule fois.
-   - :root   mode clair
-   - body.dark  => mode sombre (memes noms de variables, autres valeurs) */
+/* definition de toutes les couleurs */
 
 :root {
     /* Fonds et surfaces */
@@ -40,7 +35,7 @@
     --small-text:  #8a8a8a;
     --light-black: #4a4a4a;
 
-    /*Couleurs fonctionnelles (statuts / badges)  */
+    /* statuts / badges  */
     --vert-texte:   #1f8f6f;  --vert-fond:   #d9f2ea;  /* payé, livraison ok */
     --bleu-texte:   #5b4bdb;  --bleu-fond:   #e4e0ff;  /* en préparation */
     --violet-texte: #6030b0;  --violet-fond: #ece0ff;  /* préparée */
@@ -85,7 +80,7 @@ body.dark {
     --succes-texte: #8fe0a8;  --succes-fond: #1e3a28;
     --etoile:       #d4a574;
 
-    /* Appliquer fond + texte au body */
+    /* Appliquer fond et texte au body */
     background-color: var(--main-background);
     color: var(--main-title);
 }
