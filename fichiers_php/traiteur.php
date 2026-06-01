@@ -248,58 +248,7 @@ if (isset($_POST['payer'])) {
     <link rel="stylesheet" href="../fichiers_css/couleurs.css">
     <link rel="stylesheet" href="../fichiers_css/structg.css">
     <link rel="stylesheet" href="../fichiers_css/darkmode.css">
-    <style>
-        .traiteur { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        .traiteur h2 { margin-top: 40px; border-bottom: 2px solid var(--accent); padding-bottom: 6px; }
-        .bloc { background: var(--surface); border: 1px solid var(--bordure); border-radius: 12px; padding: 20px; margin-top: 15px; }
-        .champ-ligne { margin: 12px 0; }
-        .champ-ligne label { display:block; font-weight:bold; margin-bottom:4px; }
-        .champ-ligne input[type=text],
-        .champ-ligne input[type=date],
-        .champ-ligne select { padding:8px; border-radius:6px; border:1px solid var(--bordure); min-width:240px; }
 
-        .piece-montee { display:flex; gap:25px; flex-wrap:wrap; }
-        .piece-form { flex:1; min-width:280px; }
-        .piece-carrousel { flex:1; min-width:280px; }
-
-        .carrousel { position:relative; display:flex; align-items:center; gap:8px; }
-        .carrousel-images {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    border-radius: 12px;
-    padding-bottom: 10px;
-}
-        
-.carrousel-images img {
-     width:100%; 
-     max-width:300px; 
-    height:220px; 
-    object-fit:cover; 
-     border-radius:12px; 
-     flex-shrink:0; 
-            }
-        .carrousel .fleche { background:var(--accent); color:#fff; border:none; width:38px; height:38px; border-radius:50%; cursor:pointer; flex-shrink:0; font-size:16px; }
-
-        .acc-ligne { display:flex; align-items:center; gap:12px; margin:10px 0; flex-wrap:wrap; }
-        .acc-ligne select { padding:7px; border-radius:6px; border:1px solid var(--bordure); }
-        .acc-ligne input[type=number] { width:70px; padding:7px; }
-        .acc-prix { font-weight:bold; min-width:90px; color:var(--accent-fonce); }
-        body.dark .acc-prix { color: var(--accent); }
-
-        .total-traiteur { font-size:26px; font-weight:bold; text-align:right; margin:25px 0; }
-        .total-traiteur span { color: var(--accent-fonce); }
-        body.dark .total-traiteur span { color: var(--accent); }
-
-        .btn-payer { display:block; width:100%; padding:15px; font-size:18px; border:none; border-radius:10px;
-                     background: var(--btn-fond); color: var(--btn-texte); cursor:pointer; }
-        .btn-payer:hover { background: var(--btn-fond-hover); }
-
-        .msg-erreur { background:var(--rouge-fond); color:var(--rouge-texte); padding:12px 16px; border-radius:8px; margin:15px 0; }
-        .msg-ok     { background:var(--succes-fond); color:var(--succes-texte); padding:16px; border-radius:10px; margin:15px 0; }
-        .detail-recap li { margin:4px 0; }
-    </style>
 </head>
 <body>
 
