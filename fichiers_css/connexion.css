@@ -195,19 +195,16 @@ body::before{
 /*------------------------*/
 
 
-/* ============================================================
-   MODE SOMBRE - SPECIFIQUE pages CONNEXION / INSCRIPTION
+/* mode sombre pour connexion et inscription */
 
-============================================================ */
-
-/* -- Image de fond : on garde le flou mais on l'assombrit -- */
+/* Assombrissement image de fond */
 body.dark::before {
     background: url(../images/fond.png) center / cover no-repeat;
     /* brightness(0.35) assombrit l'image, blur(8px) preserve le flou */
     backdrop-filter: blur(8px) brightness(0.35);
 }
 
-/* -- Fieldsets : verre teinte chocolat (au lieu de blanc) -- */
+/*  Fieldsets : teinte chocolat */
 body.dark fieldset {
     background-color: rgba(45, 35, 28, 0.88);
     border-color: #d4a574;
@@ -219,13 +216,13 @@ body.dark legend {
     color: #d4a574;
 }
 
-/* -- Titres -- */
+/* Titres */
 body.dark h2 {
     color: #fcf9f4;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-/* -- Inputs : fond sombre transparent + bordure doree -- */
+/* Inputs : fond sombre transparent et bordure doree  */
 body.dark .champ input {
     background-color: rgba(31, 24, 20, 0.4);
     border: 2px solid #d4a574;
@@ -241,30 +238,30 @@ body.dark .champ input:focus {
     background-color: rgba(31, 24, 20, 0.6);
 }
 
-/* -- Texte des champs (label "Civilite *", "Prenom *"...) -- */
+/*  Texte des champs */
 body.dark .champ,
 body.dark .civilite,
 body.dark .conditions {
     color: #f5e6d3;
 }
 
-/* -- Compteur de caracteres -- */
+/* Compteur de caracteres */
 body.dark .compteur {
     color: #b8a288;
 }
 
-/* -- Erreurs : on garde le rouge mais plus lumineux -- */
+/* Erreurs :  rouge plus lumineux */
 body.dark .erreur,
 body.dark small.erreur {
     color: #ff8080;
 }
 
-/* Quand un input est en erreur, on souligne en rouge */
+/* soulignage rouge quand input erreur */
 body.dark .champ input.erreur {
     border-color: #ff8080;
 }
 
-/* -- Bouton principal (couleur caramel sur fond sombre) -- */
+/* Bouton principal (couleur caramel sur fond sombre) */
 body.dark .bouton {
     background-color: #d4a574;
     border: 2px double #fcf9f4;
@@ -277,7 +274,7 @@ body.dark .bouton:hover {
     color: #d4a574;
 }
 
-/* -- Liens (mot de passe oublie, etc.) -- */
+/*  Liens  */
 body.dark .lien {
     color: #f5e6d3;
 }
@@ -286,32 +283,28 @@ body.dark .lien:hover {
     color: #d4a574;
 }
 
-/* -- Lien des CGU (conditions) -- */
+/*Lien des CGU */
 body.dark .conditions a {
     color: #d4a574;
 }
-
-/* -- Paragraphes intermediaires (entre les 2 actions) -- */
 body.dark .connexion,
 body.dark .inscription {
     color: #352511;
 }
 
-/* -- Icone oeil (afficher/masquer mdp)
-   Les icones .png sont sombres → on les inverse pour qu'elles
-   soient visibles sur fond sombre */
+/*  Icone oeil  */
 body.dark .champ img {
     filter: invert(1) brightness(1.2);
 }
 
-/* -- Message de succes inscription (bandeau vert) -- */
+/*  Message de succes inscription  */
 body.dark .message-succes {
     background: #2e7d32;
     color: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* -- Radio buttons et checkbox : meilleur contraste -- */
+/*  Radio buttons et checkbox */
 body.dark input[type="radio"],
 body.dark input[type="checkbox"] {
     accent-color: #d4a574;
