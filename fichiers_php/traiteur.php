@@ -13,7 +13,7 @@ $fichierCommandes = '../data/commande.json';
 $clients  = json_decode(file_get_contents($fichierClients), true) ?? [];
 $produits = json_decode(file_get_contents($fichierProduits), true) ?? [];
 
-/* Client connecte + check bloque + role */
+/* Client connecte, check bloque et role */
 $client = null;
 foreach ($clients as $c) {
     if ($c['id'] == $_SESSION['id']) { $client = $c; break; }
@@ -28,9 +28,7 @@ if ($client['role'] !== 'client') {
     exit();
 }
 
-/* -------------------------------------------------------------
-   PARAMETRES DE LA COMMANDE TRAITEUR
-------------------------------------------------------------- */
+/* parametres de la commande traiteur */
 $PRIX_ETAGE  = 30;          // prix par etage de la piece montee
 $ETAGES_MAX  = 5;
 $NB_ACCOMP   = 6;           // nombre maximum d'accompagnements
@@ -39,16 +37,16 @@ $GLACAGES   = ['Fraise', 'Chocolat', 'Spéculoos', 'Mangue', 'Vanille', 'Pistach
 $GENOISES   = ['Vanille', 'Chocolat', 'Amande', 'Matcha'];
 $GARNITURES = ['Pépites de chocolat', 'Morceaux de fruits frais', 'Morceaux de mangue', 'Praliné', 'Caramel beurre salé'];
 
-/* Accompagnements = NOURRITURE uniquement (on exclut les Boissons) */
+/* Accompagnements (boissons exclus) */
 $accompagnementsDispo = [];
-$prixAccomp = [];   // [nom => prix] pour le calcul (JS + serveur)
+$prixAccomp = [];   
 foreach ($produits as $p) {
     if (($p['categorie'] ?? '') === 'Boissons') continue;
     $accompagnementsDispo[] = $p;
     $prixAccomp[$p['nom']] = (float) $p['prix'];
 }
 
-/* Images d'exemple pour le carrousel (gateaux existants) */
+/* Images d'exemple pour le carrousel  */
 $exemples = [
     'exempletraiteur1.jpg',
     'exempletraiteur2.jpg',
@@ -62,7 +60,7 @@ $exemples = [
     'exempletraiteur10.jpg'
 ];
 
-/* Recalcul du total cote SERVEUR (ne jamais se fier au JS) */
+/* Recalcul du total  */
 function calculerTotal($etages, $accNoms, $accQtes, $prixAccomp, $PRIX_ETAGE) {
     $total = $etages * $PRIX_ETAGE;
     foreach ($accNoms as $i => $nom) {
@@ -76,9 +74,7 @@ function calculerTotal($etages, $accNoms, $accQtes, $prixAccomp, $PRIX_ETAGE) {
 $erreur = null;
 $confirmation = null;
 
-/* =============================================================
-   ETAPE 3 : RETOUR DE PAIEMENT (cybank renvoie ?status=...&control=...)
-============================================================= */
+/* retour paiement */
 if (isset($_GET['status']) && isset($_SESSION['commande_traiteur'])) {
 
     $transaction  = $_GET['transaction'] ?? '';
@@ -160,9 +156,7 @@ if (isset($_GET['status']) && isset($_SESSION['commande_traiteur'])) {
     }
 }
 
-/* =============================================================
-   ETAPE 2 : SOUMISSION DU FORMULAIRE (clic "Valider et payer")
-============================================================= */
+/* soumission du formulaire */
 $lancerPaiement = false;
 if (isset($_POST['payer'])) {
 
@@ -349,7 +343,7 @@ if (isset($_POST['payer'])) {
 <div class="traiteur">
 
 <?php if ($confirmation): ?>
-    <!-- ===== CONFIRMATION APRES PAIEMENT ===== -->
+    <!--  CONFIRMATION APRES PAIEMENT  -->
     <h1 style="text-align:center;">Merci pour votre commande !</h1>
     <div class="msg-ok">
         <p>Votre commande traiteur a bien été enregistrée et payée.</p>
@@ -370,7 +364,7 @@ if (isset($_POST['payer'])) {
     <p style="text-align:center;"><a href="accueil.php" class="btn-payer" style="max-width:300px;margin:0 auto;text-align:center;text-decoration:none;">Revenir à l'accueil</a></p>
 
 <?php elseif ($lancerPaiement): ?>
-    <!-- ===== REDIRECTION VERS LE PAIEMENT ===== -->
+    <!-- REDIRECTION VERS LE PAIEMENT  -->
     <h2>Redirection vers le paiement sécurisé…</h2>
     <form id="cybankForm" action="https://www.plateforme-smc.fr/cybank/index.php" method="POST">
         <input type="hidden" name="transaction" value="<?= $transaction ?>">
@@ -382,7 +376,7 @@ if (isset($_POST['payer'])) {
     <script>document.getElementById('cybankForm').submit();</script>
 
 <?php else: ?>
-    <!-- ===== FORMULAIRE TRAITEUR ===== -->
+    <!-- FORMULAIRE TRAITEUR  -->
     <h1 style="text-align:center;">Commande traiteur sur mesure</h1>
     <p style="text-align:center;">Composez le buffet de votre événement : pièce montée personnalisée + accompagnements.</p>
 
@@ -392,7 +386,7 @@ if (isset($_POST['payer'])) {
 
     <form method="POST" id="form-traiteur">
 
-        <!-- ETAPE 1 : EVENEMENT -->
+        <!-- evenement -->
         <h2>Votre événement</h2>
         <div class="bloc">
             <div class="champ-ligne">
@@ -407,7 +401,7 @@ if (isset($_POST['payer'])) {
             </div>
         </div>
 
-        <!-- ETAPE 2 : PIECE MONTEE -->
+        <!-- piece monté -->
         <h2>Choix de la pièce montée</h2>
         <div class="bloc piece-montee">
             <div class="piece-form">
@@ -445,7 +439,7 @@ if (isset($_POST['payer'])) {
                 </div>
             </div>
 
-            <!-- Carrousel d'exemples (visuel) -->
+            <!-- Carrousel d'exemples  -->
             <div class="piece-carrousel">
                 <p style="font-weight:bold;">Quelques exemples :</p>
                 <div class="carrousel">
@@ -460,7 +454,7 @@ if (isset($_POST['payer'])) {
             </div>
         </div>
 
-        <!-- ETAPE 3 : ACCOMPAGNEMENTS -->
+        <!-- accompagnements -->
         <h2>Accompagnements (6 maximum)</h2>
         <div class="bloc">
             <?php for ($i = 0; $i < $NB_ACCOMP; $i++): ?>
