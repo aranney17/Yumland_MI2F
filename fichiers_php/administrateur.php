@@ -129,7 +129,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
 
 <header>
   
-    <h1><a href="../fichiers_php/administrateur.php" class="logo">La Cour des Délices</a></h1>
+    <h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <a href="../fichiers_php/profil.php"><img src="../images/Iconprofil.png" alt="Profil" class="icon"></a>
         <a href="../fichiers_php/logout.php"><p class="deconnexion">déconnexion</p></a>
