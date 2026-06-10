@@ -128,7 +128,16 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
 <body>
 
 <header>
-  
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+        <a href="#nouveautes">Nouveautés</a>
+        <a href="../fichiers_php/accueil.php">Accueil</a>
+        <a href="../fichiers_php/administrateur.php">Utilisateurs</a>
+        <a href="../fichiers_php/administrateur2.php">Commandes</a>
+    </nav>
+    <div class="barres"><span></span><span></span><span></span></div>
+    
     <h1><a href="../fichiers_php/accueil.php" class="logo">La Cour des Délices</a></h1>
     <div class="top-icons">
         <a href="../fichiers_php/profil.php"><img src="../images/Iconprofil.png" alt="Profil" class="icon"></a>
