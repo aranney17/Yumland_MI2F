@@ -126,6 +126,8 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
     <link rel="stylesheet" href="../fichiers_css/darkmode_admin.css"> 
 </head>
 <body>
+    
+<?php include 'sidebar.php'; ?>
 
 <header>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
