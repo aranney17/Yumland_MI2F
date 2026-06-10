@@ -11,7 +11,7 @@ if (isset($_SESSION['id'])) {
                 session_destroy();
                 die("Votre compte a été bloqué. <a href='../fichiers_php/connexion.php'>Retour</a>");
             }
-            if ($u['role'] !== 'client') {
+            /*if ($u['role'] !== 'client') {
                 $redir = [
                     'cuisinier'      => '../fichiers_php/commandes.php',
                     'livreur'        => '../fichiers_php/livraison.php',
@@ -19,7 +19,7 @@ if (isset($_SESSION['id'])) {
                 ];
                 header("Location: " . ($redir[$u['role']] ?? '../fichiers_php/accueil.php'));
                 exit();
-            }
+            }*/
             break;
         }
     }
