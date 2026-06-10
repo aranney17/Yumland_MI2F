@@ -21,11 +21,11 @@ foreach ($utilisateurs as $u) {
         break;
     }
 }
-if ($bloqueConnecte) {
+if ($bloqueConnecte) {  //s'il est bloqué
     session_destroy();
     die("Votre compte a été bloqué. <a href='../fichiers_php/connexion.php'>Retour</a>");
 }
-if ($roleConnecte !== 'administrateur') {
+if ($roleConnecte !== 'administrateur') {  //s'il n'est pas admin
     http_response_code(403);
     die("Accès refusé. Cette page est réservée aux administrateurs.");
 }
@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'toggle_bloque') {
                 echo json_encode(['success' => false, 'erreur' => 'Vous ne pouvez pas vous bloquer vous-meme']);
                 exit;
             }
-            $u['bloque'] = !($u['bloque'] ?? false);
+            $u['bloque'] = !($u['bloque'] ?? false); //inverse l'état
             $nouveauBloque = $u['bloque'];
             $userCible = $u;
             break;
@@ -58,10 +58,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'toggle_bloque') {
 
     file_put_contents($fichierClients, json_encode($utilisateurs, JSON_PRETTY_PRINT));
 
-    if ($nouveauBloque) {
+    if ($nouveauBloque) {  //si on bloque
         $commandes = json_decode(file_get_contents($fichierCommandes), true) ?? [];
         $nouvellesCmd = [];
-        foreach ($commandes as $cmd) {
+        foreach ($commandes as $cmd) {  //on garde tout à part le bloque
             $estDuUser = strtolower($cmd['nom']) === strtolower($userCible['nom'])
                       && strtolower($cmd['prenom']) === strtolower($userCible['prenom'])
                       && $cmd['telephone'] === $userCible['telephone'];
@@ -94,7 +94,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
     $trouve = false;
     foreach ($utilisateurs as &$u) {
         if ($u['id'] === $idCible) {
-            $u['role'] = $nouveauRole;
+            $u['role'] = $nouveauRole; //change le rôle
             $trouve = true;
             break;
         }
@@ -215,7 +215,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'changer_role') {
 <script>
 function toggleBloque(btn) {
     const userId = btn.dataset.id;
-    const confirmation = btn.classList.contains('est-bloque')
+    const confirmation = btn.classList.contains('est-bloque') //on regarde s'il est bloque
         ? 'Confirmer le déblocage de cet utilisateur ?'
         : 'Confirmer le BLOCAGE ? Toutes ses commandes seront supprimées.';
     if (!confirm(confirmation)) return;
@@ -224,11 +224,11 @@ function toggleBloque(btn) {
     formData.append('action', 'toggle_bloque');
     formData.append('user_id', userId);
 
-    fetch('../fichiers_php/administrateur.php', { method: 'POST', body: formData })
+    fetch('../fichiers_php/administrateur.php', { method: 'POST', body: formData })     // Envoie la requête AJAX
         .then(r => r.json())
         .then(data => {
             if (data.success) {
-                btn.textContent = data.bloque ? 'Débloquer' : 'Bloquer';
+                btn.textContent = data.bloque ? 'Débloquer' : 'Bloquer';  // Met à jour le bouton et la ligne sans recharger la page
                 btn.classList.toggle('est-bloque', data.bloque);
                 const ligne = document.getElementById('ligne-' + userId);
                 if (ligne) ligne.classList.toggle('ligne-bloque', data.bloque);
